@@ -42,6 +42,7 @@ A rewarding, incremental racing loop that a player can run with one thumb, in th
 | Price curve | Not fixed: tuned in a Node pacing simulator (pass/fail checks only, no speed numbers) against fast start, slowing curve | 
 | Palette | CHOSEN 11:36 PM Eastern: warm and bright (warm ink, never black), region-tinted. Sampled all three as still pictures (palettes/palette-sheet.png, 11:35 PM Eastern; throwaway mockup, not game art) (warm and bright, bold and saturated, muted retro) in the prototype before choosing; house rule: warm ink, never black | 
 | Art bar and flavor | Far better than the throwaway palette samples. An American-flavored take on cozy pixel management, plain readable mechanics only, nothing bizarre; original, no copying of any specific game | 
+| American flavor | Cross-country road trip whose stops are small-town scenes (diners, fairs, farm roads, drive-ins, stadium crowds), matching the five regions | 
 | Sound | None. Vibration allowed (not available on iPhone browsers) |
 
 ## 2. Game loop (draft)

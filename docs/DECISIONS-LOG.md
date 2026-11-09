@@ -100,3 +100,4 @@ Name (card posted), weather/hazards/collectibles, iOS vibration scope, prototype
 - 2026.11.08 11:31 PM Eastern (owner): wants to sample all three palette moods (warm and bright; bold and saturated; muted retro) before choosing. Fold into the prototype page: palette switch next to the two steering schemes and two pixel sizes.
 - 2026.11.08 11:36 PM Eastern: palette = warm and bright (left sample).
 - 2026.11.08 11:38 PM Eastern (owner): final graphics must be far better than the palette samples (those are throwaway mockups). Style target: an "American version" of the cozy pixel management genre, without bizarre gameplay mechanics (keep mechanics plain and readable). Still original; no copying of any specific game.
+- 2026.11.08 11:40 PM Eastern: American flavor = a cross-country road trip whose stops are small-town scenes.
