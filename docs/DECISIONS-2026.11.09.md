@@ -3,7 +3,7 @@
 Written 2026.11.09, 8:41 PM Eastern. This adds to `DESIGN-DOC-DRAFT-2026.11.08.md`. Where the two differ, this log is newer. Everything here was asked for or accepted by the owner in the project threads on 2026.11.09. Items marked GUESS are first values chosen by the builder and not yet judged by the owner.
 
 ## What it is and how it works
-A one-thumb, portrait racing game. The playable is still a single-file sample page (latest v5.14) under `racing-game-research/sample-page/`. It is not yet the real game build in the repo.
+A one-thumb, portrait racing game. The playable is still a single-file sample page (latest v5.16, in `play/`). It is not yet the real game build in the repo.
 
 ## Why it exists
 To settle look, feel and the reward loop by playing, before the real build starts.
@@ -13,7 +13,7 @@ To settle look, feel and the reward loop by playing, before the real build start
 |---|---|
 | View | Tilted three-quarter view. Top-down stays as a setting. |
 | Renderer | WebGL2 by default with live 3D toy models, soft shadows, per-pixel headlights at dusk and bloom. Canvas fallback. Automatic step-down: render scale 3, 2, 1, then Canvas. |
-| Phone speed | 60.0 FPS at render scale x3 on the owner's phone through v5.11 (Chromium engine, viewport 374x678, pixel ratio 2.89), including the full 3D world. v5.12 to v5.14 not yet reported. |
+| Phone speed | 60.0 FPS at render scale x3 on the owner's phone through v5.11 (phone, Chromium engine), including the full 3D world. v5.12 to v5.14 not yet reported. |
 | Logo | Toy license plate ("ONE-THUMB RACING / THUMB / CIRCUIT"). Sticker-text logos rejected as too close to the other games. |
 | Cars | Wheels spin and steer, brake lights, exhaust puffs, nose dip and lift, 3D boost flame. A rammed rival flips with one eased roll and lands in dust. Shoves glide, never jump. |
 | World | 3D fence (not across shortcuts), grandstands with a crowd that jumps with the fans meter, fan groups, corner arrow signs, start gantry, river, lake, bridge with rails, lakeside village. |
@@ -38,7 +38,9 @@ To settle look, feel and the reward loop by playing, before the real build start
 - Not picked: "faster and tighter feel" (higher top speed, camera zoom).
 - Left out for cost: replay of the last corner.
 
-OPEN: the final-lap hunter gives rivals behind the player a small speed lift (5 to 11%) and slows rivals far ahead by 5%. This bends the design doc rule "fair AI, no secret help". The owner was told on 2026.11.09 and has not yet said keep or remove.
+DECIDED (owner tapped "Keep it", 2026.11.09 9:21 PM ET): the final-lap hunter gives rivals behind the player a small speed lift (5 to 11%) and slows rivals far ahead by 5%. The design doc rule "fair AI, no secret help" now allows this last-lap help.
+
+LEVELS (owner picked "Levels and track unlocks", v5.15; every number is a first guess): XP per race = 20 + place bonus (30/20/10) + up to 20 from coins + up to 20 from stunts. Levels 1 to 10; XP needed 60 + 40 per level. Unlocks: Sedan 2, Twin Pines + Dot + upgrade level 3 to 4 at 3, Kart 4, Truck + Rex + upgrade level 5 at 5, Sports 6. Rivals get 1.2% faster per level, up to 10%. Old saves get 40 XP per past race and keep what they own.
 
 ## Game loop in the sample
 | Topic | Decision or GUESS |
@@ -56,3 +58,7 @@ OPEN: the final-lap hunter gives rivals behind the player a small speed lift (5 
 - Firefox and WebKit checks of the sample.
 - USPTO name check for "Thumb Circuit".
 - The real game build in `lfcfoundry/thumb-circuit` (not approved yet).
+
+## Update v5.16 (2026.11.10)
+- Dusk is darker, with two headlight beams per car. Arrow keys steer and space is Boost on a keyboard. The sample is published as `play/` and the landing page as `index.html`.
+- Still open: name check, pit and repair crews, Firefox and WebKit checks, hidden speed report and error log buttons.
