@@ -3,7 +3,7 @@
 Written 2026.11.09, 8:41 PM Eastern. This adds to `DESIGN-DOC-DRAFT-2026.11.08.md`. Where the two differ, this log is newer. Everything here was asked for or accepted by the owner in the project threads on 2026.11.09. Items marked GUESS are first values chosen by the builder and not yet judged by the owner.
 
 ## What it is and how it works
-A one-thumb, portrait racing game. The playable is still a single-file sample page (latest v5.16, in `play/`). It is not yet the real game build in the repo.
+A one-thumb, portrait racing game. The playable is still a single-file sample page (latest v5.17, in `play/`). It is not yet the real game build in the repo.
 
 ## Why it exists
 To settle look, feel and the reward loop by playing, before the real build starts.
@@ -59,6 +59,6 @@ LEVELS (owner picked "Levels and track unlocks", v5.15; every number is a first 
 - USPTO name check for "Thumb Circuit".
 - The real game build in `lfcfoundry/thumb-circuit` (not approved yet).
 
-## Update v5.16 (2026.11.10)
+## Update v5.17 (2026.11.10)
 - Dusk is darker, with two headlight beams per car. Arrow keys steer and space is Boost on a keyboard. The sample is published as `play/` and the landing page as `index.html`.
 - Still open: name check, pit and repair crews, Firefox and WebKit checks, hidden speed report and error log buttons.

@@ -2,6 +2,9 @@
 
 Short, plain lines. Each version is one playable sample page in `play/`.
 
+## v5.17
+- Assist-off bonus (1.5x), a bigger color palette, photographers along the track, a drift look, and a wider view on larger screens.
+
 ## v5.16
 - Darker dusk, two headlights per car, and keyboard steering with arrow keys and space for Boost.
 
