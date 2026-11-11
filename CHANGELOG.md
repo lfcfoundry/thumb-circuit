@@ -2,6 +2,13 @@
 
 Short, plain lines. Each version is one playable sample page in `play/`.
 
+## v5.28
+- Five new vehicles in the Garage: Motorbike (450 coins, level 4), Three-wheeler (500 coins, level 5), Minivan with a rocket on the roof (900 coins, level 7), Formula racer (2,500 coins, level 9) and Robotruck (5,000 coins, bad at everything).
+- Road conditions on Hard rivals: wet road and mud, deep sand on the beach, spilled soda and sticky syrup on Candy Ridge, black ice and snow drifts on Glacier Party. Slippery stretches cut grip and sticky ones cut speed. Rivals slow a little on them too, and the race report shows the time spent on them.
+- The view pulls back as you speed up, and a little more on boost. Speed lines now start at normal top speed.
+- New setting "Thumb reach" for slide steering: Short, Medium or Long. A longer reach makes the steering calmer.
+- With road help off, the thumb reach is a little longer and the car catches big slides at part strength.
+
 ## v5.27
 - Normal rivals pulled back halfway between v5.24 and v5.25.
 
