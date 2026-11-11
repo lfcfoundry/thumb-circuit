@@ -2,6 +2,19 @@
 
 Short, plain lines. Each version is one playable sample page in `play/`.
 
+## v5.26
+- A striped speed bump across the whole road on Orchard Ring. It costs about a fifth of your speed and gives a small hop. Rivals slow for it too, and the race report counts it.
+- Prince Chimp watches from a tiki throne beside Banana Beach, and a chimp submarine circles the lake there.
+- Gulls circle in a corner of the screen on parts of the beach and ice tracks.
+- Penguins and pineapple characters now face the camera.
+
+## v5.25
+- Normal rivals are a little faster and chase harder when you lead, more so with road help on.
+- The Done button stays pinned at the bottom of every menu.
+- People now fly a kite, wave a bigger flag, hold balloons and a sign, eat ice cream on the beach and candy tracks, and wear winter clothes on the ice track, next to a snowman.
+- Penguins and pineapple characters on Glacier Party, and apple piles and baskets on Orchard Ring.
+- Fancy flies across the screen now and then on the beach and candy tracks.
+
 ## v5.24
 - People are redrawn with legs, shoes, arms and shaped bodies, and are a little larger.
 - Road surfaces change by section: asphalt, cobblestone, concrete slabs and packed dirt. Looks only, grip is unchanged.

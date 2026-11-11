@@ -3,7 +3,7 @@
 Written 2026.11.09, 8:41 PM Eastern. This adds to `DESIGN-DOC-DRAFT-2026.11.08.md`. Where the two differ, this log is newer. Everything here was asked for or accepted by the owner in the project threads on 2026.11.09. Items marked GUESS are first values chosen by the builder and not yet judged by the owner.
 
 ## What it is and how it works
-A one-thumb, portrait racing game. The playable is still a single-file sample page (latest v5.24, in `play/`). It is not yet the real game build in the repo.
+A one-thumb, portrait racing game. The playable is still a single-file sample page (latest v5.26, in `play/`). It is not yet the real game build in the repo.
 
 ## Why it exists
 To settle look, feel and the reward loop by playing, before the real build starts.
