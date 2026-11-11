@@ -2,6 +2,47 @@
 
 Short, plain lines. Each version is one playable sample page in `play/`.
 
+## v6.22
+- Off-road spots are printed in the results report, and dirt shortcuts count toward skill seconds.
+- A quick second touch keeps the steering anchor, so a re-touch no longer jumps the car.
+- How to play has 14 picture cards. Settings rows have icons and one-line descriptions.
+
+## v6.21
+- One landmark per theme sits in the infield.
+- Road colors are darker in every theme, so the road stands out from the grass.
+
+## v6.20
+- Rivals behind you catch up a little, and rivals ahead no longer slow down.
+- Skill seconds: drift boosts, shortcuts and fence hits show a small estimate in the results.
+- Drivers in the cars have helmets and shoulders. The roof is off the hatch, sedan, sports car and truck.
+
+## v6.13
+- Autopilot is less: the car no longer follows the road by itself when the thumb is down.
+- The loop-de-loop only takes you in when you are lined up with it.
+- The camera shows more of the track ahead. Boost trail is thinner.
+- Garage cars have bumpers, grilles, plates and mirrors.
+
+## v6.12
+- Quick tour on first visit, and again from How to play.
+- Tracks show a map, and upgrades show an icon.
+
+## v6.11
+- Boost is coasting when you keep the thumb up, and rivals catch up less.
+- Upgrades and Tracks moved to the big row on the title screen.
+- Sparks, dust and flame effects are sharper.
+
+## v6.10
+- Steering with road help off follows the bend more, and the car straightens up after a hit.
+- Ramps can skip a barrier when the landing is close to the road.
+- Position is a big gold number. The coin count has a coin picture.
+
+## v6.04
+- The Boost button is gone. Boost is a flick up, or the space bar. Boost meters sit under the speedometer.
+
+## v6.03
+- Flick up while steering to boost.
+- With road help off, the car follows the bend while the thumb is up or near the middle.
+
 ## v6.02
 - Trace line in Copy results: a short record of side, thumb, speed and drift state, for testing.
 - Corner braking also works off the road.
