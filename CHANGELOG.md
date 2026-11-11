@@ -2,6 +2,9 @@
 
 Short, plain lines. Each version is one playable sample page in `play/`.
 
+## v5.27
+- Normal rivals pulled back halfway between v5.24 and v5.25.
+
 ## v5.26
 - A striped speed bump across the whole road on Orchard Ring. It costs about a fifth of your speed and gives a small hop. Rivals slow for it too, and the race report counts it.
 - Prince Chimp watches from a tiki throne beside Banana Beach, and a chimp submarine circles the lake there.
