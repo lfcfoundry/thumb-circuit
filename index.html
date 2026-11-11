@@ -1,146 +1,179 @@
 <!doctype html>
 <html lang="en">
-<head>
 <meta charset="utf-8">
+<title>Thumb Circuit</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Thumb Circuit (working name)</title>
-<meta name="description" content="Thumb Circuit is a one-thumb, portrait racing game. One offline HTML file, no ads, no accounts, no network.">
+<meta name="description" content="Thumb Circuit is a one-thumb racing game for phones. One offline HTML file, no ads, no accounts, no network.">
 <style>
-/* Warm toy palette taken from the game's own HUD: cream, caramel and brown. */
+/* Same layout as the other LFC Foundry game pages: dark hero band, light body, tiles, screenshots and a footer.
+   Colors are Thumb Circuit's warm palette, taken from the game's own HUD. */
 :root{
   --bg:#fff8e6; --fg:#4a3228; --muted:#7a5a48; --soft:#fbe9c0; --line:#e3b878;
-  --hero:#5a3d30; --hero-fg:#fff8e6; --hero-muted:#f1d9b0;
+  --hero:#5a3d30; --hero-fg:#fff8e6; --hero-muted:#f1d9b0; --hero-line:#9a7050;
   --accent:#c98d4a; --accent-fg:#fff8e6; --accent-dark:#8a5a2a; --btn-alt:#ffbf47;
-  --display:ui-rounded,"Trebuchet MS",Verdana,sans-serif;
-  --body:ui-rounded,"Trebuchet MS",Verdana,sans-serif;
+  --display:'Segoe UI',system-ui,sans-serif;
+  --body:'Segoe UI',system-ui,sans-serif;
   --mono:ui-monospace,Consolas,monospace;
 }
 @media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
   --bg:#2b1f19; --fg:#f6e9d2; --muted:#d7bfa3; --soft:#3a2a22; --line:#7a5a3c;
-  --hero:#1f1510; --hero-fg:#fff8e6; --hero-muted:#e7cfa8; --accent:#d9a060; --accent-fg:#2b1f19; --accent-dark:#f0c48a; color-scheme:dark}}
+  --hero:#1f1510; --hero-fg:#fff8e6; --hero-muted:#e7cfa8; --hero-line:#7a5a3c; --accent:#d9a060; --accent-fg:#2b1f19; --accent-dark:#f0c48a; color-scheme:dark}}
 :root[data-theme="dark"]{
   --bg:#2b1f19; --fg:#f6e9d2; --muted:#d7bfa3; --soft:#3a2a22; --line:#7a5a3c;
-  --hero:#1f1510; --hero-fg:#fff8e6; --hero-muted:#e7cfa8; --accent:#d9a060; --accent-fg:#2b1f19; --accent-dark:#f0c48a; color-scheme:dark}
+  --hero:#1f1510; --hero-fg:#fff8e6; --hero-muted:#e7cfa8; --hero-line:#7a5a3c; --accent:#d9a060; --accent-fg:#2b1f19; --accent-dark:#f0c48a; color-scheme:dark}
 *{box-sizing:border-box}
-body{margin:0;background:var(--bg);color:var(--fg);font:17px/1.6 var(--body)}
+body{background:var(--bg);color:var(--fg);font:17px/1.6 var(--body);margin:0}
 a{color:var(--accent-dark)}
 :focus-visible{outline:3px solid var(--accent);outline-offset:2px}
-.wrap{max-width:960px;margin:0 auto;padding-left:16px;padding-right:16px}
+.wrap{max-width:1040px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
 h1,h2,h3{font-family:var(--display);line-height:1.15;text-wrap:balance;margin:0}
-.hero{background:var(--hero);color:var(--hero-fg);padding-block:48px 56px}
-.nav{display:flex;flex-wrap:wrap;gap:6px 22px;align-items:center;margin-bottom:40px;font-size:15px}
+.hero{background:var(--hero);color:var(--hero-fg);padding-block:64px 56px}
+.hero .eyebrow{font:600 13px var(--mono);letter-spacing:.12em;text-transform:uppercase;color:var(--hero-muted);margin:0}
+.hero h1{font-size:clamp(44px,8vw,84px);font-weight:800;letter-spacing:-.02em;margin:10px 0 14px}
+.hero p.pitch{font-size:clamp(19px,2.6vw,25px);max-width:36em;color:var(--hero-muted);margin:0 0 30px}
+.nav{display:flex;flex-wrap:wrap;gap:6px 22px;align-items:center;margin-bottom:44px;font-size:15px}
 .nav b{font:700 18px var(--display);margin-right:auto}
 .nav a{color:var(--hero-muted);text-decoration:none}
 .nav a:hover{color:var(--hero-fg)}
-.plate{display:inline-block;border:4px solid var(--accent);border-radius:12px;background:var(--hero-fg);color:var(--hero);padding:10px 18px 12px;font:800 clamp(30px,6vw,56px)/1.05 var(--display);letter-spacing:.02em;text-align:center}
-.plate small{display:block;font:700 clamp(12px,2vw,15px) var(--display);letter-spacing:.2em;margin-top:4px;color:var(--accent-dark)}
-.hero .pitch{font-size:clamp(18px,2.4vw,22px);max-width:34em;color:var(--hero-muted);margin:26px 0 28px}
 .btns{display:flex;flex-wrap:wrap;gap:12px}
-.btn{display:inline-block;padding:14px 26px;border-radius:14px;font:700 18px var(--display);text-decoration:none;border:3px solid var(--accent-dark);background:linear-gradient(#ffe38a,var(--btn-alt));color:#4a3228;box-shadow:0 3px 0 var(--accent-dark)}
-.btn.alt{background:transparent;color:var(--hero-fg);border-color:var(--hero-muted);box-shadow:none}
-.btn:hover{filter:brightness(1.06)}
-.facts{display:flex;flex-wrap:wrap;gap:8px;margin-top:26px}
-.fact{font:600 13px var(--mono);padding:5px 11px;border:1px solid #9a7050;border-radius:999px;color:var(--hero-muted)}
-section{padding-block:48px}
-section+section{border-top:2px dashed var(--line)}
-h2{font-size:clamp(26px,4vw,36px);font-weight:700;margin-bottom:14px}
-h3{font-size:20px;margin-bottom:6px}
-.lead{max-width:44em;color:var(--muted);margin:0}
+.btn{display:inline-block;padding:14px 26px;border-radius:6px;font:700 18px var(--display);text-decoration:none;border:2px solid var(--accent);background:linear-gradient(#ffe38a,var(--btn-alt));color:#4a3228}
+.btn.alt{background:transparent;color:var(--hero-fg);border-color:var(--hero-muted)}
+.btn:hover{filter:brightness(1.08)}
+.badges{display:flex;flex-wrap:wrap;gap:8px;margin-top:28px}
+.badge{font:600 13px var(--mono);padding:5px 11px;border:1px solid var(--hero-line);border-radius:4px;color:var(--hero-muted)}
+.heroshot{margin:36px 0 0;max-width:240px}
+.heroshot img{display:block;width:100%;height:auto;border-radius:12px;border:3px solid var(--accent)}
+section{padding-block:56px}
+section+section{border-top:1px solid var(--line)}
+h2{font-size:clamp(28px,4vw,40px);font-weight:700;margin-bottom:14px}
+h3{font-size:19px;margin-bottom:6px}
+.lead{max-width:44em;color:var(--muted);margin:0 0 8px}
 ul.uses{margin:14px 0 0;padding-left:20px}
 ul.uses li{margin-bottom:8px}
-.tiles{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:16px;margin-top:24px}
-.tile{background:var(--soft);border:2px solid var(--line);border-radius:14px;padding:18px}
+.tiles{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:18px;margin-top:28px}
+.tile{background:var(--soft);padding:22px;border-radius:8px;min-width:0}
+.tile h3{font-size:21px}
 .tile p{margin:0;color:var(--muted);font-size:16px}
-.steps{counter-reset:s;list-style:none;padding:0;margin:20px 0 0;display:grid;gap:12px}
-.steps li{counter-increment:s;background:var(--soft);border-radius:12px;padding:14px 16px 14px 56px;position:relative}
-.steps li::before{content:counter(s);position:absolute;left:14px;top:12px;width:30px;height:30px;border-radius:50%;background:var(--accent);color:var(--accent-fg);font:700 16px var(--display);display:flex;align-items:center;justify-content:center}
-.promises{display:flex;flex-wrap:wrap;gap:8px 10px;margin-top:18px;padding:0;list-style:none}
-.promises li{background:var(--soft);border:1px solid var(--line);border-radius:999px;padding:6px 14px;font-size:15px}
+.shots{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:18px;margin-top:28px}
+.shots figure{margin:0}
+.shots img{display:block;width:100%;height:auto;border-radius:8px;border:1px solid var(--line)}
+.shots figcaption{font-size:15px;color:var(--muted);margin-top:8px}
 .docs{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px;margin-top:20px;padding:0;list-style:none}
-.docs a{display:block;border:1px solid var(--line);border-radius:12px;padding:14px;text-decoration:none;color:var(--fg);background:var(--soft)}
+.docs a{display:block;border:1px solid var(--line);border-radius:8px;padding:14px;text-decoration:none;color:var(--fg);background:var(--soft)}
 .docs a:hover{border-color:var(--accent)}
 .docs span{display:block;color:var(--muted);font-size:14px}
-footer{padding-block:28px;border-top:2px dashed var(--line);color:var(--muted);font-size:14px}
-@media (max-width:480px){.btn{width:100%;text-align:center}}
+.note{font-size:14px;color:var(--muted);margin-top:6px}
+footer{background:var(--hero);color:var(--hero-muted);padding-block:40px 36px;font-size:15px}
+footer h3{color:var(--hero-fg);font-size:16px;margin-bottom:8px}
+footer a{display:block;color:var(--hero-muted);text-decoration:none;margin-bottom:4px}
+footer a:hover{color:var(--hero-fg)}
+.cols{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:20px}
+footer p{margin:28px 0 0;font-size:14px}
+@media (max-width:480px){.btn{width:100%;text-align:center}.heroshot{max-width:200px}}
 </style>
-</head>
 <body>
 <header class="hero">
   <div class="wrap">
     <nav class="nav" aria-label="Site">
-      <b>Thumb Circuit</b>
-      <a href="#how">How it works</a>
-      <a href="#why">Why it exists</a>
-      <a href="#docs">Docs</a>
-      <a href="play/">Play</a>
+      <b>LFC Foundry</b>
+      <a href="play/">Play it now</a>
+      <a href="https://github.com/lfcfoundry/thumb-circuit">Source code</a>
+      <a href="https://github.com/lfcfoundry">All projects</a>
     </nav>
-    <div class="plate" role="img" aria-label="Toy license plate: ONE-THUMB RACING, THUMB CIRCUIT">ONE-THUMB RACING<small>THUMB CIRCUIT</small></div>
-    <p class="pitch">A portrait racing game you steer with one thumb. The car drives itself forward; you pick the line, win races, and spend your coins in the garage.</p>
+    <p class="eyebrow">One-thumb racing</p>
+    <h1>Thumb Circuit</h1>
+    <p class="pitch">Slide your thumb to steer a tiny car around the track. Win races, earn coins, level up, and spend them in the garage.</p>
     <div class="btns">
       <a class="btn" href="play/">Play the sample</a>
-      <a class="btn alt" href="#docs">Read the docs</a>
+      <a class="btn alt" href="https://github.com/lfcfoundry/thumb-circuit">Source code</a>
     </div>
-    <div class="facts">
-      <span class="fact">one file</span>
-      <span class="fact">offline</span>
-      <span class="fact">no ads</span>
-      <span class="fact">no accounts</span>
-      <span class="fact">no sound</span>
-      <span class="fact">single player</span>
-      <span class="fact">MIT</span>
+    <div class="badges">
+      <span class="badge">sample v5.17</span>
+      <span class="badge">MIT</span>
+      <span class="badge">free</span>
+      <span class="badge">works offline</span>
+      <span class="badge">no ads, no accounts</span>
+      <span class="badge">no sound</span>
     </div>
+    <figure class="heroshot">
+      <img src="docs/img/title-phone.jpg" alt="Thumb Circuit title screen on a phone, with the toy license plate logo and the Race button" width="390" height="844">
+    </figure>
   </div>
 </header>
 
 <main>
-  <section id="how">
+  <section>
     <div class="wrap">
       <h2>What it is and how it works</h2>
-      <p class="lead">Thumb Circuit is a racing game for phones, played in portrait with one thumb, seen from a tilted three-quarter view (top-down is a setting). The car drives itself forward and your thumb steers it. Win races to earn coins, experience and fans, then spend them in the garage on upgrades, new cars, colors and drivers.</p>
-      <ol class="steps">
-        <li>Hold your thumb on the screen and slide it to steer. The road helps a little with direction, never by pulling you to the middle of the lane.</li>
-        <li>Grab coins and boost bottles on the track, use ramps and speed pads, and stay close to rivals for bonuses.</li>
-        <li>Finish the race for prize money and experience. Levels unlock new cars, drivers and tracks.</li>
-        <li>Between races, upgrade your car, change its paint, and pick a driver.</li>
-      </ol>
+      <p class="lead">A racing game for phones, played in portrait with one thumb, seen from a tilted three-quarter view. The car drives itself forward and your thumb steers. Win races to earn coins, experience and fans, then spend them in the garage on upgrades, new cars, paint and drivers. It is one offline HTML file with browser saves.</p>
       <div class="tiles">
-        <div class="tile"><h3>Playable sample</h3><p>The current build is a sample page, not the finished game. It shows the look, the feel and the reward loop so they can be judged by playing.</p></div>
-        <div class="tile"><h3>One file, offline</h3><p>The page is a single HTML file. It makes no network requests and needs no install.</p></div>
-        <div class="tile"><h3>Saves stay local</h3><p>Progress is kept in the browser. A copy-paste save code is planned.</p></div>
+        <div class="tile"><h3>Steer with a slide</h3><p>Hold your thumb on the screen and slide to steer. The road gives a little help with direction, but it never pulls you to the middle of the lane.</p></div>
+        <div class="tile"><h3>Race for rewards</h3><p>Finish races for prize money and experience. Levels from 1 to 10 unlock new cars, drivers and tracks.</p></div>
+        <div class="tile"><h3>Tune your car</h3><p>Upgrade the engine, tires, turbo and body in five levels each, then change the paint and stripes.</p></div>
       </div>
     </div>
   </section>
 
-  <section id="why">
+  <section>
     <div class="wrap">
       <h2>Why it exists</h2>
       <p class="lead">A rewarding, incremental racing loop you can play with one thumb, in the same cozy, single-file spirit as the other LFC Foundry games.</p>
       <ul class="uses">
-        <li>Playing a quick race while waiting in line or on a bus, one-handed.</li>
-        <li>A kid or a grown-up who wants a simple game with no ads, no sign-in and no purchases to push.</li>
-        <li>Someone who wants to see how a small racing game can be built as one offline file.</li>
-        <li>Tinkering: the code is open source under the MIT license, so anyone can read it, change it or fork it.</li>
+        <li>A quick race while you wait in line or ride the bus, played one-handed.</li>
+        <li>A simple game for kids or grown-ups with no ads, no sign-in and nothing to buy.</li>
+        <li>An example of a game built as one offline file, with no install.</li>
+        <li>Something to read, change or fork: the code is open source under the MIT license.</li>
       </ul>
     </div>
   </section>
 
   <section>
     <div class="wrap">
-      <h2>Promises</h2>
-      <p class="lead">What the sample does today. These are checked against the build, not planned.</p>
-      <ul class="promises">
-        <li>No ads</li>
-        <li>No accounts</li>
-        <li>No data sent anywhere</li>
-        <li>No purchases</li>
-        <li>Works offline</li>
-        <li>Single player</li>
-        <li>Open source (MIT)</li>
-      </ul>
+      <h2>Highlights</h2>
+      <p class="lead">What the sample has today.</p>
+      <div class="tiles">
+        <div class="tile"><h3>Track thrills</h3><p>Jump ramps, speed pads, oil slicks and puddles. Rivals use them too, and sometimes suffer for it.</p></div>
+        <div class="tile"><h3>Close racing</h3><p>Sit right behind a rival for a slipstream boost. A close-call bonus, a final-lap hunter and a slow-motion photo finish keep the last laps tense.</p></div>
+        <div class="tile"><h3>Bigger crashes</h3><p>Ram a rival and cones and tire stacks fly, and cars can flip.</p></div>
+        <div class="tile"><h3>Rocket start</h3><p>Tap Boost right at the green light for a head start. Tap too early and you lose it.</p></div>
+        <div class="tile"><h3>Garage and drivers</h3><p>Buy cars, pick paint and stripe colors, and recruit drivers with faces and perks.</p></div>
+        <div class="tile"><h3>Two tracks</h3><p>Meadow Loop and Twin Pines, with a bridge, a river, a lakeside village, grandstands with a crowd, and signs along the road.</p></div>
+        <div class="tile"><h3>3D look with a fallback</h3><p>Live 3D cars and headlights at dusk, drawn with WebGL2 when your browser has it, and a Canvas picture when it does not.</p></div>
+        <div class="tile"><h3>Keyboard too</h3><p>On a computer, the arrow keys steer and the space bar is Boost.</p></div>
+      </div>
     </div>
   </section>
 
-  <section id="docs">
+  <section>
+    <div class="wrap">
+      <h2>Promises</h2>
+      <p class="lead">What the sample does today, checked against the build.</p>
+      <div class="tiles">
+        <div class="tile"><h3>No ads</h3><p>Not one, anywhere in the game.</p></div>
+        <div class="tile"><h3>No accounts</h3><p>Nothing to sign up for or log in to.</p></div>
+        <div class="tile"><h3>No data sent anywhere</h3><p>The page makes no network requests. Progress stays in your own browser.</p></div>
+        <div class="tile"><h3>No purchases</h3><p>Coins and cars are earned in the game. Nothing is sold for real money.</p></div>
+        <div class="tile"><h3>Works offline</h3><p>One self-contained file. Once it has loaded, you can play with no connection.</p></div>
+        <div class="tile"><h3>Single player</h3><p>Just you against the computer rivals.</p></div>
+        <div class="tile"><h3>Fully open source</h3><p>MIT licensed, with every line on GitHub for anyone to read, copy or change.</p></div>
+        <div class="tile"><h3>No sound</h3><p>The game is silent by design. Phones may give a short buzz at some moments.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="wrap">
+      <h2>A look inside</h2>
+      <div class="shots">
+        <figure><img src="docs/img/title-phone.jpg" alt="Title screen" loading="lazy" width="390" height="844"><figcaption>Title screen</figcaption></figure>
+        <figure><img src="docs/img/race-phone.jpg" alt="Race start with the lights and the Boost button" loading="lazy" width="390" height="844"><figcaption>Race start, with the lights and Boost</figcaption></figure>
+        <figure><img src="docs/img/title-desk.jpg" alt="Title screen on a wide browser window" loading="lazy" width="780" height="570"><figcaption>Wide browser window</figcaption></figure>
+      </div>
+      <p class="note">Screenshots of the sample build v5.17, taken in headless Chromium.</p>
+    </div>
+  </section>
+
+  <section>
     <div class="wrap">
       <h2>Docs and changelog</h2>
       <p class="lead">Short quick-start first, then the details.</p>
@@ -155,7 +188,19 @@ footer{padding-block:28px;border-top:2px dashed var(--line);color:var(--muted);f
 </main>
 
 <footer>
-  <div class="wrap">Thumb Circuit is a working name. MIT license, Copyright (c) 2026 LFC Foundry. Source in this repository.</div>
+  <div class="wrap">
+    <div class="cols">
+      <div>
+        <h3>More from LFC Foundry</h3>
+        <a href="https://github.com/lfcfoundry/pineapple-defense">Pineapple Defense</a>
+        <a href="https://github.com/lfcfoundry/fancy-banana">Fancy Banana</a>
+        <a href="https://github.com/lfcfoundry/apple-press">Apple Press</a>
+        <a href="https://github.com/lfcfoundry/story-editor">Story Editor</a>
+        <a href="https://github.com/lfcfoundry/js-modules">JS-modules</a>
+      </div>
+    </div>
+    <p>MIT License. Copyright (c) 2026 LFC Foundry. Thumb Circuit is a working name.</p>
+  </div>
 </footer>
 </body>
 </html>
