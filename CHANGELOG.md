@@ -2,6 +2,15 @@
 
 Short, plain lines. Each version is one playable sample page in `play/`.
 
+## v5.33
+- Underdog Rocket: a pink bar above Boost fills faster when you are behind. When it is full, double-tap Boost for a short rocket burst.
+
+## v5.32
+- Eighth track, Big Top Loop: a circus track with a loop-de-loop. Cars ride through it, and rivals do too. Opens at level 1 for now.
+
+## v5.31
+- Bridge shadows, cars under the bridge show as outlines, and coins sit on the bridge.
+
 ## v5.30
 - Fancy is redrawn to look like he does in his own game: a curved banana with big eyes, a red mask, a red scarf with two waving tails, rosy cheeks and a smile. He still flies across the screen now and then on the beach and candy tracks.
 - Slide steering: the invisible center point now follows your thumb when you slide past full reach, so turning back the other way answers right away.
