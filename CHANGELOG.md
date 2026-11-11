@@ -8,6 +8,7 @@ Short, plain lines. Each version is one playable sample page in `play/`.
 
 ## v5.22
 - Boost tuning: the meter fills more slowly, drifts pay fans instead of extra boost, and the Boost button uses the meter.
+- Ramp jumps go a bit more than twice as high at the same length.
 
 ## v5.21
 - Hitting a wall now slides you along it. Fences are solid only near the track, and people near shortcuts are removed.
