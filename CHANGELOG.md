@@ -3,7 +3,8 @@
 Short, plain lines. Each version is one playable sample page in `play/`.
 
 ## v5.23
-- Glacier Party track, themed scenery (orchard, beach, candy and ice), road marks from braking and cornering, and redrawn driver faces.
+- Four themed tracks (an apple orchard, a beach, a candy shop and a glacier party), six tracks in all, with rubber and burn marks on the road, new driver faces, and less shiny cars.
+- Since v5.17: Easy, Normal and Hard rivals, solid crowds, fences that slide you forward, fan points, a hand-picked paint list, and a fuller race report.
 
 ## v5.22
 - Boost tuning: the meter fills more slowly, drifts pay fans instead of extra boost, and the Boost button uses the meter.
