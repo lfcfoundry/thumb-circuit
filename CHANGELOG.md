@@ -2,6 +2,12 @@
 
 Short, plain lines. Each version is one playable sample page in `play/`.
 
+## v5.24
+- People are redrawn with legs, shoes, arms and shaped bodies, and are a little larger.
+- Road surfaces change by section: asphalt, cobblestone, concrete slabs and packed dirt. Looks only, grip is unchanged.
+- Wider stripes on the cars.
+- Monster truck, earned at 200 lifetime fans, and six paint looks earned from 25 to 1,000 lifetime fans. The garage shows the fan count.
+
 ## v5.23
 - Four themed tracks (an apple orchard, a beach, a candy shop and a glacier party), six tracks in all, with rubber and burn marks on the road, new driver faces, and less shiny cars.
 - Since v5.17: Easy, Normal and Hard rivals, solid crowds, fences that slide you forward, fan points, a hand-picked paint list, and a fuller race report.
@@ -15,6 +21,7 @@ Short, plain lines. Each version is one playable sample page in `play/`.
 
 ## v5.20
 - Rivals on Easy, Normal and Hard. The car can no longer drive over people. Bouncy edges and turn speed cost are settings. A paint picker with 24 paints and 10 ready-made looks, and a fuller results report.
+- People got hair, hats and skin tones on the same simple bodies. The full redraw came in v5.24.
 
 ## v5.19
 - "Copy last results" now copies your last race, not the title demo.
