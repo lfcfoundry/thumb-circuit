@@ -2,6 +2,18 @@
 
 Short, plain lines. Each version is one playable sample page in `play/`.
 
+## v5.30
+- Fancy is redrawn to look like he does in his own game: a curved banana with big eyes, a red mask, a red scarf with two waving tails, rosy cheeks and a smile. He still flies across the screen now and then on the beach and candy tracks.
+- Slide steering: the invisible center point now follows your thumb when you slide past full reach, so turning back the other way answers right away.
+- Slide steering with road help off: a small dead zone around the center keeps the car straight when your thumb wobbles a little.
+- Slide steering with road help off: a drift now starts only when you push the thumb most of the way and hold it a little longer, so small corrections no longer turn into slides.
+- Monster truck steers a little sharper.
+- The line under the logo on the title page now reads "Tiny cars. Big drifts. One thumb."
+
+## v5.29
+- New track, Skyway Eight (level 3): a figure eight where the road climbs a ramp onto a bridge and crosses over itself. The bridge has rails, and cars on different levels do not touch.
+- On Easy rivals, level 1 of every upgrade is free.
+
 ## v5.28
 - Five new vehicles in the Garage: Motorbike (450 coins, level 4), Three-wheeler (500 coins, level 5), Minivan with a rocket on the roof (900 coins, level 7), Formula racer (2,500 coins, level 9) and Robotruck (5,000 coins, bad at everything).
 - Road conditions on Hard rivals: wet road and mud, deep sand on the beach, spilled soda and sticky syrup on Candy Ridge, black ice and snow drifts on Glacier Party. Slippery stretches cut grip and sticky ones cut speed. Rivals slow a little on them too, and the race report shows the time spent on them.
