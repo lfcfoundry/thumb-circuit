@@ -2,6 +2,18 @@
 
 Short, plain lines. Each version is one playable sample page in `play/`.
 
+## v6.02
+- Trace line in Copy results: a short record of side, thumb, speed and drift state, for testing.
+- Corner braking also works off the road.
+
+## v6.01
+- Corner braking with road help off, and more grip off the road so the car can steer back.
+
+## v6.00
+- Campaign "Road to the Big Top": six towns, each with three races and a duel. Duel wins earn vehicles.
+- Fancy is half size and flies across the top of the screen.
+- Steering with road help off changed. Still being tuned.
+
 ## v5.33
 - Underdog Rocket: a pink bar above Boost fills faster when you are behind. When it is full, double-tap Boost for a short rocket burst.
 
