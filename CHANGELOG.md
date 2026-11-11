@@ -2,6 +2,25 @@
 
 Short, plain lines. Each version is one playable sample page in `play/`.
 
+## v5.23
+- Four themed tracks (an apple orchard, a beach, a candy shop and a glacier party), six tracks in all, with rubber and burn marks on the road, new driver faces, and less shiny cars.
+- Since v5.17: Easy, Normal and Hard rivals, solid crowds, fences that slide you forward, fan points, a hand-picked paint list, and a fuller race report.
+
+## v5.22
+- Boost tuning: the meter fills more slowly, drifts pay fans instead of extra boost, and the Boost button uses the meter.
+
+## v5.21
+- Hitting a wall now slides you along it. Fences are solid only near the track, and people near shortcuts are removed.
+
+## v5.20
+- Rivals on Easy, Normal and Hard. The car can no longer drive over people. Bouncy edges and turn speed cost are settings. A paint picker with 24 paints and 10 ready-made looks, and a fuller results report.
+
+## v5.19
+- "Copy last results" now copies your last race, not the title demo.
+
+## v5.18
+- Turbo and tire upgrades add more drift boost. The Boost button glows at each drift tier.
+
 ## v5.17
 - Assist-off bonus (1.5x), a bigger color palette, photographers along the track, a drift look, and a wider view on larger screens.
 
