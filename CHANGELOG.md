@@ -2,11 +2,50 @@
 
 Short, plain lines. Each version is one playable sample page in `play/`.
 
+## v7.26
+- Darker road is on by default, so cars and coins stand out more. Open-Road Wind is a test option: a race leader with open road slowly tires. The version stamp on the title and results is fixed.
+
+## v7.25
+- Folded into v7.26.
+
 ## v7.24
-- Test build. Its changes are not listed yet; the part 7 notes are still pending.
+- Darker road option (test).
 
 ## v7.23
-- Test build. Its changes are not listed yet; the part 7 notes are still pending.
+- Closer passes pay more: CLOSE CALL, TIGHT! and RAZOR! (test).
+
+## v7.22
+- Speedometer and boost meter merged into one dial, with less on the right side of the screen.
+
+## v7.21
+- Saving the boost meter pays more (new boost curve), flick freeze is off, drift ribbons use your paint color, and night headlight streaks show during boosts.
+
+## v7.20
+- Speed lines fade in and out instead of blinking.
+
+## v7.19
+- Smoother start and stop for the speed lines.
+
+## v7.18
+- Full-size view widens on boost, and the headlight boost is fixed.
+
+## v7.17
+- Speed lines show only while boosting.
+
+## v7.16
+- Test options for a new boost curve and the flick freeze length.
+
+## v7.15
+- Speed lines at the screen edges and a wider view during boosts. Steering stays steady in slow motion.
+
+## v7.14
+- Crash slow motion when you flip a rival (tap to skip, with a Settings switch). Your finish becomes an instant photo on the results card, with Save photo.
+
+## v7.13
+- Notifications moved off your car, with one rank card at a time. Glancing fence hits scrape instead of bouncing (SAVE!). Slingshot out of a slipstream.
+
+## v7.12
+- First race goes straight to Orchard Ring with one help card. Warm glow ring under your car, rivals never share your paint color, Chase Start defaults to 2 s, and speedups (instancing, ground tiles, on-screen drawing).
 
 ## v7.11
 - Wrong-way warning when you drive against the traffic, and color cycling.
