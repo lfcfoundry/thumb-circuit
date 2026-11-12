@@ -2,6 +2,9 @@
 
 Short, plain lines. Each version is one playable sample page in `play/`.
 
+## v7.36
+- Test switches, all off: fence peel-off (fpo), SAVE! on scrapes (fss), SAVE! during recovery (svr), and Bump Flags (bmp: hold your nose by a rival's rear wheels for half a second for +2 fans and +1 coin).
+
 ## v7.35
 - Faster effects: dust, smoke, sparks and confetti now draw in one pass (Firefox about 17% less work per frame). Same look.
 
