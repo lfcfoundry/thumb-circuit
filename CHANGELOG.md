@@ -2,6 +2,12 @@
 
 Short, plain lines. Each version is one playable sample page in `play/`.
 
+## v7.30
+- Passing the car you slingshot off makes RAZOR! a little easier, for 2 s after the launch.
+
+## v7.29
+- Open-Road Wind tuned (only a leader well clear of second tires; clears slowly), with a Settings switch to try it (off by default). Clearer wind lines.
+
 ## v7.28
 - RAZOR! is a little easier to earn when passing out of a slingshot.
 
