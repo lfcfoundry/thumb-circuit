@@ -2,6 +2,9 @@
 
 Short, plain lines. Each version is one playable sample page in `play/`.
 
+## v7.42
+- Closing In is on: cut the gap to the car ahead and earn a coin and a fan (CLOSING IN +1 in the side strip).
+
 ## v7.41
 - Closing In test switch: one log entry per pay, and a test knob to carry progress over after a pass; still off.
 
