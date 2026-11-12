@@ -2,6 +2,9 @@
 
 Short, plain lines. Each version is one playable sample page in `play/`.
 
+## v7.03
+- Grudge meter, the first of the v7 changes. Chase Start and Turbo Lap no longer stack. Test build: passed robot races only.
+
 ## v6.31
 - Free races have three goals to chase, shown during the countdown. Each goal met adds fans and coins.
 - Finishing fourth pays a small consolation.
