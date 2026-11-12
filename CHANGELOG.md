@@ -2,6 +2,9 @@
 
 Short, plain lines. Each version is one playable sample page in `play/`.
 
+## v7.35
+- Faster effects: dust, smoke, sparks and confetti now draw in one pass (Firefox about 17% less work per frame). Same look.
+
 ## v7.34
 - Grudge mark: a rival that remembers your bumps shows a small red badge above it, one dot per bump (up to 6), pulsing at 3 or more.
 
