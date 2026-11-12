@@ -2,6 +2,9 @@
 
 Short, plain lines. Each version is one playable sample page in `play/`.
 
+## v7.38
+- Round 11 hooks: Almost There (your closest goal on the results card), Rematch (a rival who beat you by under 2 s), Hunter Pay (+2 coins for a pass from 3rd or lower), Wrapped Prize (unlocks open from a box), Good Stopping Point (after a cup, what opens next time).
+
 ## v7.37
 - Fence fixes on when steering help is off (the car eases off a scrape, SAVE! for steering off a scrape, SAVE! during recovery); test switch for Fancy's Pace Notes (a chip under the speedometer calls the next corner), off.
 
