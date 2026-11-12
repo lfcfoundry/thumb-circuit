@@ -2,6 +2,9 @@
 
 Short, plain lines. Each version is one playable sample page in `play/`.
 
+## v7.40
+- Test switch for a new chaser reward (working name Closing In: closing the gap on the car ahead pays a coin and a fan), off.
+
 ## v7.39
 - With road help on, steering back to the road from the grass no longer costs extra speed; test switches for the fence-slide drift boost and Bump Flags tuning.
 
