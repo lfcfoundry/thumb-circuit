@@ -2,6 +2,21 @@
 
 Short, plain lines. Each version is one playable sample page in `play/`.
 
+## v7.11
+- Wrong-way warning when you drive against the traffic, and color cycling.
+
+## v7.10
+- Night effects on top of the day-to-dusk lighting.
+
+## v7.09
+- Attract Loop on the title screen, and a new Settings layout.
+
+## v7.08
+- Results section with a clearer breakdown of the race.
+
+## v7.07
+- Track ratings shown for each track.
+
 ## v7.03
 - Grudge meter, the first of the v7 changes. Chase Start and Turbo Lap no longer stack. Test build: passed robot races only.
 
