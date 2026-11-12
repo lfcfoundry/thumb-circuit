@@ -2,6 +2,38 @@
 
 Short, plain lines. Each version is one playable sample page in `play/`.
 
+## v6.31
+- Free races have three goals to chase, shown during the countdown. Each goal met adds fans and coins.
+- Finishing fourth pays a small consolation.
+
+## v6.30
+- Road surfaces and road conditions fade in and out, with no hard seams.
+- Hard rivals' road effects fade in too.
+
+## v6.29
+- A flick no longer steers the car for a moment.
+- The results show thumb lean and reach figures.
+- Roads are a little darker again.
+
+## v6.28
+- Hits briefly freeze the frame.
+- Reduce shake setting for a calmer camera.
+
+## v6.27
+- Crash Cup: a derby on Skyway Eight, unlocked by finishing a race there. Bumps dent, smoke and total the car. Fans come from bumps and rams.
+
+## v6.26
+- The flat top-down view is gone. The tilted view is the only view.
+
+## v6.25
+- Day to dusk is the default time of day.
+
+## v6.24
+- New time of day option, Day to dusk. The race goes from day to dusk, and the headlights turn on near the end.
+
+## v6.23
+- Soft grass and dirt patches on the ground, and tree clusters on the outside of corners.
+
 ## v6.22
 - Off-road spots are printed in the results report, and dirt shortcuts count toward skill seconds.
 - A quick second touch keeps the steering anchor, so a re-touch no longer jumps the car.
