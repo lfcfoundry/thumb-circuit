@@ -2,6 +2,9 @@
 
 Short, plain lines. Each version is one playable sample page in `play/`.
 
+## v7.41
+- Closing In test switch: one log entry per pay, and a test knob to carry progress over after a pass; still off.
+
 ## v7.40
 - Test switch for a new chaser reward (working name Closing In: closing the gap on the car ahead pays a coin and a fan), off.
 

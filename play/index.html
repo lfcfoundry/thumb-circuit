@@ -2,7 +2,7 @@
 <html lang="en"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
 <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'unsafe-inline' 'wasm-unsafe-eval'; style-src 'unsafe-inline'; img-src data:; font-src data:">
-<title>Thumb Circuit sample page v7.40</title>
+<title>Thumb Circuit sample page v7.41</title>
 <style>
 html,body{margin:0;height:100%;background:#5a3d30;overflow:hidden;overscroll-behavior:none;touch-action:none;-webkit-user-select:none;user-select:none;font-family:ui-rounded,"Trebuchet MS",Verdana,sans-serif;color:#4a3228}
 #wrap{position:fixed;inset:0;display:flex;justify-content:center;align-items:flex-start}
@@ -234,7 +234,7 @@ body.dial #boost{display:none!important}body.dial #rk{top:250px!important}body.d
 <div class="trow2"><button class="tb" id="bHow" type="button">How to play</button><button class="tb" id="bDrv" type="button">Drivers</button><button class="tb" id="bSet" type="button">Settings</button></div>
 <div class="lvrow" id="lvRow"></div>
 <p class="best" id="best"></p>
-<p class="legal">Sample v7.40 &middot; Forged by LFC Foundry &middot; MIT License</p>
+<p class="legal">Sample v7.41 &middot; Forged by LFC Foundry &middot; MIT License</p>
 </div>
 </div>
 <div id="panel" style="display:none"><div class="card"><button id="cx" type="button" aria-label="Close">X</button>
@@ -3913,7 +3913,7 @@ function report(){
  var a=Array.prototype.slice.call(frames,0,nf).sort(function(x,y){return x-y}),n=a.length,sum=0;for(var i=0;i<n;i++)sum+=a[i];
  var avg=n?sum/n:0,p95=n?a[Math.floor(n*0.95)]:0,worst=n?a[n-1]:0,fps=avg?1000/avg:0;
  var verdict=fps>=55?'smooth (about 60 FPS)':(fps>=40?'ok, some drops':'choppy');
- var t=['Thumb Circuit sample v7.40 results',
+ var t=['Thumb Circuit sample v7.41 results',
  'Car: '+opt.car+' (paint '+meCol(opt.car).join(' / ')+'), driver: '+DRV[opt.drv].n+', upgrades engine '+lv('eng')+' tires '+lv('tir')+' turbo '+lv('tur')+' body '+lv('bod')+', wallet '+wallet()+', level '+lvl()+' ('+(save.xp||0)+' XP, +'+xpGain+' this race, rivals x'+rivK().toFixed(2)+'), rivals: '+rivals.map(function(r){return r.pers.name+' ('+r.kind+')'}).join(', '),
  'Turns cost speed '+(opt.scr?'on':'off')+', Bouncy edges '+(opt.bnc?'on':'off')+', Rivals: '+(DIFN[opt.dif]||'Normal')+' (rewards x'+(DIFM[opt.dif]||1)+' for a top 3 finish, bonus coins this race '+difB+'), '+'Steering: '+(opt.steer===1?'1 slide thumb':'2 drag a target')+', thumb reach '+['short','medium','long'][opt.sens|0]+', road help '+(opt.assist?'on':'off (coins and fans x1.5)'),
  'Track: '+TRACKS[curTrk].n+', view: '+(opt.view?'tilted':'top-down')+', time of day: '+TOD[opt.tod].n,
@@ -4312,15 +4312,15 @@ function offTo(){var la=car.lat||0;if(Math.abs(la)<=RW||Math.abs(car.uS||0)<0.05
 // ---- v7.40 Closing In (M37 spec, placeholder name, test switch opt.cli, off): a hidden meter adds up how much you close on the nearest rival
 // ahead (checked once a second, gap at most gmax). Losing ground lowers it, never below 0; it resets when the car ahead changes or spins.
 // At step units it pays +1 fan +1 coin, "CLOSING IN +1" in the side strip (shared 1.5 s pop budget), at least cd s apart, none before t0 s. Rivals are only read.
-var cliK={step:80,gmax:1000,cd:4,t0:10},CLI={m:0,tg:null,gap:0,acc:0,last:-99,n:0,rs:0,endT:0};
-function cliReset(){CLI.m=0;CLI.tg=null;CLI.gap=0;CLI.acc=0;CLI.last=-99;CLI.n=0;CLI.rs=0;CLI.endT=0}
-function cliStep(dt){if(CLI.endT>0){CLI.endT-=dt;if(CLI.endT<=0)fxLog('closing','end','reward')}if(!opt.cli||demo||finished||!rivals||st!=='run'||count>0)return;CLI.acc+=dt;if(CLI.acc<1)return;CLI.acc-=1;
+var cliK={carry:0,step:80,gmax:1000,cd:4,t0:10},CLI={nc:0,m:0,tg:null,gap:0,acc:0,last:-99,n:0,rs:0,endT:0};
+function cliReset(){CLI.m=0;CLI.tg=null;CLI.gap=0;CLI.acc=0;CLI.last=-99;CLI.n=0;CLI.rs=0;CLI.nc=0}
+function cliStep(dt){if(!opt.cli||demo||finished||!rivals||st!=='run'||count>0)return;CLI.acc+=dt;if(CLI.acc<1)return;CLI.acc-=1;
  var tg=null,gp=1e9;for(var i=0;i<rivals.length;i++){var r=rivals[i];if(r.fin)continue;var g2=r.p-car.p;if(g2>0&&g2<gp){gp=g2;tg=r}}
- if(!tg||tg!==CLI.tg||tg.spin>0){if(CLI.m>0)CLI.rs++;CLI.m=0;CLI.tg=tg;CLI.gap=gp;return}
+ if(!tg||tg!==CLI.tg||tg.spin>0){var pass=!!(tg&&CLI.tg&&tg!==CLI.tg&&CLI.tg.p<car.p&&!(tg.spin>0));if(cliK.carry&&pass){CLI.nc++}else{if(CLI.m>0)CLI.rs++;CLI.m=0}CLI.tg=tg;CLI.gap=gp;return}
  if(gp<=cliK.gmax&&CLI.gap<=cliK.gmax){CLI.m=Math.max(0,CLI.m+(CLI.gap-gp))}CLI.gap=gp;
- var t=runTime/1000;if(CLI.m>=cliK.step&&t>=cliK.t0&&t-CLI.last>=cliK.cd){CLI.m=0;CLI.last=t;CLI.n++;coins+=1;fanPts+=1;crowd=Math.min(1,crowd+0.012);CLI.endT=0.9;fxLog('closing','start','reward');rwPop({lab:'CLOSING IN +1',col:'#6fd4ff',nm:'closing',big:1})}}
-function cliTxt(){return opt.cli?('pays '+CLI.n+', meter resets '+CLI.rs):'off'}
-window.__tc.cli=function(){return {pays:CLI.n,resets:CLI.rs,meter:Math.round(CLI.m),gap:Math.round(CLI.gap),last:CLI.last}};window.__tc.cliK=cliK;
+ var t=runTime/1000;if(CLI.m>=cliK.step&&t>=cliK.t0&&t-CLI.last>=cliK.cd){CLI.m=0;CLI.last=t;CLI.n++;coins+=1;fanPts+=1;crowd=Math.min(1,crowd+0.012);rwPop({lab:'CLOSING IN +1',col:'#6fd4ff',nm:'closing',big:1})}}
+function cliTxt(){return opt.cli?('pays '+CLI.n+', meter resets '+CLI.rs+(cliK.carry?', carried over '+CLI.nc:'')):'off'}
+window.__tc.cli=function(){return {pays:CLI.n,resets:CLI.rs,carried:CLI.nc,meter:Math.round(CLI.m),gap:Math.round(CLI.gap),last:CLI.last}};window.__tc.cliK=cliK;
 
 })();
 
