@@ -2,6 +2,9 @@
 
 Short, plain lines. Each version is one playable sample page in `play/`.
 
+## v7.27
+- Near-miss rewards now measure the gap between car edges, so Tight and Razor can trigger.
+
 ## v7.26
 - Darker road is on by default, so cars and coins stand out more. Open-Road Wind is a test option: a race leader with open road slowly tires. The version stamp on the title and results is fixed.
 
