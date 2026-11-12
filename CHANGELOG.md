@@ -2,6 +2,9 @@
 
 Short, plain lines. Each version is one playable sample page in `play/`.
 
+## v7.32
+- Pit Picks: at each new lap, pick 1 of 3 perks (Boost x2, Coins x2, Draft x2) by where your thumb is, locked after 2 s. Open-Road Wind removed.
+
 ## v7.31
 - Much stronger Open-Road Wind lines (pale streaks flowing past the lone leader). Wind is still off by default.
 
