@@ -45,6 +45,7 @@ A rewarding, incremental racing loop that a player can run with one thumb, in th
 | Race HUD | Lap, coins, crowd meter along the top; one boost button low at one side by the thumb; steering works anywhere on screen | 
 | Garage screen | Home tab: large car plus six part cards with tier bars, one tap buys a step. Other tabs: Drivers, Crew, Shop | 
 | Car art | Chunky, readable cars on track; detailed pixel portrait in the garage with brand badges and upgrade looks | 
+| Pickups | Coins, boost, repair wrench (less damage this race), fan stars (raise crowd and fans), a fixed-value bonus icon. No random boxes | 
 | Sound | None. Vibration allowed (not available on iPhone browsers) |
 
 ## 2. Game loop (draft)

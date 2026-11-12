@@ -17,6 +17,16 @@ Short, plain lines. Each version is one playable sample page in `play/`.
 ## v7.07
 - Track ratings shown for each track.
 
+## v7.05 and v7.06
+- Overnight track (Big Top Loop renamed Big Top Overnight, the only track with the day-to-night slide). Hands-off help setting (None, Light, Full; Light is the default). Rival catch-up arrows, and fireflies at night.
+- Play Bow: rivals play a bow move, Blaze strongest and Careful not at all, halved on Hard.
+- Chase Start is 2, 3 or 6 seconds.
+- Fixed the Copy results button.
+- Time of day is Day, Sunset or Dusk. Day to dusk is no longer a default.
+
+## v7.04
+- Lift to Look: lift your thumb to look ahead. The camera leads 0.58 seconds sideways, with a bend arrow and a Look-ahead aids setting.
+
 ## v7.03
 - Grudge meter, the first of the v7 changes. Chase Start and Turbo Lap no longer stack. Test build: passed robot races only.
 
