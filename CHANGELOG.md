@@ -2,6 +2,12 @@
 
 Short, plain lines. Each version is one playable sample page in `play/`.
 
+## v7.24
+- Test build. Its changes are not listed yet; the part 7 notes are still pending.
+
+## v7.23
+- Test build. Its changes are not listed yet; the part 7 notes are still pending.
+
 ## v7.11
 - Wrong-way warning when you drive against the traffic, and color cycling.
 
