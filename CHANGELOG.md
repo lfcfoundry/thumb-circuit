@@ -3,7 +3,7 @@
 Short, plain lines. Each version is one playable sample page in `play/`.
 
 ## v7.28
-- Wider RAZOR window during the slingshot.
+- RAZOR! is a little easier to earn when passing out of a slingshot.
 
 ## v7.27
 - Near-miss rewards now measure the gap between car edges, so Tight and Razor can trigger.
