@@ -28,7 +28,13 @@ Short, plain lines. Each version is one playable sample page in `play/`.
 - Lift to Look: lift your thumb to look ahead. The camera leads 0.58 seconds sideways, with a bend arrow and a Look-ahead aids setting.
 
 ## v7.03
-- Grudge meter, the first of the v7 changes. Chase Start and Turbo Lap no longer stack. Test build: passed robot races only.
+- Turbo only speeds you up when Chase Start is on. Test build: passed robot races only.
+
+## v7.02
+- Grudge meter: rivals you bump keep a grudge. It cools by one after a race without a bump. Test build: passed robot races only.
+
+## v7.01
+- Turbo Lap: the last lap is 8% faster for everyone, and fans come in at 1.5 times.
 
 ## v6.31
 - Free races have three goals to chase, shown during the countdown. Each goal met adds fans and coins.
