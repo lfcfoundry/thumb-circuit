@@ -2,7 +2,7 @@
 <html lang="en"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
 <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'unsafe-inline' 'wasm-unsafe-eval'; style-src 'unsafe-inline'; img-src data:; font-src data:">
-<title>Thumb Circuit sample page v7.30</title>
+<title>Thumb Circuit sample page v7.31</title>
 <style>
 html,body{margin:0;height:100%;background:#5a3d30;overflow:hidden;overscroll-behavior:none;touch-action:none;-webkit-user-select:none;user-select:none;font-family:ui-rounded,"Trebuchet MS",Verdana,sans-serif;color:#4a3228}
 #wrap{position:fixed;inset:0;display:flex;justify-content:center;align-items:flex-start}
@@ -230,7 +230,7 @@ body.dial #boost{display:none!important}body.dial #rk{top:250px!important}body.d
 <div class="trow2"><button class="tb" id="bHow" type="button">How to play</button><button class="tb" id="bDrv" type="button">Drivers</button><button class="tb" id="bSet" type="button">Settings</button></div>
 <div class="lvrow" id="lvRow"></div>
 <p class="best" id="best"></p>
-<p class="legal">Sample v7.30 &middot; Forged by LFC Foundry &middot; MIT License</p>
+<p class="legal">Sample v7.31 &middot; Forged by LFC Foundry &middot; MIT License</p>
 </div>
 </div>
 <div id="panel" style="display:none"><div class="card"><button id="cx" type="button" aria-label="Close">X</button>
@@ -3869,7 +3869,7 @@ function report(){
  var a=Array.prototype.slice.call(frames,0,nf).sort(function(x,y){return x-y}),n=a.length,sum=0;for(var i=0;i<n;i++)sum+=a[i];
  var avg=n?sum/n:0,p95=n?a[Math.floor(n*0.95)]:0,worst=n?a[n-1]:0,fps=avg?1000/avg:0;
  var verdict=fps>=55?'smooth (about 60 FPS)':(fps>=40?'ok, some drops':'choppy');
- var t=['Thumb Circuit sample v7.30 results',
+ var t=['Thumb Circuit sample v7.31 results',
  'Car: '+opt.car+' (paint '+meCol(opt.car).join(' / ')+'), driver: '+DRV[opt.drv].n+', upgrades engine '+lv('eng')+' tires '+lv('tir')+' turbo '+lv('tur')+' body '+lv('bod')+', wallet '+wallet()+', level '+lvl()+' ('+(save.xp||0)+' XP, +'+xpGain+' this race, rivals x'+rivK().toFixed(2)+'), rivals: '+rivals.map(function(r){return r.pers.name+' ('+r.kind+')'}).join(', '),
  'Turns cost speed '+(opt.scr?'on':'off')+', Bouncy edges '+(opt.bnc?'on':'off')+', Rivals: '+(DIFN[opt.dif]||'Normal')+' (rewards x'+(DIFM[opt.dif]||1)+' for a top 3 finish, bonus coins this race '+difB+'), '+'Steering: '+(opt.steer===1?'1 slide thumb':'2 drag a target')+', thumb reach '+['short','medium','long'][opt.sens|0]+', road help '+(opt.assist?'on':'off (coins and fans x1.5)'),
  'Track: '+TRACKS[curTrk].n+', view: '+(opt.view?'tilted':'top-down')+', time of day: '+TOD[opt.tod].n,
@@ -4139,8 +4139,11 @@ var windN=0,windMax=0,windT=0;
 function windOpen(p,lat,self){var all=[car].concat(rivals),i;for(i=0;i<all.length;i++){var o=all[i];if(o===self)continue;var op=o===car?car.p:o.p,ol=o===car?car.lat:o.d,gp=op-p;if(gp>0&&gp<110&&Math.abs(ol-lat)<45)return 0}return 1}
 function windStep(dt){if(finished)return;var all=[car].concat(rivals),i,lead=car,lp=car.p;for(i=0;i<rivals.length;i++)if(!rivals[i].fin&&rivals[i].p>lp){lp=rivals[i].p;lead=rivals[i]}var sp2=-1e9;for(i=0;i<all.length;i++){var pp=all[i]===car?car.p:all[i].p;if(all[i]!==lead&&pp>sp2)sp2=pp}var clr=lp-sp2>=150;for(i=0;i<all.length;i++){var o=all[i],me=o===car,po=me?car.p:o.p,la=me?car.lat:o.d,sh=!windOpen(po,la,o),w=o.wnd||0;if(sh)w=Math.max(0,w-dt/0.8);else if(o===lead&&clr)w=Math.min(1,w+dt/8);else w=Math.max(0,w-dt/6);o.wnd=w}
  if(car.wnd>windMax)windMax=car.wnd;if(car.wnd>0.5){windT+=dt;if(!car.wOn){car.wOn=1;windN++;fxLog('open-road-wind','start','micro')}}else if(car.wOn&&car.wnd<0.3){car.wOn=0;fxLog('open-road-wind','end','micro')}}
-function windDraw(){if(!opt.orw||demo||st!=='run'||!(car.wnd>0.35))return;var a=(car.wnd-0.35)/0.65,s=Math.sin(car.th),c=Math.cos(car.th),i;ctx.save();ctx.strokeStyle='#ffffff';ctx.lineCap='round';ctx.lineWidth=2.6;
- for(i=0;i<5;i++){var ph=(tAll*1.6+i/5)%1,off=(i-2)*7,dist=60-ph*40,x=car.x+s*dist+c*off,y=car.y-c*dist+s*off;ctx.globalAlpha=0.8*a*Math.sin(ph*Math.PI);ctx.beginPath();ctx.moveTo(x,y);ctx.quadraticCurveTo(x-s*11+c*4,y+c*11+s*4,x-s*22,y+c*22);ctx.strokeStyle='rgba(74,50,40,0.35)';ctx.lineWidth=5;ctx.stroke();ctx.strokeStyle='#ffffff';ctx.lineWidth=2.6;ctx.stroke()}
+function windDraw(){if(!opt.orw||demo||st!=='run'||!(car.wnd>0.25))return;var a=Math.min(1,(car.wnd-0.25)/0.5),s=Math.sin(car.th),c=Math.cos(car.th),i;ctx.save();ctx.lineCap='round';
+ for(i=0;i<6;i++){var side=i%2?1:-1,off=side*(13+(i>>1)*7),ph=(tAll*2.2+i*0.37)%1,f0=70-ph*110,f1=f0-34,al=a*Math.sin(ph*Math.PI);
+  var x0=car.x+s*f0+c*off,y0=car.y-c*f0+s*off,x1=car.x+s*f1+c*(off*1.15),y1=car.y-c*f1+s*(off*1.15);
+  ctx.globalAlpha=0.5*al;ctx.strokeStyle='#2a3a55';ctx.lineWidth=6;ctx.beginPath();ctx.moveTo(x0,y0);ctx.lineTo(x1,y1);ctx.stroke();
+  ctx.globalAlpha=0.95*al;ctx.strokeStyle='#e8f6ff';ctx.lineWidth=3.2;ctx.beginPath();ctx.moveTo(x0,y0);ctx.lineTo(x1,y1);ctx.stroke()}
  ctx.restore();ctx.globalAlpha=1}
 
 })();

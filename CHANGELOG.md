@@ -2,6 +2,9 @@
 
 Short, plain lines. Each version is one playable sample page in `play/`.
 
+## v7.31
+- Much stronger Open-Road Wind lines (pale streaks flowing past the lone leader). Wind is still off by default.
+
 ## v7.30
 - Passing the car you slingshot off makes RAZOR! a little easier, for 2 s after the launch.
 
