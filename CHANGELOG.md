@@ -2,6 +2,9 @@
 
 Short, plain lines. Each version is one playable sample page in `play/`.
 
+## v7.39
+- With road help on, steering back to the road from the grass no longer costs extra speed; test switches for the fence-slide drift boost and Bump Flags tuning.
+
 ## v7.38
 - Round 11 hooks: Almost There (your closest goal on the results card), Rematch (a rival who beat you by under 2 s), Hunter Pay (+2 coins for a pass from 3rd or lower), Wrapped Prize (unlocks open from a box), Good Stopping Point (after a cup, what opens next time).
 
