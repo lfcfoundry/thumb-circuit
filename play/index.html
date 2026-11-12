@@ -2,7 +2,7 @@
 <html lang="en"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
 <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'unsafe-inline' 'wasm-unsafe-eval'; style-src 'unsafe-inline'; img-src data:; font-src data:">
-<title>Thumb Circuit sample page v7.38</title>
+<title>Thumb Circuit sample page v7.39</title>
 <style>
 html,body{margin:0;height:100%;background:#5a3d30;overflow:hidden;overscroll-behavior:none;touch-action:none;-webkit-user-select:none;user-select:none;font-family:ui-rounded,"Trebuchet MS",Verdana,sans-serif;color:#4a3228}
 #wrap{position:fixed;inset:0;display:flex;justify-content:center;align-items:flex-start}
@@ -234,7 +234,7 @@ body.dial #boost{display:none!important}body.dial #rk{top:250px!important}body.d
 <div class="trow2"><button class="tb" id="bHow" type="button">How to play</button><button class="tb" id="bDrv" type="button">Drivers</button><button class="tb" id="bSet" type="button">Settings</button></div>
 <div class="lvrow" id="lvRow"></div>
 <p class="best" id="best"></p>
-<p class="legal">Sample v7.38 &middot; Forged by LFC Foundry &middot; MIT License</p>
+<p class="legal">Sample v7.39 &middot; Forged by LFC Foundry &middot; MIT License</p>
 </div>
 </div>
 <div id="panel" style="display:none"><div class="card"><button id="cx" type="button" aria-label="Close">X</button>
@@ -3000,7 +3000,7 @@ var VS_PT='in vec2 aP;in vec4 j0;in vec4 j1;in vec4 j2;uniform vec2 uCam;uniform
 var cv=document.getElementById('cv'),ctx=cv.getContext('2d',{alpha:false});
 var mini=document.getElementById('mini'),mctx=mini.getContext('2d'),gauge=document.getElementById('gauge'),gctx=gauge.getContext('2d');
 var W=360,VW=360,H=640,SC=3,dpr=1,RW=97,LAPS=2,L=0;
-var opt={alm:1,rmt:1,hun:1,wrp:1,gsp:1,pcn:0,bmp:0,fpo:1,fss:1,svr:1,grm:1,cfl:1,ppk:1,steer:2,assist:1,vib:1,car:'hatch',tod:0,view:1,gl:1,drv:'pip',trk:0,col:'',str:'',dif:1,bnc:1,scr:1,sens:1,cup:0,rs:0,hh:1,chs:2,trb:1,ltl:1,pb:1,ge:0,cyc:1,bcv:3,cbo:1,glw:1,pcg:1,gfh:1,sav:1,rov:1,sls:1,rail:1,fp:1,phd:1,srk:1,spi:1,fps:1,rib:1,hls:1,dial:1,gcc:1,dka:1,orw:0,one:0}
+var opt={fab:0,nfd:0,nsr:1,stp:0,alm:1,rmt:1,hun:1,wrp:1,gsp:1,pcn:0,bmp:0,fpo:1,fss:1,svr:1,grm:1,cfl:1,ppk:1,steer:2,assist:1,vib:1,car:'hatch',tod:0,view:1,gl:1,drv:'pip',trk:0,col:'',str:'',dif:1,bnc:1,scr:1,sens:1,cup:0,rs:0,hh:1,chs:2,trb:1,ltl:1,pb:1,ge:0,cyc:1,bcv:3,cbo:1,glw:1,pcg:1,gfh:1,sav:1,rov:1,sls:1,rail:1,fp:1,phd:1,srk:1,spi:1,fps:1,rib:1,hls:1,dial:1,gcc:1,dka:1,orw:0,one:0}
 var DIF=[0.93,1.01,1.08],DIFN=['Easy','Normal','Hard'],DIFM=[1,1.25,1.5],difB=0;;var ctx2=ctx,glc=document.getElementById('glc'),fxc=document.getElementById('fxc'),fxx=fxc.getContext('2d'),pxc=document.getElementById('pxc'),pxx=pxc?pxc.getContext('2d'):null,PXS=2,glReady=false,RS=2,rsCap=3,wasG=null,gov={on:1,n:0,sum:0,note:'none'};
 function glOn(){return opt.gl===1&&glReady&&GLR.ok()}
 var NF=72,KV=0,SHA=0.34,STAT={hatch:{v:1,a:1.3,g:1,s:1},sedan:{v:1,a:1.2,g:1.1,s:0.95},sports:{v:1.06,a:1.5,g:0.92,s:1},truck:{v:0.96,a:1.05,g:1.15,s:0.88},kart:{v:0.95,a:1.6,g:1.25,s:1.1},monster:{v:0.98,a:1.1,g:1.12,s:0.92},bike:{v:1.04,a:1.7,g:0.95,s:1.22},trike:{v:1.02,a:1.45,g:1.04,s:1.12},van:{v:1.1,a:1.75,g:0.84,s:1.15},robo:{v:0.9,a:0.9,g:0.82,s:0.8},f1:{v:1.12,a:1.7,g:1.3,s:1.06}};
@@ -3491,14 +3491,14 @@ function update(dt){
  if(grass&&Math.abs(lat)>RW+38&&riverDist(car.x,car.y)<=0){target*=0.6;if(Math.random()<dt*90)emit(car.x+(Math.random()-0.5)*18,car.y+(Math.random()-0.5)*18,(Math.random()-0.5)*90,(Math.random()-0.5)*90-30,0.45,7);if(!car.wet){car.wet=1;showMsg('SPLASH!');vib(20)}}else car.wet=0;
  if(bumpT>0){bumpT-=dt;target*=Math.min(0.95,0.55+0.07*bodL+(drvK==='rex'?0.25:0))}
  if(spunT>0){spunT-=dt;target*=0.5}
- target*=1-((opt.scr&&!demo)?(car.drift>0.17?0.18:0.36):0.18)*Math.abs(car.uS);
+ target*=1-((opt.nsr&&!demo&&offMv())?0:(((opt.scr&&!demo)?(car.drift>0.17?0.18:0.36):0.18)*Math.abs(car.uS)));
  var Lw=W*0.105,spd=Math.hypot(car.vx,car.vy),dMax=0.66*S.s/(1+0.9*spd/(W*0.9)),cz=(COND.length===N&&onRoad&&!demo&&car.air<=0)?COND[ni]:0,cm=(COND.length===N&&onRoad&&!demo&&car.air<=0)?condMix(ni):null,GL=W*0.95*S.g*(cm?1-cm[0]*0.26-cm[1]*0.44:1),dGrip=Math.min(dMax,Math.atan(GL*0.93*Lw/Math.max(spd*spd,1))),dT=0,tr=T.tg[wrapI(ni+3)],trE=tr-((!opt.assist&&!demo&&NA.eg)?clamp((Math.abs(lat)-RW*0.55)/(RW*0.45),0,1)*(lat<0?-1:1)*NA.eg:0);
  if(cm&&cm[2]>0)target*=1-0.16*cm[2];if(cz){condT+=dt;if(!car.cz)showMsg(CNM[thm()][cz===3?1:0])}car.cz=cz;
  var want=tr-clamp((Math.abs(lat)-RW*0.7)/(RW*0.4),0,1)*(lat<0?-1:1)*0.5;
  kd+=((kR-kL)-kd)*Math.min(1,dt*7);if(Math.abs(kd)<0.02&&kR===kL)kd=0;var kOn=touch.id<0&&kd!==0;
  car.cbk=0;if(go&&!demo&&!finished){trcT+=dt;if(trcT>=0.5&&TRC.length<1200){trcT-=0.5;var tA='abcdefghijklmnopqrs';TRC+=tA.charAt(9+clamp(Math.round(lat/RW*4),-9,9))+(touch.id<0?'_':tA.charAt(9+clamp(Math.round(car.uS*9),-9,9)))+clamp(Math.round(spd/(base*1.5)*9),0,9)+(car.dft?(boostT>0?'x':'d'):(boostT>0?'b':'.'))}}if(!go){car.uS=0}
  else if(touch.id>=0||kOn){car.upT=0;
-  if(opt.steer===1||kOn){var tx=touch.x;if(touch.hold){if(performance.now()<touch.hold[0])tx=touch.hold[1];else{touch.sx+=touch.x-touch.hold[1];touch.hold=null}}if(!kOn&&NA.tr){var rg=W*((SENS[opt.sens]||0.2)+(opt.assist?0:NA.r))*SC/dpr;if(tx-touch.sx>rg)touch.sx=tx-rg;else if(touch.sx-tx>rg)touch.sx=tx+rg}var d=kOn?kd:clamp(((tx-touch.sx)*dpr/SC)/(W*((SENS[opt.sens]||0.2)+(opt.assist?0:NA.r))),-1,1);if(!kOn&&NA.sc2)d=0.7*d+0.3*d*d*d;if(!kOn&&!opt.assist&&NA.cv!==1)d=(d<0?-1:1)*Math.pow(Math.abs(d),NA.cv);if(!kOn&&!opt.assist&&NA.dz>0)d=(d<0?-1:1)*Math.max(0,Math.abs(d)-NA.dz)/(1-NA.dz);if(fp.t>0&&opt.fps&&!kOn){var fk2=1-0.6*(fp.t>0.3?1:fp.t/0.3);d=fpD+(d-fpD)*fk2}fpD=d;car.uS=d;if(!kOn&&go&&!finished&&!demo){var adx=Math.abs(d);dBins[Math.min(9,adx*10|0)]++;if(d<-0.05)leanL++;else if(d>0.05)leanR++;}var ad=Math.abs(d),dm=ad<0.8?(ad/0.8)*dGrip:dGrip+(dMax-dGrip)*(ad-0.8)/0.2;if(!kOn&&!opt.assist&&NA.cb&&!car.dft){var vR=base*NA.cr,dW=ad*Math.atan(GL*0.93*Lw/(vR*vR));if(dW>dGrip){var vOK=Math.sqrt(GL*0.93*Lw/Math.tan(dW));if(vOK<target)target=vOK;car.cbk=1}dm=Math.min(dW,dGrip*1.04)}else if(!kOn&&!opt.assist&&NA.cl&&!car.dft)dm=Math.min(dm,dGrip*1.04);dT=(d<0?-dm:dm)+((!opt.assist&&!kOn&&NA.lf&&!onShort&&!car.dft&&ad<NA.ff)?(hlpV=clamp(wrapA(tr-car.th)*NA.lf,-dGrip,dGrip)*(1-ad/NA.ff)*NA.fd):0)+(opt.assist&&!onShort&&ad<0.8?clamp(wrapA(want-car.th)*0.5,-0.12,0.12)*(1-ad/0.8):0);if(ad<0.8)dT=clamp(dT,-dGrip,dGrip)}
+  if(opt.steer===1||kOn){var tx=touch.x;if(touch.hold){if(performance.now()<touch.hold[0])tx=touch.hold[1];else{touch.sx+=touch.x-touch.hold[1];touch.hold=null}}if(!kOn&&NA.tr){var rg=W*((SENS[opt.sens]||0.2)+(opt.assist?0:NA.r))*SC/dpr;if(tx-touch.sx>rg)touch.sx=tx-rg;else if(touch.sx-tx>rg)touch.sx=tx+rg}var d=kOn?kd:clamp(((tx-touch.sx)*dpr/SC)/(W*((SENS[opt.sens]||0.2)+(opt.assist?0:NA.r))),-1,1);if(!kOn&&NA.sc2)d=0.7*d+0.3*d*d*d;if(!kOn&&!opt.assist&&NA.cv!==1)d=(d<0?-1:1)*Math.pow(Math.abs(d),NA.cv);if(!kOn&&!opt.assist&&NA.dz>0)d=(d<0?-1:1)*Math.max(0,Math.abs(d)-NA.dz)/(1-NA.dz);if(fp.t>0&&opt.fps&&!kOn){var fk2=1-0.6*(fp.t>0.3?1:fp.t/0.3);d=fpD+(d-fpD)*fk2}fpD=d;car.uS=d;if(!kOn&&go&&!finished&&!demo){var adx=Math.abs(d);dBins[Math.min(9,adx*10|0)]++;if(d<-0.05)leanL++;else if(d>0.05)leanR++;}var ad=Math.abs(d),dm=ad<0.8?(ad/0.8)*dGrip:dGrip+(dMax-dGrip)*(ad-0.8)/0.2;if(!kOn&&!opt.assist&&NA.cb&&!car.dft){var vR=base*NA.cr,dW=ad*Math.atan(GL*0.93*Lw/(vR*vR));if(dW>dGrip){var vOK=Math.sqrt(GL*0.93*Lw/Math.tan(dW));if(vOK<target)target=vOK;car.cbk=1}dm=Math.min(dW,dGrip*1.04)}else if(!kOn&&!opt.assist&&NA.cl&&!car.dft)dm=Math.min(dm,dGrip*1.04);dT=(d<0?-dm:dm)+((!opt.assist&&!kOn&&NA.lf&&!onShort&&!car.dft&&ad<NA.ff)?(hlpV=clamp(wrapA(tr-car.th)*NA.lf,-dGrip,dGrip)*(1-ad/NA.ff)*NA.fd):0)+(opt.assist&&!onShort&&ad<0.8?clamp(wrapA(want-car.th)*0.5,-0.12,0.12)*(1-ad/0.8):0);if(ad<0.8)dT=clamp(dT,-dGrip,dGrip);if(opt.fab&&opt.assist&&!kOn&&!demo&&!onShort&&FS.gap<0.5){var aT=clamp(wrapA(want-car.th)*0.5,-0.12,0.12);dT=FS.bw*dT+(1-FS.bw)*aT;FS.nb++}if(opt.stp&&opt.assist&&!kOn&&!demo&&!onShort&&offTo()){var aS=clamp(wrapA(want-car.th)*0.5,-dGrip,dGrip);if(aS*dT>0&&Math.abs(aS)>Math.abs(dT)){dT=aS;FS.ns++}}}
   else{var tx=cam.x+(touch.x*dpr-cv.getBoundingClientRect().left*dpr)/SC/zmS-VW/2,ty=cam.y+(touch.y*dpr-cv.getBoundingClientRect().top*dpr)/SC/zmS-H/2,ang=Math.atan2(tx-car.x,-(ty-car.y)),er=wrapA(ang-car.th);car.uS=clamp(er*1.2,-1,1);var lim=Math.abs(er)>0.9?dMax:dGrip;dT=clamp(er*1.6,-lim,lim)}
  }else{car.upT=(car.upT||0)+dt;if(!opt.assist&&!demo&&go&&NA.cs<1&&car.upT>NA.cg&&boostT<=0){target*=1-(1-NA.cs)*Math.min(1,(car.upT-NA.cg)/0.5);coastT+=dt}car.uS+=(0-car.uS)*Math.min(1,dt*6);dT=(opt.assist&&!onShort)?clamp(wrapA(want-car.th)*1.4,-dGrip,dGrip):0;if(!opt.assist&&!demo&&NA.lf&&!onShort){var fK=1-(1-NA.fm)*clamp((car.upT-NA.fg)/1.0,0,1),fe=wrapA(trE-car.th)*NA.lf*fK,fa=Math.min(Math.abs(fe),0.5);hlpV=fe*0.6;if(fa>dGrip&&NA.cb){var vF=Math.sqrt(GL*0.93*Lw/Math.tan(fa));if(vF<target)target=vF;car.cbk=1}dT=clamp(fe,-dGrip,dGrip)}}
  if(!demo){var au=Math.abs(car.uS),dsg=car.uS<0?-1:1;if(!car.dft){if(go&&au>(opt.assist?0.6:NA.da)&&spd>W*0.38&&!grass&&car.air<=0){car.dfw=(car.dfw||0)+dt;if(car.dfw>(opt.assist?0.16:NA.dw))car.dft=dsg,car.dfx=0,car.dfw=0}else car.dfw=0}else if(au<(opt.assist?0.28:NA.dx)||dsg!==car.dft||spd<W*0.28||grass){car.dfx+=dt;if(car.dfx>0.22||dsg!==car.dft&&au>0.5||spd<W*0.28)car.dft=0}else car.dfx=0;if(car.dft){var sl=Math.abs(wrapA(Math.atan2(car.vx,-car.vy)-car.th)),ex=Math.max(0,sl-DSL);car.dsl=sl;dT=car.dft*Math.max(-dMax*0.6,dGrip*DST*Math.max(0.45,au)-ex*DSC)}}else car.dft=0;
@@ -3516,7 +3516,7 @@ function update(dt){
  loopCar(dt);
  var sp=Math.hypot(car.vx,car.vy),dr=Math.abs(wrapA(Math.atan2(car.vx,-car.vy)-car.th));if(sp<W*0.2)dr=0;car.drift=dr;if(Math.abs(car.uS)>0.5)lastTurn=tAll;if(dr>0.17&&sp>W*0.3)lastDr=tAll;
  if(dr>maxDrift)maxDrift=dr;
- if(dr>0.17&&sp>W*0.3){driftTime+=dt;if(driftHold===0)dftB=boostT>0?1:0;driftHold+=dt*(1+0.12*(demo?0:lv('tir')));if(boostT<=0)meter=Math.min(1,meter+dt*(drvK==='dot'?0.34:0.26));if(Math.random()<dt*50)emit(car.x-sT*10+(Math.random()-0.5)*14,car.y+cT*10+(Math.random()-0.5)*14,(Math.random()-0.5)*20-car.vx*0.1,(Math.random()-0.5)*20-car.vy*0.1,0.5,1);
+ if(dr>0.17&&sp>W*0.3&&!(opt.nfd&&!demo&&Math.abs(car.lat||0)>RW)){driftTime+=dt;if(driftHold===0)dftB=boostT>0?1:0;driftHold+=dt*(1+0.12*(demo?0:lv('tir')));if(boostT<=0)meter=Math.min(1,meter+dt*(drvK==='dot'?0.34:0.26));if(Math.random()<dt*50)emit(car.x-sT*10+(Math.random()-0.5)*14,car.y+cT*10+(Math.random()-0.5)*14,(Math.random()-0.5)*20-car.vx*0.1,(Math.random()-0.5)*20-car.vy*0.1,0.5,1);
   for(var dw=-1;dw<2;dw+=2)if(Math.random()<dt*110)emit(car.x-sT*11+cT*dw*6,car.y+cT*11+sT*dw*6,(Math.random()-0.5)*30-car.vx*0.15,(Math.random()-0.5)*30-car.vy*0.15,0.6,8);
   if(Math.random()<dt*(40+driftHold*30))emit(car.x-sT*11+cT*(Math.random()<0.5?-6:6),car.y+cT*11+sT*(Math.random()<0.5?-6:6),(Math.random()-0.5)*110,(Math.random()-0.5)*110,0.4,driftHold<0.6?9:(driftHold<1.6?10:11));
   var rx=cT*5,ry=sT*5,bx=car.x-sT*10,by=car.y+cT*10;if(T.hz[car.idx]<1){skid[ns%320]=[bx-rx,by-ry,bx+rx,by+ry,car.x,car.y];ns++}}
@@ -3913,7 +3913,7 @@ function report(){
  var a=Array.prototype.slice.call(frames,0,nf).sort(function(x,y){return x-y}),n=a.length,sum=0;for(var i=0;i<n;i++)sum+=a[i];
  var avg=n?sum/n:0,p95=n?a[Math.floor(n*0.95)]:0,worst=n?a[n-1]:0,fps=avg?1000/avg:0;
  var verdict=fps>=55?'smooth (about 60 FPS)':(fps>=40?'ok, some drops':'choppy');
- var t=['Thumb Circuit sample v7.38 results',
+ var t=['Thumb Circuit sample v7.39 results',
  'Car: '+opt.car+' (paint '+meCol(opt.car).join(' / ')+'), driver: '+DRV[opt.drv].n+', upgrades engine '+lv('eng')+' tires '+lv('tir')+' turbo '+lv('tur')+' body '+lv('bod')+', wallet '+wallet()+', level '+lvl()+' ('+(save.xp||0)+' XP, +'+xpGain+' this race, rivals x'+rivK().toFixed(2)+'), rivals: '+rivals.map(function(r){return r.pers.name+' ('+r.kind+')'}).join(', '),
  'Turns cost speed '+(opt.scr?'on':'off')+', Bouncy edges '+(opt.bnc?'on':'off')+', Rivals: '+(DIFN[opt.dif]||'Normal')+' (rewards x'+(DIFM[opt.dif]||1)+' for a top 3 finish, bonus coins this race '+difB+'), '+'Steering: '+(opt.steer===1?'1 slide thumb':'2 drag a target')+', thumb reach '+['short','medium','long'][opt.sens|0]+', road help '+(opt.assist?'on':'off (coins and fans x1.5)'),
  'Track: '+TRACKS[curTrk].n+', view: '+(opt.view?'tilted':'top-down')+', time of day: '+TOD[opt.tod].n,
@@ -4212,7 +4212,7 @@ function grmDraw(){GRM.n=0;if(!opt.grm||demo||st!=='run'||!rivals)return;for(var
 // fpo peel-off: after 0.25 s pinned in a scrape, turn the heading up to 4 deg away from the fence (20 deg/s). Acts only while touching the fence.
 // fss SAVE! on scrapes: thumb steers away within 0.6 s of the scrape and the car leaves the fence: SAVE!, half the lost speed back.
 // svr SAVE! during recovery (assist off): see fhStep.
-var FS={pv:0,pa:0.07,pw:0.25,cd:0,hit:0,pin:0,gap:9,nx:0,ny:0,k:1,sp:0,sc:null,n:0,pk:0,nr:0};
+var FS={nD:30,bw:0.5,nb:0,ns:0,pv:0,pa:0.07,pw:0.25,cd:0,hit:0,pin:0,gap:9,nx:0,ny:0,k:1,sp:0,sc:null,n:0,pk:0,nr:0};
 function fsStep(dt){var h=FS.hit,c=car;FS.hit=0;if(FS.cd>0)FS.cd-=dt;if(h){FS.pin+=dt;FS.gap=0}else{FS.gap+=dt;if(FS.gap>0.1)FS.pin=0}
  if(demo)return;var Nx=FS.nx,Ny=FS.ny;
  if(h&&opt.fpo&&FS.pin>FS.pw&&FS.k<=0.5&&c.air<=0){var hn=Math.sin(c.th)*Nx-Math.cos(c.th)*Ny,aw=-Math.asin(clamp(hn,-1,1));if(aw<FS.pa){var dh=Math.cos(c.th)*Nx+Math.sin(c.th)*Ny,s1=Math.min(FS.pa-aw,0.35*dt);var sg1=-(dh>0?1:-1)*s1;c.th=wrapA(c.th+sg1);if(FS.pv){var cs=Math.cos(sg1),sn=Math.sin(sg1),vx=c.vx,vy=c.vy;c.vx=vx*cs-vy*sn;c.vy=vx*sn+vy*cs}}if(FS.pv){var vn=c.vx*Nx+c.vy*Ny,vs=Math.hypot(c.vx,c.vy)||1;if(vn>-vs*Math.sin(FS.pa)){var dv=vn+vs*Math.sin(FS.pa);c.vx-=Nx*dv;c.vy-=Ny*dv}}FS.pk+=dt}
@@ -4227,7 +4227,7 @@ window.__tc.fs=FS;
 // sideways, for 0.5 s of game time: +2 fans +1 coin and a BUMP! flag in the side strip. Once per rival per lap. A rival that passed you in the
 // last 5 s pays double (PAYBACK!). At most one flag per 1.5 s, keeping the biggest. Reads rivals only, never writes them.
 // Hunter Pay (not built yet) calls bmpAbsorb(r) when it pays a pass: a bump on that rival in the last 1.5 s is then dropped from its pay.
-var BMP={hT:0.5,rk:1,pb0:8,n:0,pb:0,drop:0,hold:[],lap:[],pbT:[],last:[],q:null,qT:0,popT:-9,clk:0,endT:0,endN:''};
+var BMP={hT:0.3,rk:1.5,pb0:8,n:0,pb:0,drop:0,hold:[],lap:[],pbT:[],last:[],q:null,qT:0,popT:-9,clk:0,endT:0,endN:''};
 function bmpReset(){BMP.n=0;BMP.pb=0;BMP.drop=0;BMP.hold=[];BMP.lap=[];BMP.pbT=[];BMP.last=[];BMP.q=null;BMP.popT=-9;BMP.clk=0;BMP.endT=0}
 function bmpPB(r){var i=rivals.indexOf(r);if(i>=0)BMP.pbT[i]=BMP.clk}
 function bmpAbsorb(r){var i=rivals.indexOf(r),L=BMP.last[i];if(!L||BMP.clk-L.t>1.5||L.dropped)return 0;L.dropped=1;BMP.drop++;coins-=L.c;fanPts-=L.f;return L.c}
@@ -4304,6 +4304,10 @@ function gspShow(b,r){if(!opt.gsp||!r.first)return;var nx=TOWNS[r.sn.tw+1],h=new
  bd.addEventListener('click',function(){GSP.done=1;goTitle()});bk.addEventListener('click',function(){goTitle()});row.appendChild(bd);row.appendChild(bk);d.appendChild(row);b.appendChild(d);GSP.n++;fxLog('good-stopping-point','start','hud');setTimeout(function(){try{bk.focus()}catch(e){}},0)}
 function r11Txt(){return 'almost there '+(opt.alm?(ALM.cur?ALM.cur.label+' ('+ALM.cur.est+')':'none'):'off')+', rematch '+(opt.rmt?RMT.n+(RMT.last?' ('+RMT.last+')':''):'off')+', hunter pay '+(opt.hun?HUN.race+' passes (+'+HUN.race*2+')':'off')+', wrapped prizes '+(opt.wrp?WRP.n:'off')+', stopping point '+(opt.gsp?GSP.n:'off')}
 window.__tc.gspTry=function(tw){var h=document.getElementById('tourBox');h.textContent='';gspShow(h,{first:1,sn:{tw:tw|0}});openCard('results')};window.__tc.r11=function(){return {alm:ALM.cur||null,almLog:ALM.log.slice(),rmt:{name:RMT.name,n:RMT.n,last:RMT.last,btn:document.getElementById('rAgain').textContent},hun:{n:HUN.n,race:HUN.race},wrp:{n:WRP.n,skip:WRP.skip.slice()},gsp:GSP.n}};
+
+// off the road and the thumb turns the car back toward it
+function offMv(){var la=car.lat||0;if(Math.abs(la)<=RW+FS.nD)return false;var i=car.idx|0;return (car.vx*T.nx[i]+car.vy*T.ny[i])*(la>0?1:-1)<0}
+function offTo(){var la=car.lat||0;if(Math.abs(la)<=RW||Math.abs(car.uS||0)<0.05)return false;var i=car.idx|0,q=Math.cos(car.th)*T.nx[i]+Math.sin(car.th)*T.ny[i];return car.uS*q*(la>0?1:-1)>0}
 
 })();
 
