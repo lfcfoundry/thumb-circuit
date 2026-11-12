@@ -2,6 +2,9 @@
 
 Short, plain lines. Each version is one playable sample page in `play/`.
 
+## v7.34
+- Grudge mark: a rival that remembers your bumps shows a small red badge above it, one dot per bump (up to 6), pulsing at 3 or more.
+
 ## v7.33
 - Coins from rams, close calls, drifts, air, smashes, lap bonuses and Pit Picks now fly from the car to the coin counter, like pickups do (up to 3 coins per gain).
 
