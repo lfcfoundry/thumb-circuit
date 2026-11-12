@@ -2,6 +2,9 @@
 
 Short, plain lines. Each version is one playable sample page in `play/`.
 
+## v7.43
+- Fancy's Pace Notes is on: a chip under the speedometer calls the next corner (switch in Settings).
+
 ## v7.42
 - Closing In is on: cut the gap to the car ahead and earn a coin and a fan (CLOSING IN +1 in the side strip).
 
