@@ -2,7 +2,7 @@
 <html lang="en"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
 <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'unsafe-inline' 'wasm-unsafe-eval'; style-src 'unsafe-inline'; img-src data:; font-src data:">
-<title>Thumb Circuit sample page v7.35</title>
+<title>Thumb Circuit sample page v7.36</title>
 <style>
 html,body{margin:0;height:100%;background:#5a3d30;overflow:hidden;overscroll-behavior:none;touch-action:none;-webkit-user-select:none;user-select:none;font-family:ui-rounded,"Trebuchet MS",Verdana,sans-serif;color:#4a3228}
 #wrap{position:fixed;inset:0;display:flex;justify-content:center;align-items:flex-start}
@@ -230,7 +230,7 @@ body.dial #boost{display:none!important}body.dial #rk{top:250px!important}body.d
 <div class="trow2"><button class="tb" id="bHow" type="button">How to play</button><button class="tb" id="bDrv" type="button">Drivers</button><button class="tb" id="bSet" type="button">Settings</button></div>
 <div class="lvrow" id="lvRow"></div>
 <p class="best" id="best"></p>
-<p class="legal">Sample v7.35 &middot; Forged by LFC Foundry &middot; MIT License</p>
+<p class="legal">Sample v7.36 &middot; Forged by LFC Foundry &middot; MIT License</p>
 </div>
 </div>
 <div id="panel" style="display:none"><div class="card"><button id="cx" type="button" aria-label="Close">X</button>
@@ -2996,7 +2996,7 @@ var VS_PT='in vec2 aP;in vec4 j0;in vec4 j1;in vec4 j2;uniform vec2 uCam;uniform
 var cv=document.getElementById('cv'),ctx=cv.getContext('2d',{alpha:false});
 var mini=document.getElementById('mini'),mctx=mini.getContext('2d'),gauge=document.getElementById('gauge'),gctx=gauge.getContext('2d');
 var W=360,VW=360,H=640,SC=3,dpr=1,RW=97,LAPS=2,L=0;
-var opt={grm:1,cfl:1,ppk:1,steer:2,assist:1,vib:1,car:'hatch',tod:0,view:1,gl:1,drv:'pip',trk:0,col:'',str:'',dif:1,bnc:1,scr:1,sens:1,cup:0,rs:0,hh:1,chs:2,trb:1,ltl:1,pb:1,ge:0,cyc:1,bcv:3,cbo:1,glw:1,pcg:1,gfh:1,sav:1,rov:1,sls:1,rail:1,fp:1,phd:1,srk:1,spi:1,fps:1,rib:1,hls:1,dial:1,gcc:1,dka:1,orw:0,one:0}
+var opt={bmp:0,fpo:0,fss:0,svr:0,grm:1,cfl:1,ppk:1,steer:2,assist:1,vib:1,car:'hatch',tod:0,view:1,gl:1,drv:'pip',trk:0,col:'',str:'',dif:1,bnc:1,scr:1,sens:1,cup:0,rs:0,hh:1,chs:2,trb:1,ltl:1,pb:1,ge:0,cyc:1,bcv:3,cbo:1,glw:1,pcg:1,gfh:1,sav:1,rov:1,sls:1,rail:1,fp:1,phd:1,srk:1,spi:1,fps:1,rib:1,hls:1,dial:1,gcc:1,dka:1,orw:0,one:0}
 var DIF=[0.93,1.01,1.08],DIFN=['Easy','Normal','Hard'],DIFM=[1,1.25,1.5],difB=0;;var ctx2=ctx,glc=document.getElementById('glc'),fxc=document.getElementById('fxc'),fxx=fxc.getContext('2d'),pxc=document.getElementById('pxc'),pxx=pxc?pxc.getContext('2d'):null,PXS=2,glReady=false,RS=2,rsCap=3,wasG=null,gov={on:1,n:0,sum:0,note:'none'};
 function glOn(){return opt.gl===1&&glReady&&GLR.ok()}
 var NF=72,KV=0,SHA=0.34,STAT={hatch:{v:1,a:1.3,g:1,s:1},sedan:{v:1,a:1.2,g:1.1,s:0.95},sports:{v:1.06,a:1.5,g:0.92,s:1},truck:{v:0.96,a:1.05,g:1.15,s:0.88},kart:{v:0.95,a:1.6,g:1.25,s:1.1},monster:{v:0.98,a:1.1,g:1.12,s:0.92},bike:{v:1.04,a:1.7,g:0.95,s:1.22},trike:{v:1.02,a:1.45,g:1.04,s:1.12},van:{v:1.1,a:1.75,g:0.84,s:1.15},robo:{v:0.9,a:0.9,g:0.82,s:0.8},f1:{v:1.12,a:1.7,g:1.3,s:1.06}};
@@ -3533,7 +3533,7 @@ function update(dt){
    else if(bumpT<=0){for(var q=0;q<22;q++)emit(ht.px,ht.py,(Math.random()-0.5)*230,(Math.random()-0.5)*230,0.5,q%3===0?14:(q%2?2:6));bumpT=0.45;nBumps++;grudgeAdd(r);playBow(r);if(cup)cupHit(ht);shakeT=0.2;crowd=Math.max(0,crowd-0.25);meter=Math.max(0,meter-0.25);vib(35);var cs=Math.max(0,-(car.vx*nx+car.vy*ny));var gk=1+0.18*grudgeOf(r);car.vx+=nx*(45+cs*0.7)*gk;car.vy+=ny*(45+cs*0.7)*gk;r.bump=0.45;r.dv=-(nx*T.nx[r.idx]+ny*T.ny[r.idx])*80;r.v*=0.92;rings.push({x:ht.px,y:ht.py,t:0,c:'#fff8d0'});if(!demo)pops.push({x:car.x,y:car.y-10,t:0,im:txt('BUMP!','#ff8a6a')})}}}
  for(i=0;i<rivals.length;i++){r=rivals[i];if(!r.passed&&car.p>r.p+22){r.passed=true;crowd=Math.min(1,crowd+0.1)}if(r.passed&&car.p<r.p-30)r.passed=false}
  pickups(dt);
- if(go&&!finished)for(i=0;i<rivals.length;i++){r=rivals[i];var ah=r.ah;if(r.p>car.p+14)ah=true;else if(r.p<car.p-14)ah=false;if(r.ah!==undefined&&ah!==r.ah){if(ah){feedRank('PASSED BY',r,'dn');vib(12)}else{if(Math.abs(car.lat-r.d)<38&&bumpT<=0&&r.spin<=0){nClose++;var cg=Math.abs(car.lat-r.d),eg=cg-0.87*(((CSH[opt.car]||[0,12.5])[1])+((CSH[r.kind]||[0,12.5])[1])),sw=(r===slR&&tAll-slLT<2),gt=!opt.gcc?0:(eg<(sw?4:3)?2:(eg<7?1:0));if(r===slR)slR=null;GCC[gt]++;var gc=[1,2,3][gt],gm=opt.gcc?[0.08,0.12,0.2][gt]:0.08;coins+=gc;meter=Math.min(1,meter+gm);crowd=Math.min(1,crowd+0.05*(1+gt));if(gt===2){pullS=Math.max(pullS,0.6);shakeT=Math.max(shakeT,0.08)}pops.push({x:car.x,y:car.y-26,t:0,im:txt(['CLOSE CALL! +1','TIGHT! +2','RAZOR! +3'][gt],['#7fe06a','#6fd4ff','#ffd84a'][gt]),big:1})}feedRank('OVERTAKE!',r,'up');vib([12,20,12]);rings.push({x:car.x,y:car.y,t:0,c:'#7fe06a'});for(var q7=0;q7<18;q7++)emit(car.x,car.y,(Math.random()-0.5)*180,(Math.random()-0.5)*180,0.5,5)}}r.ah=ah}
+ if(go&&!finished)for(i=0;i<rivals.length;i++){r=rivals[i];var ah=r.ah;if(r.p>car.p+14)ah=true;else if(r.p<car.p-14)ah=false;if(r.ah!==undefined&&ah!==r.ah){if(ah){bmpPB(r);feedRank('PASSED BY',r,'dn');vib(12)}else{if(Math.abs(car.lat-r.d)<38&&bumpT<=0&&r.spin<=0){nClose++;var cg=Math.abs(car.lat-r.d),eg=cg-0.87*(((CSH[opt.car]||[0,12.5])[1])+((CSH[r.kind]||[0,12.5])[1])),sw=(r===slR&&tAll-slLT<2),gt=!opt.gcc?0:(eg<(sw?4:3)?2:(eg<7?1:0));if(r===slR)slR=null;GCC[gt]++;var gc=[1,2,3][gt],gm=opt.gcc?[0.08,0.12,0.2][gt]:0.08;coins+=gc;meter=Math.min(1,meter+gm);crowd=Math.min(1,crowd+0.05*(1+gt));if(gt===2){pullS=Math.max(pullS,0.6);shakeT=Math.max(shakeT,0.08)}pops.push({x:car.x,y:car.y-26,t:0,im:txt(['CLOSE CALL! +1','TIGHT! +2','RAZOR! +3'][gt],['#7fe06a','#6fd4ff','#ffd84a'][gt]),big:1})}feedRank('OVERTAKE!',r,'up');vib([12,20,12]);rings.push({x:car.x,y:car.y,t:0,c:'#7fe06a'});for(var q7=0;q7<18;q7++)emit(car.x,car.y,(Math.random()-0.5)*180,(Math.random()-0.5)*180,0.5,5)}}r.ah=ah}
  if(onRoad&&bumpT<=0)crowd=Math.min(1,crowd+(drvK==='pip'?0.01:0.008)*dt);
  var lapN=Math.floor(car.p/L)+1;
  if(lapN>car.lap&&!finished){car.lap=lapN;if(lapN>LAPS){}else{ppGo();var b2=5+Math.floor(crowd*10);coins+=b2;if(lapN===LAPS){turboOn()?(banner('TURBO LAP!',(chaseD>0?'You 8% faster':'Everyone 8% faster')+', fans x1.5   +'+b2+' coins',1),nTurbo++):banner('FINAL LAP!','Lap '+(lapN-1)+' done   +'+b2+' coins',1);shakeT=0.3;flashT=0.4;flashK=0}else banner('LAP '+(lapN-1)+' DONE','+'+b2+' coins',0);for(var lq=0;lq<30;lq++)emit(car.x+(Math.random()-0.5)*200,car.y+(Math.random()-0.5)*200,(Math.random()-0.5)*80,(Math.random()-0.5)*80,0.8+Math.random()*0.6,5);vib(25);pk.forEach(function(p){p.got=false});resetDyn()}}
@@ -3909,7 +3909,7 @@ function report(){
  var a=Array.prototype.slice.call(frames,0,nf).sort(function(x,y){return x-y}),n=a.length,sum=0;for(var i=0;i<n;i++)sum+=a[i];
  var avg=n?sum/n:0,p95=n?a[Math.floor(n*0.95)]:0,worst=n?a[n-1]:0,fps=avg?1000/avg:0;
  var verdict=fps>=55?'smooth (about 60 FPS)':(fps>=40?'ok, some drops':'choppy');
- var t=['Thumb Circuit sample v7.35 results',
+ var t=['Thumb Circuit sample v7.36 results',
  'Car: '+opt.car+' (paint '+meCol(opt.car).join(' / ')+'), driver: '+DRV[opt.drv].n+', upgrades engine '+lv('eng')+' tires '+lv('tir')+' turbo '+lv('tur')+' body '+lv('bod')+', wallet '+wallet()+', level '+lvl()+' ('+(save.xp||0)+' XP, +'+xpGain+' this race, rivals x'+rivK().toFixed(2)+'), rivals: '+rivals.map(function(r){return r.pers.name+' ('+r.kind+')'}).join(', '),
  'Turns cost speed '+(opt.scr?'on':'off')+', Bouncy edges '+(opt.bnc?'on':'off')+', Rivals: '+(DIFN[opt.dif]||'Normal')+' (rewards x'+(DIFM[opt.dif]||1)+' for a top 3 finish, bonus coins this race '+difB+'), '+'Steering: '+(opt.steer===1?'1 slide thumb':'2 drag a target')+', thumb reach '+['short','medium','long'][opt.sens|0]+', road help '+(opt.assist?'on':'off (coins and fans x1.5)'),
  'Track: '+TRACKS[curTrk].n+', view: '+(opt.view?'tilted':'top-down')+', time of day: '+TOD[opt.tod].n,
@@ -3924,7 +3924,7 @@ function report(){
  'Laps: '+((finished&&MX.laps.length<LAPS?MX.laps.push(finishT/1000):0),MX.laps.length?MX.laps.map(function(x,q){return (x-(q?MX.laps[q-1]:0)).toFixed(1)+' s'}).join(', '):'none finished')+', top speed '+Math.round(MX.top*0.42)+' mph, average '+(runTime>0?Math.round(MX.dist/(runTime/1000)*0.42):0)+' mph',
  'Places: time in P1 '+MX.posT[1].toFixed(1)+' s, P2 '+MX.posT[2].toFixed(1)+' s, P3 '+MX.posT[3].toFixed(1)+' s, P4 '+MX.posT[4].toFixed(1)+' s, place changes '+MX.posCh+', worst place P'+MX.worst+(finished&&order.length>1?', gaps at the finish: '+gapTxt():''),
  'Fans: +'+(st==='done'?fanGain:fanPts)+' this race, lifetime '+(save.fans||0)+', most cars hit on one boost '+(MX.bh||0)+', boost speed x'+BSP,
- 'Trace, 2 per second (side a-s with j = middle and f or n = road edge, thumb a-s with j = centered and _ = lifted, speed 0-9, state b boost d drift x both): '+TRC,'Skill seconds: '+skillTxt()+'\nOff-road spots (lap@percent of lap): '+(offSp.join(' ')||'none')+'\nThumb lean: left '+leanPct()[0]+'%, right '+leanPct()[1]+'%, reach use p90 '+leanPct()[2]+'%, full-lock share '+leanPct()[3]+'%\nGoals: '+RG.map(function(g){return g.t+(g.ok?' (done)':' (missed)')}).join(', ')+'\nReduce shake: '+(opt.rs?'on':'off')+'\nCrash Cup: '+(cup?'on':(opt.cup?'on but locked':'off'))+', hits '+cupHits+', stage '+cupStage+(cupTot?', totaled':'')+'\n'+'Hands-off help: '+['none','light','full'][opt.hh===undefined?1:opt.hh]+'\n'+'Play bow: '+(opt.pb?'on':'off')+', rival apologies '+nBow+', show-offs '+nFool+'\n'+'Look-ahead aids: '+(opt.ltl?'on':'off')+', lift-to-look '+nLift+', bend chevrons '+nChev+', rival arrows '+nRA+'\n'+'Grudges: '+(save.grudge?Object.keys(save.grudge).filter(function(n){return save.grudge[n]>0}).map(function(n){return n+' '+save.grudge[n]}).join(', '):'')+' (bumps this race '+nGrudge+')\n'+'Slingshots: '+(opt.sls?nSling+' (about +'+slGain.toFixed(1)+' s)':'off')+'\n'+'Fence hits: '+fhTxt()+'\n'+'Own car: glow ring '+(opt.glw?'on':'off')+', paint clash guard '+(opt.pcg?'on, '+nClash+' rival paints changed':'off')+'\n'+'First moves: '+fmTxt()+'\n'+'Wrong way warnings: '+ww.n+' ('+ww.tot.toFixed(1)+' s heading backward)\n'+'Moving colors: '+(opt.cyc?'on':'off')+' (WebGL only: water shimmer'+(thm()==='c'?', flowing candy curbs':'')+(TRACKS[opt.trk]&&TRACKS[opt.trk].ov?', marquee lights at night':'')+')\n'+'Night: glowing bend edges '+(opt.ge?'on':'off')+', moon sheen and speed beams on\n'+'Finish photo: '+(opt.phd?(phN?'taken':'on, no finish yet'):'off')+'\n'+'Pit Picks: '+(opt.ppk?(PPK.got.join(', ')||'none'):'off')+'\n'+'Close calls: '+(opt.gcc?'graded':'flat')+', close '+GCC[0]+', tight '+GCC[1]+', razor '+GCC[2]+'\n'+'Touch samples per move event: '+(TS.ev?(TS.s/TS.ev).toFixed(2):'none')+' ('+TS.ev+' events)\n'+'Night headlight streaks: '+(opt.hls?'on':'off')+', shown '+hlsN+' times\n'+'Living Ribbons: '+(opt.rib?'on':'off')+', drawn '+ribN+' times\n'+'Streak Rush: '+(opt.srk?'on':'off')+', speed intensity '+(opt.spi?'shared':'off')+', peak '+spPk.toFixed(2)+', edge lines shown '+srkN+' times\n'+'Focus Pull: '+(opt.fp&&!opt.rs?'on':'off')+', ran '+fp.n+' times, skipped by touch '+fp.skip+'\n'+'Attract loop: shown '+atr.shows+' times this visit, '+atr.n+' beats\n'+'Turbo Lap: '+(opt.trb?(nTurbo?'ran':'on, not reached'):'off')+'\n'+'Look-ahead: lowest half-screen preview '+minLook.toFixed(2)+' s, HUD faded '+(hudA<0.9?'now':'at times')+'\n'+'Chase start: '+chaseD+' s behind, fans x'+chaseM().toFixed(1)+', place changes '+MX.posCh+'\n'+'Boost: clean flicks '+nClean+' of '+nBst+', help steering shown '+hlpT.toFixed(1)+' s\n'+'Grip warnings '+nScuff+' ('+gripT.toFixed(1)+' s)\n'+'Flick boosts '+nFlk+', straighten-up help '+nRcv.toFixed(1)+' s, barrier hops '+nHop+', coasting with thumb up '+coastT.toFixed(1)+' s','Driving: drift lock '+(MX.dft||0).toFixed(1)+' s in '+(MX.dfn||0)+' drifts, boost time '+MX.boostT.toFixed(1)+' s, off the road '+offT.toFixed(1)+' s, hard steering '+MX.steerT.toFixed(1)+' s, fence hits '+MX.fence+', people barrier hits '+MX.ppl+', input '+(Object.keys(MX.inp).join('+')||'none')+(kUsed?'+keys':''),
+ 'Trace, 2 per second (side a-s with j = middle and f or n = road edge, thumb a-s with j = centered and _ = lifted, speed 0-9, state b boost d drift x both): '+TRC,'Skill seconds: '+skillTxt()+'\nOff-road spots (lap@percent of lap): '+(offSp.join(' ')||'none')+'\nThumb lean: left '+leanPct()[0]+'%, right '+leanPct()[1]+'%, reach use p90 '+leanPct()[2]+'%, full-lock share '+leanPct()[3]+'%\nGoals: '+RG.map(function(g){return g.t+(g.ok?' (done)':' (missed)')}).join(', ')+'\nReduce shake: '+(opt.rs?'on':'off')+'\nCrash Cup: '+(cup?'on':(opt.cup?'on but locked':'off'))+', hits '+cupHits+', stage '+cupStage+(cupTot?', totaled':'')+'\n'+'Hands-off help: '+['none','light','full'][opt.hh===undefined?1:opt.hh]+'\n'+'Play bow: '+(opt.pb?'on':'off')+', rival apologies '+nBow+', show-offs '+nFool+'\n'+'Look-ahead aids: '+(opt.ltl?'on':'off')+', lift-to-look '+nLift+', bend chevrons '+nChev+', rival arrows '+nRA+'\n'+'Grudges: '+(save.grudge?Object.keys(save.grudge).filter(function(n){return save.grudge[n]>0}).map(function(n){return n+' '+save.grudge[n]}).join(', '):'')+' (bumps this race '+nGrudge+')\n'+'Slingshots: '+(opt.sls?nSling+' (about +'+slGain.toFixed(1)+' s)':'off')+'\n'+'Fence hits: '+fhTxt()+'\n'+'Own car: glow ring '+(opt.glw?'on':'off')+', paint clash guard '+(opt.pcg?'on, '+nClash+' rival paints changed':'off')+'\n'+'First moves: '+fmTxt()+'\n'+'Wrong way warnings: '+ww.n+' ('+ww.tot.toFixed(1)+' s heading backward)\n'+'Moving colors: '+(opt.cyc?'on':'off')+' (WebGL only: water shimmer'+(thm()==='c'?', flowing candy curbs':'')+(TRACKS[opt.trk]&&TRACKS[opt.trk].ov?', marquee lights at night':'')+')\n'+'Night: glowing bend edges '+(opt.ge?'on':'off')+', moon sheen and speed beams on\n'+'Finish photo: '+(opt.phd?(phN?'taken':'on, no finish yet'):'off')+'\n'+'Pit Picks: '+(opt.ppk?(PPK.got.join(', ')||'none'):'off')+'\n'+'Bump Flags: '+bmpTxt()+'\n'+'Close calls: '+(opt.gcc?'graded':'flat')+', close '+GCC[0]+', tight '+GCC[1]+', razor '+GCC[2]+'\n'+'Touch samples per move event: '+(TS.ev?(TS.s/TS.ev).toFixed(2):'none')+' ('+TS.ev+' events)\n'+'Night headlight streaks: '+(opt.hls?'on':'off')+', shown '+hlsN+' times\n'+'Living Ribbons: '+(opt.rib?'on':'off')+', drawn '+ribN+' times\n'+'Streak Rush: '+(opt.srk?'on':'off')+', speed intensity '+(opt.spi?'shared':'off')+', peak '+spPk.toFixed(2)+', edge lines shown '+srkN+' times\n'+'Focus Pull: '+(opt.fp&&!opt.rs?'on':'off')+', ran '+fp.n+' times, skipped by touch '+fp.skip+'\n'+'Attract loop: shown '+atr.shows+' times this visit, '+atr.n+' beats\n'+'Turbo Lap: '+(opt.trb?(nTurbo?'ran':'on, not reached'):'off')+'\n'+'Look-ahead: lowest half-screen preview '+minLook.toFixed(2)+' s, HUD faded '+(hudA<0.9?'now':'at times')+'\n'+'Chase start: '+chaseD+' s behind, fans x'+chaseM().toFixed(1)+', place changes '+MX.posCh+'\n'+'Boost: clean flicks '+nClean+' of '+nBst+', help steering shown '+hlpT.toFixed(1)+' s\n'+'Grip warnings '+nScuff+' ('+gripT.toFixed(1)+' s)\n'+'Flick boosts '+nFlk+', straighten-up help '+nRcv.toFixed(1)+' s, barrier hops '+nHop+', coasting with thumb up '+coastT.toFixed(1)+' s','Driving: drift lock '+(MX.dft||0).toFixed(1)+' s in '+(MX.dfn||0)+' drifts, boost time '+MX.boostT.toFixed(1)+' s, off the road '+offT.toFixed(1)+' s, hard steering '+MX.steerT.toFixed(1)+' s, fence hits '+MX.fence+', people barrier hits '+MX.ppl+', input '+(Object.keys(MX.inp).join('+')||'none')+(kUsed?'+keys':''),
  'FPS average '+fps.toFixed(1)+', slowest frame '+worst.toFixed(1)+' ms, 95th percentile '+p95.toFixed(1)+' ms ('+n+' frames)',
  'Frame detail: 99th percentile '+(n?a[Math.floor(n*0.99)]:0).toFixed(1)+' ms, slowest 1% average '+(n?(function(){var k=Math.max(1,Math.floor(n*0.01)),q=0;for(var z=n-k;z<n;z++)q+=a[z];return 1000/(q/k)})():0).toFixed(1)+' FPS, frames over 25 ms '+cnt(a,25)+', over 50 ms '+cnt(a,50)+', over 100 ms '+cnt(a,100)+', typical frame '+(n?a[n>>1]:0).toFixed(1)+' ms',
  'Curtains (last close and open): '+(curtN?curtN+' frames, slowest '+curtMax.toFixed(1)+' ms, over 25 ms '+curtJ:'not run yet'),
@@ -4065,7 +4065,7 @@ var ww={t:0,ok:0,on:0,n:0,tot:0,el:null};
 function wwOff(){ww.t=0;ww.ok=0;if(ww.on){ww.on=0;ww.el.className=''}}
 var fm={s:-1,b:-1,d:-1,o:0};function fmTxt(){var f=function(v){return v<0?'not yet':v.toFixed(1)+' s'};return 'steer '+f(fm.s)+', boost '+f(fm.b)+', drift '+f(fm.d)+', off road in the first 20 s '+fm.o.toFixed(1)+' s'+(save.races>1?'':' (first race on this save)')}
 function fmStep(dt){var rt=runTime/1000;if(fm.s<0&&Math.abs(car.uS)>0.3)fm.s=rt;if(fm.b<0&&boostT>0)fm.b=rt;if(fm.d<0&&car.dft)fm.d=rt;if(rt<20&&Math.abs(car.lat)>RW)fm.o+=dt}
-function wwStep(dt){hudFadeStep(dt);ribStep();ppStep();cflStep();if(st==='run'&&count<=0&&!finished){fmStep(dt);fhStep(dt)}if(st!=='run'||count>0||finished||car.air>0){wwOff();return}var tg=T.tg[car.idx|0],fx=Math.sin(tg),fy=-Math.cos(tg),v=car.vx*fx+car.vy*fy,hd=Math.cos(wrapA(car.th-tg));
+function wwStep(dt){hudFadeStep(dt);ribStep();ppStep();cflStep();if(st==='run'&&count<=0&&!finished){fmStep(dt);fhStep(dt);fsStep(dt);bmpStep(dt)}if(st!=='run'||count>0||finished||car.air>0){wwOff();return}var tg=T.tg[car.idx|0],fx=Math.sin(tg),fy=-Math.cos(tg),v=car.vx*fx+car.vy*fy,hd=Math.cos(wrapA(car.th-tg));
  var back=(v<-25)||(hd<-0.35&&v<20);if(back){ww.t+=dt;ww.ok=0;if(ww.t>2)ww.tot+=dt}else{ww.ok+=dt;if(ww.ok>0.4)ww.t=0}
  if(!ww.on&&ww.t>2){ww.on=1;ww.n++;var turn=wrapA(tg-car.th);ww.el.className='on'+(turn<0?' lf':'');if(opt.vib)vib([40,60,40])}else if(ww.on&&ww.t===0){ww.on=0;ww.el.className=''}}
 window.__tc.ww=function(){return {on:ww.on,n:ww.n,t:ww.t,tot:ww.tot}};
@@ -4074,18 +4074,18 @@ window.__tc.ww=function(){return {on:ww.on,n:ww.n,t:ww.t,tot:ww.tot}};
 // The thumb can end the 1 s recovery (lean over 30%), and turning back to the road within 0.6 s by thumb earns SAVE! (half the lost speed back).
 // The pop now shows the real time lost (until speed is back to 95% of before the hit).
 var fhK=1,fh=null,nScr=0,scrT=0,nOvr=0,nSave=0,fhLost=0,fhN=0;
-function fhReset(){fh=null;nScr=0;scrT=0;nOvr=0;nSave=0;fhLost=0;fhN=0}
+function fhReset(){bmpReset();FS.hit=0;FS.pin=0;FS.gap=9;FS.sc=null;FS.cd=0;FS.n=0;FS.pk=0;FS.nr=0;fh=null;nScr=0;scrT=0;nOvr=0;nSave=0;fhLost=0;fhN=0}
 function fenceHit(c,Nx,Ny){if(demo||!opt.gfh){fhK=1;return wallBounce(c,Nx,Ny)}var vo=c.vx*Nx+c.vy*Ny;if(vo<=0)return 0;var sp=Math.hypot(c.vx,c.vy)||1,ang=Math.asin(clamp(vo/sp,0,1))*57.3;fhK=clamp((ang-20)/25,0,1);
- var sx=c.vx-Nx*vo,sy=c.vy-Ny*vo;sx*=0.995;sy*=0.995;
+ if(c===car){FS.hit=1;FS.nx=Nx;FS.ny=Ny;FS.k=fhK;FS.sp=sp}var sx=c.vx-Nx*vo,sy=c.vy-Ny*vo;sx*=0.995;sy*=0.995;
  if(fhK<=0){c.vx=sx;c.vy=sy;nScr++;scrT+=1/60;if(Math.random()<0.6)emit(c.x+Nx*10,c.y+Ny*10,(Math.random()-0.5)*90-Nx*40,(Math.random()-0.5)*90-Ny*40,0.35,2);if(!fh)fhPre=sp;return vo*0.2}
  var th0=c.th,dl0=c.dl;wallBounce(c,Nx,Ny);var bx=c.vx,by=c.vy;c.vx=sx+(bx-sx)*fhK;c.vy=sy+(by-sy)*fhK;if(fhK<1){c.th=wrapA(th0+wrapA(c.th-th0)*fhK)}fhPre=sp;return vo}
 var fhPre=0;
 function fhStart(){fh={t:0,pre:fhPre||Math.hypot(car.vx,car.vy),lost:0,post:Math.hypot(car.vx,car.vy),saved:0};fhN++}
-function fhStep(dt){if(!fh)return;fh.t+=dt;var sp=Math.hypot(car.vx,car.vy),tg=T.tg[car.idx|0];fh.lost+=Math.max(0,1-sp/Math.max(1,fh.pre))*dt;
- if(opt.sav&&!fh.saved&&fh.t<=0.6&&car.rcv<=0&&Math.abs(wrapA(tg-car.th))<0.175&&sp<fh.pre*0.95){var nsp=sp+0.5*(fh.pre-fh.post),k=nsp/Math.max(1,sp);car.vx*=k;car.vy*=k;fh.saved=1;nSave++;showMsg('SAVE!');vib(15);pops.push({x:car.x,y:car.y-48,t:0,im:txt('SAVE!','#7fe06a'),big:1})}
+function fhStep(dt){if(!fh)return;fh.t+=dt;var sp=Math.hypot(car.vx,car.vy),tg=T.tg[car.idx|0];fh.lost+=Math.max(0,1-sp/Math.max(1,fh.pre))*dt;if(Math.abs(car.uS||0)>0.2)fh.th=1;
+ if(opt.sav&&!fh.saved&&fh.t<=0.6&&(car.rcv<=0||(opt.svr&&fh.th))&&Math.abs(wrapA(tg-car.th))<0.175&&sp<fh.pre*0.95){var nsp=sp+0.5*(fh.pre-fh.post),k=nsp/Math.max(1,sp);car.vx*=k;car.vy*=k;fh.saved=1;nSave++;if(car.rcv>0){car.rcv=0;FS.nr++}showMsg('SAVE!');vib(15);pops.push({x:car.x,y:car.y-48,t:0,im:txt('SAVE!','#7fe06a'),big:1})}
  if(sp>=fh.pre*0.95||fh.t>3){var L=Math.round(fh.lost*10)/10;fhLost+=L;if(L>=0.1)skillPop('f',-L);fh=null}}
-function fhTxt(){return opt.gfh?(fhN+' hits, '+nScr+' scrape frames ('+scrT.toFixed(1)+' s), saves '+nSave+', thumb took over '+nOvr+', time lost '+fhLost.toFixed(1)+' s'+(opt.sav?'':' (SAVE! off)')+(opt.rov?'':' (override off)')):'graded off'}
-window.__tc.fh=function(){return {n:fhN,scr:nScr,save:nSave,ovr:nOvr,lost:fhLost}};
+function fhTxt(){return opt.gfh?(fhN+' hits, '+nScr+' scrape frames ('+scrT.toFixed(1)+' s), saves '+nSave+', thumb took over '+nOvr+', time lost '+fhLost.toFixed(1)+' s'+(opt.fss?', scrape saves '+FS.n:'')+(opt.fpo?', peel-off '+FS.pk.toFixed(1)+' s':'')+(opt.svr?', saves in recovery '+FS.nr:'')+(opt.sav?'':' (SAVE! off)')+(opt.rov?'':' (override off)')):'graded off'}
+window.__tc.fh=function(){return {ss:FS.n,pk:FS.pk,nr:FS.nr,n:fhN,scr:nScr,save:nSave,ovr:nOvr,lost:fhLost}};
 
 // v7.13 notification lanes (owner: "notifications keep covering the car"): toasts queue one at a time in the top band; car pops ride beside the car
 var FQ=[],fdBusy=0;function fdQ(d){FQ.push(d);if(FQ.length>2)FQ.splice(0,FQ.length-2);fdPump()}
@@ -4203,6 +4203,42 @@ function grmDraw(){GRM.n=0;if(!opt.grm||demo||st!=='run'||!rivals)return;for(var
  ctx.fillStyle='#fff8ec';ctx.fillRect(-1.3,-4.5,2.6,7);ctx.fillRect(-1.3,4,2.6,2.4);
  for(k=0;k<n;k++){ctx.beginPath();ctx.arc((k-(n-1)/2)*5,14,1.9,0,6.2832);ctx.fillStyle=an?'#e8402a':'#ff7a5a';ctx.fill();ctx.lineWidth=1;ctx.stroke()}
  ctx.restore()}}
+
+// ---- v7.36 fence test options (FENCE-SCENE note 2026.11.12), all off by default ----
+// fpo peel-off: after 0.25 s pinned in a scrape, turn the heading up to 4 deg away from the fence (20 deg/s). Acts only while touching the fence.
+// fss SAVE! on scrapes: thumb steers away within 0.6 s of the scrape and the car leaves the fence: SAVE!, half the lost speed back.
+// svr SAVE! during recovery (assist off): see fhStep.
+var FS={pv:0,pa:0.07,pw:0.25,cd:0,hit:0,pin:0,gap:9,nx:0,ny:0,k:1,sp:0,sc:null,n:0,pk:0,nr:0};
+function fsStep(dt){var h=FS.hit,c=car;FS.hit=0;if(FS.cd>0)FS.cd-=dt;if(h){FS.pin+=dt;FS.gap=0}else{FS.gap+=dt;if(FS.gap>0.1)FS.pin=0}
+ if(demo)return;var Nx=FS.nx,Ny=FS.ny;
+ if(h&&opt.fpo&&FS.pin>FS.pw&&FS.k<=0.5&&c.air<=0){var hn=Math.sin(c.th)*Nx-Math.cos(c.th)*Ny,aw=-Math.asin(clamp(hn,-1,1));if(aw<FS.pa){var dh=Math.cos(c.th)*Nx+Math.sin(c.th)*Ny,s1=Math.min(FS.pa-aw,0.35*dt);var sg1=-(dh>0?1:-1)*s1;c.th=wrapA(c.th+sg1);if(FS.pv){var cs=Math.cos(sg1),sn=Math.sin(sg1),vx=c.vx,vy=c.vy;c.vx=vx*cs-vy*sn;c.vy=vx*sn+vy*cs}}if(FS.pv){var vn=c.vx*Nx+c.vy*Ny,vs=Math.hypot(c.vx,c.vy)||1;if(vn>-vs*Math.sin(FS.pa)){var dv=vn+vs*Math.sin(FS.pa);c.vx-=Nx*dv;c.vy-=Ny*dv}}FS.pk+=dt}
+ if(h&&opt.fss&&!fh&&!FS.sc&&FS.k<=0.5)FS.sc={t:0,pre:FS.sp,min:FS.sp,th:0,nx:Nx,ny:Ny};
+ var s=FS.sc;if(!s)return;if(!opt.fss||fh){FS.sc=null;return}s.t+=dt;var sp=Math.hypot(c.vx,c.vy);s.min=Math.min(s.min,sp);
+ var dh2=Math.cos(c.th)*s.nx+Math.sin(c.th)*s.ny,u=c.uS||0;if(s.t<=0.6&&Math.abs(u)>0.2&&((u>0)!==(dh2>0)))s.th=1;
+ if(FS.gap>0.15){if(s.th&&s.min<s.pre*0.97&&FS.cd<=0){FS.cd=2;var nsp=Math.min(s.pre,sp+0.5*(s.pre-s.min)),q=nsp/Math.max(1,sp);c.vx*=q;c.vy*=q;FS.n++;nSave++;showMsg('SAVE!');vib(15);pops.push({x:c.x,y:c.y-48,t:0,im:txt('SAVE!','#7fe06a'),big:1});fxLog('scrape-save','reward','reward')}FS.sc=null;return}
+ if(s.t>2)FS.sc=null}
+window.__tc.fs=FS;
+
+// ---- v7.36 Bump Flags (M33 spec, test switch opt.bmp, off by default): hold your nose level with a rival's rear wheels, within one car width
+// sideways, for 0.5 s of game time: +2 fans +1 coin and a BUMP! flag in the side strip. Once per rival per lap. A rival that passed you in the
+// last 5 s pays double (PAYBACK!). At most one flag per 1.5 s, keeping the biggest. Reads rivals only, never writes them.
+// Hunter Pay (not built yet) calls bmpAbsorb(r) when it pays a pass: a bump on that rival in the last 1.5 s is then dropped from its pay.
+var BMP={n:0,pb:0,drop:0,hold:[],lap:[],pbT:[],last:[],q:null,qT:0,popT:-9,clk:0,endT:0,endN:''};
+function bmpReset(){BMP.n=0;BMP.pb=0;BMP.drop=0;BMP.hold=[];BMP.lap=[];BMP.pbT=[];BMP.last=[];BMP.q=null;BMP.popT=-9;BMP.clk=0;BMP.endT=0}
+function bmpPB(r){var i=rivals.indexOf(r);if(i>=0)BMP.pbT[i]=BMP.clk}
+function bmpAbsorb(r){var i=rivals.indexOf(r),L=BMP.last[i];if(!L||BMP.clk-L.t>1.5||L.dropped)return 0;L.dropped=1;BMP.drop++;coins-=L.c;fanPts-=L.f;return L.c}
+function bmpShow(q){railAdd(q.pay?'PAYBACK! +'+q.c:'BUMP! +'+q.c,{__c:q.pay?'#ffd84a':'#ff9a6a'});BMP.popT=BMP.clk;BMP.endT=0.9;BMP.endN=q.pay?'payback':'bump';fxLog(BMP.endN,'start','reward')}
+function bmpStep(dt){BMP.clk+=dt;if(BMP.endT>0){BMP.endT-=dt;if(BMP.endT<=0)fxLog(BMP.endN,'end','reward')}
+ if(BMP.q&&BMP.clk-BMP.popT>=1.5){bmpShow(BMP.q);BMP.q=null}
+ if(!opt.bmp||demo||!rivals||finished)return;var cl=CSH[opt.car]||[20,12.5],lap=car.lap|0;
+ for(var i=0;i<rivals.length;i++){var r=rivals[i],rs=CSH[r.kind]||[20,12.5],rel=r.p-car.p,sd=Math.abs(car.lat-r.d);
+  var ok=!(car.air>0)&&!(r.air>0)&&!(r.fin)&&rel<=cl[0]+0.6*rs[0]&&rel>=-(cl[0]+rs[0])*0.5&&sd<=cl[1]*4+rs[1]-cl[1]&&BMP.lap[i]!==lap;
+  if(!ok){BMP.hold[i]=0;continue}BMP.hold[i]=(BMP.hold[i]||0)+dt;if(BMP.hold[i]<0.5)continue;
+  BMP.hold[i]=0;BMP.lap[i]=lap;var pay=(BMP.pbT[i]!==undefined&&BMP.clk-BMP.pbT[i]<=5)?1:0,c=pay?2:1,f=pay?4:2;
+  coins+=c;fanPts+=f;crowd=Math.min(1,crowd+f*0.012);BMP.n++;if(pay)BMP.pb++;BMP.last[i]={t:BMP.clk,c:c,f:f};
+  var q={pay:pay,c:c,big:c};if(BMP.clk-BMP.popT>=1.5&&!BMP.q)bmpShow(q);else if(!BMP.q||q.big>BMP.q.big)BMP.q=q}}
+function bmpTxt(){return opt.bmp?('bumps '+BMP.n+', paybacks '+BMP.pb+', bumpsDropped '+BMP.drop):'off'}
+window.__tc.bmp=function(){return {bumps:BMP.n,paybacks:BMP.pb,bumpsDropped:BMP.drop}};window.__tc.bmpAbsorb=bmpAbsorb;
 
 })();
 
