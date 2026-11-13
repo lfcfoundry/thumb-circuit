@@ -2,7 +2,7 @@
 <html lang="en"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
 <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'unsafe-inline' 'wasm-unsafe-eval'; style-src 'unsafe-inline'; img-src data:; font-src data:">
-<title>Thumb Circuit sample page v7.55</title>
+<title>Thumb Circuit sample page v7.56</title>
 <style>
 html,body{margin:0;height:100%;background:#5a3d30;overflow:hidden;overscroll-behavior:none;touch-action:none;-webkit-user-select:none;user-select:none;font-family:ui-rounded,"Trebuchet MS",Verdana,sans-serif;color:#4a3228}
 #wrap{position:fixed;inset:0;display:flex;justify-content:center;align-items:flex-start}
@@ -240,7 +240,7 @@ body.dial #boost{display:none!important}body.dial #rk{top:250px!important}body.d
 <div class="trow2"><button class="tb" id="bHow" type="button">How to play</button><button class="tb" id="bDrv" type="button">Drivers</button><button class="tb" id="bStk" type="button">Stickers</button><button class="tb" id="bSet" type="button">Settings</button></div>
 <div class="lvrow" id="lvRow"></div>
 <p class="best" id="best"></p>
-<p class="legal">Sample v7.55 &middot; Forged by LFC Foundry &middot; MIT License</p>
+<p class="legal">Sample v7.56 &middot; Forged by LFC Foundry &middot; MIT License</p>
 </div>
 </div>
 <div id="panel" style="display:none"><div class="card"><button id="cx" type="button" aria-label="Close">X</button>
@@ -3014,7 +3014,7 @@ function rw(i){return WX?RW+WX[i]:RW}
 function ow(i,off){return WX&&(off>=RW-10||off<=10-RW)?off+(off>0?WX[i]:-WX[i]):off}
 function wxInit(TR){WX=null;if(!TR.wx||!WXK.on)return;WX=new Float32Array(N);var sc=N/(TR.wn||N);TR.wx.forEach(function(b){var a=Math.round(b[0]*sc),e=Math.round(b[1]*sc),B=WXK.blend,v=b[2]*WXK.k;for(var j=a-B;j<=e+B;j++){var f=j<a?(j-a+B)/B:(j>e?(e+B-j)/B:1);f=f*f*(3-2*f);var q=((j%N)+N)%N;WX[q]=Math.max(WX[q],v*f)}})}
 var WXK={on:1,k:1,blend:30};
-var opt={cli:1,fab:0,nfd:0,nsr:1,stp:0,alm:1,rmt:1,hun:1,wrp:1,gsp:1,pcn:1,rhl:1,pdm:1,stk:1,srb:1,rcs:1,abh:0,gpk:1,scb:1,bmp:0,fpo:1,fss:1,svr:1,grm:1,cfl:1,ppk:1,steer:2,assist:1,vib:1,car:'hatch',tod:0,view:1,gl:1,drv:'pip',trk:0,col:'',str:'',dif:1,bnc:1,scr:1,sens:1,cup:0,rs:0,hh:1,chs:2,trb:1,ltl:1,pb:1,ge:0,cyc:1,bcv:3,cbo:1,glw:1,pcg:1,gfh:1,sav:1,rov:1,sls:1,rail:1,fp:1,phd:1,srk:1,spi:1,fps:1,rib:1,hls:1,dial:1,gcc:1,dka:1,orw:0,one:0}
+var opt={cli:1,fab:0,nfd:0,nsr:1,stp:0,alm:1,rmt:1,hun:1,wrp:1,gsp:1,pcn:1,rhl:1,pdm:1,stk:1,srb:1,rcs:1,abh:0,gpk:1,scb:1,trm:1,bmp:0,fpo:1,fss:1,svr:1,grm:1,cfl:1,ppk:1,steer:2,assist:1,vib:1,car:'hatch',tod:0,view:1,gl:1,drv:'pip',trk:0,col:'',str:'',dif:1,bnc:1,scr:1,sens:1,cup:0,rs:0,hh:1,chs:2,trb:1,ltl:1,pb:1,ge:0,cyc:1,bcv:3,cbo:1,glw:1,pcg:1,gfh:1,sav:1,rov:1,sls:1,rail:1,fp:1,phd:1,srk:1,spi:1,fps:1,rib:1,hls:1,dial:1,gcc:1,dka:1,orw:0,one:0}
 var DIF=[0.93,1.01,1.08],DIFN=['Easy','Normal','Hard'],DIFM=[1,1.25,1.5],difB=0;;var ctx2=ctx,glc=document.getElementById('glc'),fxc=document.getElementById('fxc'),fxx=fxc.getContext('2d'),pxc=document.getElementById('pxc'),pxx=pxc?pxc.getContext('2d'):null,PXS=2,glReady=false,RS=2,rsCap=3,wasG=null,gov={on:1,n:0,sum:0,note:'none'};
 function glOn(){return opt.gl===1&&glReady&&GLR.ok()}
 var NF=72,KV=0,SHA=0.34,STAT={hatch:{v:1,a:1.3,g:1,s:1},sedan:{v:1,a:1.2,g:1.1,s:0.95},sports:{v:1.06,a:1.5,g:0.92,s:1},truck:{v:0.96,a:1.05,g:1.15,s:0.88},kart:{v:0.95,a:1.6,g:1.25,s:1.1},monster:{v:0.98,a:1.1,g:1.12,s:0.92},bike:{v:1.04,a:1.7,g:0.95,s:1.22},trike:{v:1.02,a:1.45,g:1.04,s:1.12},van:{v:1.1,a:1.75,g:0.84,s:1.15},robo:{v:0.9,a:0.9,g:0.82,s:0.8},f1:{v:1.12,a:1.7,g:1.3,s:1.06}};
@@ -3932,7 +3932,7 @@ function report(){
  var a=Array.prototype.slice.call(frames,0,nf).sort(function(x,y){return x-y}),n=a.length,sum=0;for(var i=0;i<n;i++)sum+=a[i];
  var avg=n?sum/n:0,p95=n?a[Math.floor(n*0.95)]:0,worst=n?a[n-1]:0,fps=avg?1000/avg:0;
  var verdict=fps>=55?'smooth (about 60 FPS)':(fps>=40?'ok, some drops':'choppy');
- var t=['Thumb Circuit sample v7.55 results',
+ var t=['Thumb Circuit sample v7.56 results',
  'Car: '+opt.car+' (paint '+meCol(opt.car).join(' / ')+'), driver: '+DRV[opt.drv].n+', upgrades engine '+lv('eng')+' tires '+lv('tir')+' turbo '+lv('tur')+' body '+lv('bod')+', wallet '+wallet()+', level '+lvl()+' ('+(save.xp||0)+' XP, +'+xpGain+' this race, rivals x'+rivK().toFixed(2)+'), rivals: '+rivals.map(function(r){return r.pers.name+' ('+r.kind+')'}).join(', '),
  'Turns cost speed '+(opt.scr?'on':'off')+', Bouncy edges '+(opt.bnc?'on':'off')+', Rivals: '+(DIFN[opt.dif]||'Normal')+' (rewards x'+(DIFM[opt.dif]||1)+' for a top 3 finish, bonus coins this race '+difB+'), '+'Steering: '+(opt.steer===1?'1 slide thumb':'2 drag a target')+', thumb reach '+['short','medium','long'][opt.sens|0]+', road help '+(opt.assist?'on':'off (coins and fans x1.5)'),
  'Track: '+TRACKS[curTrk].n+', view: '+(opt.view?'tilted':'top-down')+', time of day: '+TOD[opt.tod].n,
@@ -4140,7 +4140,7 @@ var slR=null,slLT=-9;window.__tc.sl=function(){return {c:slC,t:slT,n:nSling}};
 // v7.13 event rail (NOTIFICATIONS-AND-HUD-SPEC): rewards that start on your car go to one line under the toasts, merged within 0.6 s, shown 0.9 s.
 // The right-hand panels fade to 25% whenever your car comes within 30 px of them.
 var railEl=null,railT=0,railLast=0,railN=0;
-function railAdd(l,im){if(!railEl){railEl=document.createElement('div');railEl.id='rail';document.body.appendChild(railEl)}var now=performance.now();if(now-railLast>600)railEl.textContent='';railLast=now;var sp=document.createElement('span');sp.textContent=l||'';sp.style.color=im&&im.__c||'';railEl.appendChild(sp);while(railEl.children.length>3)railEl.removeChild(railEl.firstChild);railEl.className='on';railT=0.9;railN++}
+function railAdd(l,im){if(!railEl){railEl=document.createElement('div');railEl.id='rail';document.body.appendChild(railEl)}var now=performance.now();if(now-railLast>600)railEl.textContent='';railLast=now;var sp=document.createElement('span');sp.textContent=l||'';sp.style.color=im&&im.__c||'';if(im&&im.__s)sp.style.fontSize=im.__s+'px';railEl.appendChild(sp);while(railEl.children.length>3)railEl.removeChild(railEl.firstChild);railEl.className='on';railT=0.9;railN++}
 var hfEls=null,hfR=[],hfN=0,carSX=-1,carSY=-1;
 function hudFadeStep(dt){if(railT>0){railT-=dt;if(railT<=0&&railEl)railEl.className=''}
  if(!hfEls){hfEls=['mini','gauge','boost','rk','hlp','pcn'].map(function(i){return document.getElementById(i)}).filter(Boolean)}
@@ -4265,10 +4265,10 @@ var BMP={hT:0.3,rk:1.5,pb0:8,n:0,pb:0,drop:0,hold:[],lap:[],pbT:[],last:[],q:nul
 function bmpReset(){BMP.n=0;BMP.pb=0;BMP.drop=0;BMP.hold=[];BMP.lap=[];BMP.pbT=[];BMP.last=[];BMP.q=null;BMP.popT=-9;BMP.clk=0;BMP.endT=0}
 function bmpPB(r){var i=rivals.indexOf(r);if(i>=0)BMP.pbT[i]=BMP.clk}
 function bmpAbsorb(r){var i=rivals.indexOf(r),L=BMP.last[i];if(!L||BMP.clk-L.t>1.5||L.dropped)return 0;L.dropped=1;BMP.drop++;coins-=L.c;fanPts-=L.f;return L.c}
-function bmpShow(q){railAdd(q.lab||(q.pay?'PAYBACK! +'+q.c:'BUMP FLAG +'+q.c),{__c:q.col||(q.pay?'#ffd84a':'#ff9a6a')});BMP.popT=BMP.clk;BMP.endT=0.9;BMP.endN=q.nm||(q.pay?'payback':'bump');fxLog(BMP.endN,'start','reward')}
-function rwPop(q){if(BMP.clk-BMP.popT>=1.5&&!BMP.q)bmpShow(q);else if(!BMP.q||q.big>BMP.q.big)BMP.q=q}
+var trmK={on:1,small:13,gap:4};function bmpShow(q){railAdd(q.lab||(q.pay?'PAYBACK! +'+q.c:'BUMP FLAG +'+q.c),{__c:q.col||(q.pay?'#ffd84a':'#ff9a6a'),__s:(opt.trm&&trmK.on&&(q.big||1)<2)?trmK.small:0});BMP.popT=BMP.clk;BMP.endT=0.9;BMP.endN=q.nm||(q.pay?'payback':'bump');fxLog(BMP.endN,'start','reward')}
+var RWC={call:0,shown:0,drop:0,by:{}};function rwPop(q){RWC.call++;RWC.by[q.nm]=(RWC.by[q.nm]||0)+1;if(opt.trm&&trmK.gap&&(q.big||1)<2){if(BMP.clk-(BMP.sm||-99)<trmK.gap){RWC.quiet=(RWC.quiet||0)+1;return}BMP.sm=BMP.clk}if(BMP.clk-BMP.popT>=1.5&&!BMP.q){bmpShow(q);RWC.shown++}else if(!BMP.q||q.big>BMP.q.big){if(BMP.q)RWC.drop++;BMP.q=q}else RWC.drop++}
 function bmpStep(dt){BMP.clk+=dt;if(BMP.endT>0){BMP.endT-=dt;if(BMP.endT<=0)fxLog(BMP.endN,'end','reward')}
- if(BMP.q&&BMP.clk-BMP.popT>=1.5){bmpShow(BMP.q);BMP.q=null}
+ if(BMP.q&&BMP.clk-BMP.popT>=1.5){bmpShow(BMP.q);BMP.q=null;RWC.shown++}
  if(!opt.bmp||demo||!rivals||finished)return;var cl=CSH[opt.car]||[20,12.5],lap=car.lap|0;
  for(var i=0;i<rivals.length;i++){var r=rivals[i],rs=CSH[r.kind]||[20,12.5],rel=r.p-car.p,sd=Math.abs(car.lat-r.d);
   var ok=!(car.air>0)&&!(r.air>0)&&!(r.fin)&&rel<=cl[0]+0.6*rs[0]&&rel>=-(cl[0]+rs[0])*0.5&&sd<=(cl[1]+rs[1]+2*cl[1]*BMP.rk)&&BMP.lap[i]!==lap;
@@ -4446,8 +4446,8 @@ function rcsStep(dt){if(!opt.rcs||demo)return;if(RCS.cd>0)RCS.cd-=dt;var r=car.r
  if(rcsK.bmp&&nBumps>RCS.nb&&tt>rcsK.t0){RCS.why='b';rcsArm()}RCS.nb=nBumps;
  if(rcsK.grs){if(offOn)RCS.gt+=dt;else{if(RCS.gt>=rcsK.grs&&tt>rcsK.t0){RCS.why='g';rcsArm()}RCS.gt=0}}if(!RCS.on||st!=='run'||count>0||finished)return;RCS.age+=dt;
  var ok=offOn===0&&FS.gap>0.1&&car.air<=0&&Math.abs(wrapA(T.tg[car.idx|0]-car.th))<rcsK.ang&&!(car.rcv>0);RCS.t=ok?RCS.t+dt:0;
- if(RCS.t>=rcsK.need){RCS.on=0;RCS.n++;RCS.cd=rcsK.cd;RCS.log.push(Math.round(runTime/100)/10);if(rcsK.dur>0)boostT=Math.max(boostT,rcsK.dur);if(rcsK.mtr)meter=Math.min(1,meter+rcsK.mtr);
-  if(rcsK.coin){coins+=rcsK.coin;fanPts+=rcsK.coin}if(rcsK.kick){car.vx+=Math.sin(car.th)*rcsK.kick;car.vy-=Math.cos(car.th)*rcsK.kick}rwPop({lab:'SHAKE IT OFF!',col:'#7cf08a',nm:'recovery',big:1})}
+ if(RCS.t>=rcsK.need){RCS.on=0;RCS.n++;RCS.cd=rcsK.cd;RCS.log.push(Math.round(runTime/100)/10);if(rcsK.dur>0)boostT=Math.max(boostT,rcsK.dur);var m0=meter;if(rcsK.mtr)meter=Math.min(1,meter+rcsK.mtr);RCS.gain=meter-m0;
+  if(rcsK.coin){coins+=rcsK.coin;fanPts+=rcsK.coin}if(rcsK.kick){car.vx+=Math.sin(car.th)*rcsK.kick;car.vy-=Math.cos(car.th)*rcsK.kick}if(!(opt.trm&&RCS.gain<0.02))rwPop({lab:'SHAKE IT OFF!',col:'#7cf08a',nm:'recovery',big:1});else RCS.quiet=(RCS.quiet||0)+1}
  else if(RCS.age>rcsK.win){RCS.on=0;RCS.lap++}}
 function rcsReset(){RCS.on=0;RCS.t=0;RCS.age=0;RCS.n=0;RCS.arm=0;RCS.lap=0;RCS.cd=0;RCS.rw=0;RCS.nb=0;RCS.gt=0;RCS.log=[]}
 window.__tc.rcsK=rcsK;window.__tc.rcs=function(){return {n:RCS.n,arm:RCS.arm,lapse:RCS.lap,log:RCS.log.slice()}};
@@ -4473,6 +4473,8 @@ window.__tc.gpK=gpK;window.__tc.gp=function(){return {off:GP.off,got:GP.got,pick
 window.__tc.WXK=WXK;window.__tc.wx=function(){return WX?Array.prototype.slice.call(WX):null};
 
 window.__tc.scbK=scbK;window.__tc.scb=function(){return {n:SCB.n,mk:SCB.mk,log:SCB.log,gt:SCB.gt,m:SCB.m}};
+
+window.__tc.trmK=trmK;window.__tc.rwc=function(){return RWC};
 
 })();
 

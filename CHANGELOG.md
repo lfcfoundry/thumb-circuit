@@ -2,6 +2,9 @@
 
 Short, plain lines. Each version is one playable sample page in `play/`.
 
+## v7.56
+- Small pop-ups (Closing In, Shake It Off, Clean Bend) are smaller and show at most once every 4 seconds. Rewards are still paid; big pop-ups are unchanged.
+
 ## v7.55
 - Clean Bend is on: after you hit grass on lap 1, lap 2 shows a blue flag on that stretch. Drive it clean for CLEAN BEND! (+1 coin, +15% boost, up to 4 a lap).
 
