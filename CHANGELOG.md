@@ -2,6 +2,9 @@
 
 Short, plain lines. Each version is one playable sample page in `play/`.
 
+## v7.45
+- Podium Pop: when a race ends the top three pop onto a podium (3rd, 2nd, 1st, 0.4 s apart) with a pose each; at 4th or lower your driver shrugs. Tap to skip. The photo and prize box wait for it.
+
 ## v7.44
 - Race Headline: the results card NEWS line is written from your race (rematch win, final-bend pass, a rival you flipped, a RAZOR! pass) and names the rival; otherwise the old random jokes. Test knob for a Closing In grudge bonus (off).
 
