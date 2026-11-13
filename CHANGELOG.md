@@ -2,6 +2,9 @@
 
 Short, plain lines. Each version is one playable sample page in `play/`.
 
+## v7.60
+- Turbo Lap: if you start the last lap behind, your 8% boost fades out before bends and stays full on straights. If you lead, nothing changes.
+
 ## v7.59
 - Turbo Lap: if you start the last lap behind, only you get the extra 8% boost. If you lead, everyone still gets it.
 
