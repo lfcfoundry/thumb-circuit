@@ -2,6 +2,12 @@
 
 Short, plain lines. Each version is one playable sample page in `play/`.
 
+## v7.53
+- Gold Pick is on: finish lap 1 in 3rd or worse and the pick row gets a fourth gold card, where boost, coins and draft all double for that lap.
+
+## v7.52
+- Candy Ridge unlocks at level 6 (players who already reached level 5 keep it). Ease-off test switch with a grip mode, still off.
+
 ## v7.51
 - Test switch (off): with Help steering on and the thumb lifted, the car eases off before bends.
 
