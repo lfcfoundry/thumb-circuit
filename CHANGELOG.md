@@ -2,6 +2,9 @@
 
 Short, plain lines. Each version is one playable sample page in `play/`.
 
+## v7.47
+- Fair grudge shove (a grudge rival bumps no harder than others), Closing In pays +2 when the car ahead holds a grudge of 2 or more, and Podium Pop shows only when you finish top 3.
+
 ## v7.46
 - Sticker Book: 8 stickers per Road to the Big Top town (win, RAZOR!, flip, last-bend pass, rematch win, saved photo, 3 stars, town duel); locked ones show ?; a full page unlocks that town's paint; Stickers button on the title. Test knob for the grudge shove (unchanged).
 

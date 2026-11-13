@@ -2,7 +2,7 @@
 <html lang="en"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
 <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'unsafe-inline' 'wasm-unsafe-eval'; style-src 'unsafe-inline'; img-src data:; font-src data:">
-<title>Thumb Circuit sample page v7.46</title>
+<title>Thumb Circuit sample page v7.47</title>
 <style>
 html,body{margin:0;height:100%;background:#5a3d30;overflow:hidden;overscroll-behavior:none;touch-action:none;-webkit-user-select:none;user-select:none;font-family:ui-rounded,"Trebuchet MS",Verdana,sans-serif;color:#4a3228}
 #wrap{position:fixed;inset:0;display:flex;justify-content:center;align-items:flex-start}
@@ -240,7 +240,7 @@ body.dial #boost{display:none!important}body.dial #rk{top:250px!important}body.d
 <div class="trow2"><button class="tb" id="bHow" type="button">How to play</button><button class="tb" id="bDrv" type="button">Drivers</button><button class="tb" id="bStk" type="button">Stickers</button><button class="tb" id="bSet" type="button">Settings</button></div>
 <div class="lvrow" id="lvRow"></div>
 <p class="best" id="best"></p>
-<p class="legal">Sample v7.46 &middot; Forged by LFC Foundry &middot; MIT License</p>
+<p class="legal">Sample v7.47 &middot; Forged by LFC Foundry &middot; MIT License</p>
 </div>
 </div>
 <div id="panel" style="display:none"><div class="card"><button id="cx" type="button" aria-label="Close">X</button>
@@ -3923,7 +3923,7 @@ function report(){
  var a=Array.prototype.slice.call(frames,0,nf).sort(function(x,y){return x-y}),n=a.length,sum=0;for(var i=0;i<n;i++)sum+=a[i];
  var avg=n?sum/n:0,p95=n?a[Math.floor(n*0.95)]:0,worst=n?a[n-1]:0,fps=avg?1000/avg:0;
  var verdict=fps>=55?'smooth (about 60 FPS)':(fps>=40?'ok, some drops':'choppy');
- var t=['Thumb Circuit sample v7.46 results',
+ var t=['Thumb Circuit sample v7.47 results',
  'Car: '+opt.car+' (paint '+meCol(opt.car).join(' / ')+'), driver: '+DRV[opt.drv].n+', upgrades engine '+lv('eng')+' tires '+lv('tir')+' turbo '+lv('tur')+' body '+lv('bod')+', wallet '+wallet()+', level '+lvl()+' ('+(save.xp||0)+' XP, +'+xpGain+' this race, rivals x'+rivK().toFixed(2)+'), rivals: '+rivals.map(function(r){return r.pers.name+' ('+r.kind+')'}).join(', '),
  'Turns cost speed '+(opt.scr?'on':'off')+', Bouncy edges '+(opt.bnc?'on':'off')+', Rivals: '+(DIFN[opt.dif]||'Normal')+' (rewards x'+(DIFM[opt.dif]||1)+' for a top 3 finish, bonus coins this race '+difB+'), '+'Steering: '+(opt.steer===1?'1 slide thumb':'2 drag a target')+', thumb reach '+['short','medium','long'][opt.sens|0]+', road help '+(opt.assist?'on':'off (coins and fans x1.5)'),
  'Track: '+TRACKS[curTrk].n+', view: '+(opt.view?'tilted':'top-down')+', time of day: '+TOD[opt.tod].n,
@@ -4322,7 +4322,7 @@ function offTo(){var la=car.lat||0;if(Math.abs(la)<=RW||Math.abs(car.uS||0)<0.05
 // ---- v7.40 Closing In (M37 spec; on by default and named by the owner in v7.42): a hidden meter adds up how much you close on the nearest rival
 // ahead (checked once a second, gap at most gmax). Losing ground lowers it, never below 0; it resets when the car ahead changes or spins.
 // At step units it pays +1 fan +1 coin, "CLOSING IN +1" in the side strip (shared 1.5 s pop budget), at least cd s apart, none before t0 s. Rivals are only read.
-var cliK={carry:0,step:80,gmax:1000,cd:4,t0:10,gr:1,gmin:2},CLI={nc:0,m:0,tg:null,gap:0,acc:0,last:-99,n:0,rs:0,endT:0};
+var cliK={carry:0,step:80,gmax:1000,cd:4,t0:10,gr:2,gmin:2},CLI={nc:0,m:0,tg:null,gap:0,acc:0,last:-99,n:0,rs:0,endT:0};
 function cliReset(){CLI.m=0;CLI.tg=null;CLI.gap=0;CLI.acc=0;CLI.last=-99;CLI.n=0;CLI.rs=0;CLI.nc=0}
 function cliStep(dt){if(!opt.cli||demo||finished||!rivals||st!=='run'||count>0)return;CLI.acc+=dt;if(CLI.acc<1)return;CLI.acc-=1;
  var tg=null,gp=1e9;for(var i=0;i<rivals.length;i++){var r=rivals[i];if(r.fin)continue;var g2=r.p-car.p;if(g2>0&&g2<gp){gp=g2;tg=r}}
@@ -4360,7 +4360,7 @@ window.__tc.hdl=function(){return {ev:HDL.ev,who:HDL.who,txt:HDL.txt,n:HDL.n,cnt
 // ---- v7.45 Podium Pop (Round 12 idea 83, switch opt.pdm): when a race ends the top three pop onto a podium on the results card,
 // 3rd, then 2nd, then 1st, 0.4 s apart, and each does a short pose. Finish 4th or lower and your own driver shrugs below it.
 // It starts 0.8 s into the curtain opening so it is seen. Tap anywhere on the card to skip. The finish photo and the prize box wait for it: podium, then photo, then prize box.
-var pdmK={gap:400,pose:600,only:0,lead:800},PDM={lead:0,on:0,t0:0,dur:0,n:0,skip:0,log:[],to:[]};
+var pdmK={gap:400,pose:600,only:3,lead:800},PDM={lead:0,on:0,t0:0,dur:0,n:0,skip:0,log:[],to:[]};
 function pdmRem(){return PDM.on?Math.max(0,PDM.dur-(performance.now()-PDM.t0)):0}
 function pdmOrder(){var me={n:DRV[opt.drv].n,f:opt.drv,me:1,t:finishT,p:car.p},rows=[me];rivals.forEach(function(r){rows.push({n:r.pers.name,f:r.pers.name.toLowerCase(),me:0,t:r.fin?r.finT:0,p:r.p})});
  var a=rows.filter(function(q){return q.t>0}).sort(function(x,y){return x.t-y.t}),b=rows.filter(function(q){return !q.t}).sort(function(x,y){return y.p-x.p});return a.concat(b)}
@@ -4380,7 +4380,7 @@ window.__tc.pdm=function(){return {on:PDM.on,n:PDM.n,skip:PDM.skip,dur:PDM.dur,l
 // ---- v7.46 Sticker Book (Round 12 idea 84, switch opt.stk): a page of 8 stickers for each Road to the Big Top town. A race counts for
 // the town it belongs to (the tour show you are on, or the first town that uses the track). Locked stickers show "?". Each sticker is
 // awarded once (a bit in save.stk). A full page unlocks that town's sticker paint in the garage. Almost There can name "1 sticker to finish".
-var gkK={v:0.18};window.__tc.gkK=gkK;
+var gkK={v:0};window.__tc.gkK=gkK;
 var STKD=[['WIN','Win a race','#e0a020'],['RAZOR!','RAZOR! pass','#e24a3a'],['FLIP','Flip a rival','#6a3fa8'],['LAST BEND','Pass on the final bend','#2fb8a6'],['REMATCH','Win a rematch','#ff5fa2'],['PHOTO','Save a finish photo','#4aa8f0'],['3 STARS','3 stars on a show','#ff8a2a'],['CHAMP','Beat the town duel','#2f7a4f']];
 var STK={race:[],full:[],tw:-1,n:0,log:[]};
 function stkSave(){if(!save.stk||save.stk.length!==TOWNS.length){var o=save.stk||[];save.stk=TOWNS.map(function(_,i){return o[i]|0})}return save.stk}
