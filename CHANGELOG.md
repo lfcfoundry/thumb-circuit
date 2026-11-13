@@ -2,6 +2,9 @@
 
 Short, plain lines. Each version is one playable sample page in `play/`.
 
+## v7.50
+- PAINT SWAP! side rubs on (a light side contact costs much less than a BUMP), Shake It Off on (drive clean after a hit to refill some boost, when not in 1st), and the speed gauge and minimap redraw only when they change (faster HUD).
+
 ## v7.49
 - Side-rub test switch (still off): every second rub on the same rival adds a grudge point.
 
