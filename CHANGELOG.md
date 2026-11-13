@@ -2,6 +2,9 @@
 
 Short, plain lines. Each version is one playable sample page in `play/`.
 
+## v7.55
+- Clean Bend is on: after you hit grass on lap 1, lap 2 shows a blue flag on that stretch. Drive it clean for CLEAN BEND! (+1 coin, +15% boost, up to 4 a lap).
+
 ## v7.54
 - Candy Ridge: the three worst bends are about 25% wider, so the road, curbs and fences follow the new edge.
 
