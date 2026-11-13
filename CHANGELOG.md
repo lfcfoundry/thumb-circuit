@@ -2,6 +2,9 @@
 
 Short, plain lines. Each version is one playable sample page in `play/`.
 
+## v7.59
+- Turbo Lap: if you start the last lap behind, only you get the extra 8% boost. If you lead, everyone still gets it.
+
 ## v7.58
 - Best Chase is on: when you finish behind someone, the finish banner names your best catch-up stretch and pays 3 coins for each second you closed.
 
