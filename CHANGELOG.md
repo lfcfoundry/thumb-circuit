@@ -2,6 +2,9 @@
 
 Short, plain lines. Each version is one playable sample page in `play/`.
 
+## v7.44
+- Race Headline: the results card NEWS line is written from your race (rematch win, final-bend pass, a rival you flipped, a RAZOR! pass) and names the rival; otherwise the old random jokes. Test knob for a Closing In grudge bonus (off).
+
 ## v7.43
 - Fancy's Pace Notes is on: a chip under the speedometer calls the next corner (switch in Settings).
 
