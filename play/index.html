@@ -2,7 +2,7 @@
 <html lang="en"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
 <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'unsafe-inline' 'wasm-unsafe-eval'; style-src 'unsafe-inline'; img-src data:; font-src data:">
-<title>Thumb Circuit sample page v7.56</title>
+<title>Thumb Circuit sample page v7.57</title>
 <style>
 html,body{margin:0;height:100%;background:#5a3d30;overflow:hidden;overscroll-behavior:none;touch-action:none;-webkit-user-select:none;user-select:none;font-family:ui-rounded,"Trebuchet MS",Verdana,sans-serif;color:#4a3228}
 #wrap{position:fixed;inset:0;display:flex;justify-content:center;align-items:flex-start}
@@ -240,7 +240,7 @@ body.dial #boost{display:none!important}body.dial #rk{top:250px!important}body.d
 <div class="trow2"><button class="tb" id="bHow" type="button">How to play</button><button class="tb" id="bDrv" type="button">Drivers</button><button class="tb" id="bStk" type="button">Stickers</button><button class="tb" id="bSet" type="button">Settings</button></div>
 <div class="lvrow" id="lvRow"></div>
 <p class="best" id="best"></p>
-<p class="legal">Sample v7.56 &middot; Forged by LFC Foundry &middot; MIT License</p>
+<p class="legal">Sample v7.57 &middot; Forged by LFC Foundry &middot; MIT License</p>
 </div>
 </div>
 <div id="panel" style="display:none"><div class="card"><button id="cx" type="button" aria-label="Close">X</button>
@@ -3697,15 +3697,15 @@ function paintStatic(vx0,vy0,vx1,vy1,G){var i,k;
   segPath(run,0,0);ctx.lineWidth=2;ctx.strokeStyle=C.line;ctx.stroke();
   if(!G)[-1,1].forEach(function(sd){runPath(run,sd*(RW+78));ctx.lineWidth=1.5;ctx.strokeStyle='#c9a06f';ctx.stroke();postPath(run,sd*(RW+78));ctx.lineWidth=4;ctx.lineCap='square';ctx.strokeStyle='#8a5a3a';ctx.stroke();ctx.lineCap='butt'})}
 }
-var GT={TS:256,key:'',m:new Map(),n:0,cap:80,stamp:0};
+var GT={TS:256,key:'',m:new Map(),n:0,cap:40,stamp:0,pool:[]};function gtNew(TS){var c=GT.pool.pop();if(c){if(c.__g.reset)c.__g.reset();else{c.width=TS;c.height=TS}c.__g.fillRect(0,0,TS,TS);return c}c=document.createElement('canvas');c.width=TS;c.height=TS;c.__g=c.getContext('2d',{alpha:false});return c}
 function gtKey(G){return curTrk+'|'+todBaked+'|'+(G?1:0)+'|'+GT.stamp+'|'+VW+'x'+H}
-function gtPaint(tx,ty,G){var TS=GT.TS,c=document.createElement('canvas');c.width=TS;c.height=TS;var g=c.getContext('2d',{alpha:false}),sc=ctx,sx=cam.x,sy=cam.y,sw=VW,sh=H,sr=runs.slice();
+function gtPaint(tx,ty,G){var TS=GT.TS,c=gtNew(TS);var g=c.__g,sc=ctx,sx=cam.x,sy=cam.y,sw=VW,sh=H,sr=runs.slice();
   ctx=g;cam.x=tx*TS+TS/2;cam.y=ty*TS+TS/2;VW=TS+700;H=TS+700;ctx.setTransform(1,0,0,1,-tx*TS,-ty*TS);findRuns();try{paintStatic(tx*TS-8,ty*TS-8,tx*TS+TS+8,ty*TS+TS+8,G)}finally{ctx=sc;cam.x=sx;cam.y=sy;VW=sw;H=sh;runs.length=0;for(var q=0;q<sr.length;q++)runs.push(sr[q])}return c}
-function groundTiles(vx0,vy0,vx1,vy1,G){var k=gtKey(G);if(k!==GT.key){GT.key=k;GT.m.clear()}var TS=GT.TS,x0=Math.floor(vx0/TS),x1=Math.floor(vx1/TS),y0=Math.floor(vy0/TS),y1=Math.floor(vy1/TS),tx,ty,c,id,pre=0;GT.n++;
-  for(ty=y0;ty<=y1;ty++)for(tx=x0;tx<=x1;tx++){id=tx+','+ty;c=GT.m.get(id);if(!c){c=gtPaint(tx,ty,G);GT.m.set(id,c)}c.u=GT.n;ctx.drawImage(c,tx*TS,ty*TS)}
+function groundTiles(vx0,vy0,vx1,vy1,G){var k=gtKey(G);if(k!==GT.key){GT.key=k;GT.m.forEach(function(c){GT.pool.push(c)});GT.m.clear()}var TS=GT.TS,x0=Math.floor(vx0/TS),x1=Math.floor(vx1/TS),y0=Math.floor(vy0/TS),y1=Math.floor(vy1/TS),tx,ty,c,id,pre=0;GT.n++;
+  for(ty=y0;ty<=y1;ty++)for(tx=x0;tx<=x1;tx++){id=tx+','+ty;c=GT.m.get(id);if(!c){c=gtPaint(tx,ty,G);c.tx=tx;c.ty=ty;GT.m.set(id,c)}c.u=GT.n;ctx.drawImage(c,tx*TS,ty*TS)}
   // paint at most one tile ahead per frame (the ring around the view), and drop the least recently used past the cap
-  for(ty=y0-1;ty<=y1+1&&!pre;ty++)for(tx=x0-1;tx<=x1+1&&!pre;tx++){id=tx+','+ty;if(!GT.m.has(id)){c=gtPaint(tx,ty,G);c.u=GT.n;GT.m.set(id,c);pre=1}}
-  if(GT.m.size>GT.cap){var old=null,ou=1e15;GT.m.forEach(function(v,kk){if(v.u<ou){ou=v.u;old=kk}});if(old)GT.m.delete(old)}}
+  for(ty=y0-1;ty<=y1+1&&!pre;ty++)for(tx=x0-1;tx<=x1+1&&!pre;tx++){id=tx+','+ty;if(!GT.m.has(id)){c=gtPaint(tx,ty,G);c.tx=tx;c.ty=ty;c.u=GT.n;GT.m.set(id,c);pre=1}}
+  if(GT.m.size>Math.max(GT.cap,(x1-x0+3)*(y1-y0+3)+6)){var old=null,ou=-1,cx=(x0+x1)/2,cy=(y0+y1)/2;GT.m.forEach(function(v,kk){var d=Math.abs(v.tx-cx)+Math.abs(v.ty-cy);if(d>ou){ou=d;old=kk}});if(old){GT.pool.push(GT.m.get(old));GT.m.delete(old)}}}
 var GLPT=1,pxHid=0,OP=[],OPn=0,OBQ=null;function ob(){var o=OP[OPn];if(!o){o={m:'',x:0,y:0,z:0,rot:0,s:0,sway:0,lean:0,ink:null,out:0,own:-1,flash:0,brake:0,roll:0,pitch:0,sil:null,nosh:0,lp:0,wh:null};OP[OPn]=o}OPn++;o.z=0;o.rot=0;o.s=0;o.sway=0;o.lean=0;o.ink=null;o.out=0;o.own=-1;o.flash=0;o.brake=0;o.roll=0;o.pitch=0;o.sil=null;o.nosh=0;o.lp=0;o.wh=null;return o}
 function draw(){OPn=0;
  if(window.__camHold){cam.x=__camHold[0];cam.y=__camHold[1]}
@@ -3932,7 +3932,7 @@ function report(){
  var a=Array.prototype.slice.call(frames,0,nf).sort(function(x,y){return x-y}),n=a.length,sum=0;for(var i=0;i<n;i++)sum+=a[i];
  var avg=n?sum/n:0,p95=n?a[Math.floor(n*0.95)]:0,worst=n?a[n-1]:0,fps=avg?1000/avg:0;
  var verdict=fps>=55?'smooth (about 60 FPS)':(fps>=40?'ok, some drops':'choppy');
- var t=['Thumb Circuit sample v7.56 results',
+ var t=['Thumb Circuit sample v7.57 results',
  'Car: '+opt.car+' (paint '+meCol(opt.car).join(' / ')+'), driver: '+DRV[opt.drv].n+', upgrades engine '+lv('eng')+' tires '+lv('tir')+' turbo '+lv('tur')+' body '+lv('bod')+', wallet '+wallet()+', level '+lvl()+' ('+(save.xp||0)+' XP, +'+xpGain+' this race, rivals x'+rivK().toFixed(2)+'), rivals: '+rivals.map(function(r){return r.pers.name+' ('+r.kind+')'}).join(', '),
  'Turns cost speed '+(opt.scr?'on':'off')+', Bouncy edges '+(opt.bnc?'on':'off')+', Rivals: '+(DIFN[opt.dif]||'Normal')+' (rewards x'+(DIFM[opt.dif]||1)+' for a top 3 finish, bonus coins this race '+difB+'), '+'Steering: '+(opt.steer===1?'1 slide thumb':'2 drag a target')+', thumb reach '+['short','medium','long'][opt.sens|0]+', road help '+(opt.assist?'on':'off (coins and fans x1.5)'),
  'Track: '+TRACKS[curTrk].n+', view: '+(opt.view?'tilted':'top-down')+', time of day: '+TOD[opt.tod].n,
