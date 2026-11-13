@@ -2,7 +2,7 @@
 <html lang="en"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
 <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'unsafe-inline' 'wasm-unsafe-eval'; style-src 'unsafe-inline'; img-src data:; font-src data:">
-<title>Thumb Circuit sample page v7.57</title>
+<title>Thumb Circuit sample page v7.58</title>
 <style>
 html,body{margin:0;height:100%;background:#5a3d30;overflow:hidden;overscroll-behavior:none;touch-action:none;-webkit-user-select:none;user-select:none;font-family:ui-rounded,"Trebuchet MS",Verdana,sans-serif;color:#4a3228}
 #wrap{position:fixed;inset:0;display:flex;justify-content:center;align-items:flex-start}
@@ -86,6 +86,8 @@ body.title #lights,body.title #banner{display:none!important}
 #banner{position:fixed;left:-4%;right:-4%;top:34%;z-index:3;display:none;flex-direction:column;align-items:center;padding:10px 0 12px;pointer-events:none;font-family:"Bricolage Grotesque",ui-rounded,"Trebuchet MS",sans-serif;color:#fff8e6;background:repeating-conic-gradient(#4a3228 0 25%,#fff8e6 0 50%) 0 0/14px 14px;border-top:4px solid #4a3228;border-bottom:4px solid #4a3228;box-shadow:0 6px 0 rgba(42,26,22,.45);transform:rotate(-3deg)}
 #banner::before{content:"";position:absolute;left:0;right:0;top:9px;bottom:9px;background:linear-gradient(180deg,#ff8a6a,#d8503f 55%,#b23a2c)}
 #banner b,#banner span{position:relative}
+#banner i{position:relative;order:3;font:bold 14px ui-rounded,"Trebuchet MS",Verdana,sans-serif;font-style:normal;color:#bff0ff;text-shadow:0 2px 0 #4a3228;margin-top:4px;max-width:86vw;text-align:center}
+#banner i:empty{display:none}
 #banner b{font-size:40px;line-height:1.05;text-shadow:0 3px 0 #4a3228}
 #banner span{font:bold 17px ui-rounded,"Trebuchet MS",Verdana,sans-serif;color:#ffe9a8;text-shadow:0 2px 0 #4a3228;white-space:pre}
 #banner.show{display:flex;animation:bnin .45s cubic-bezier(.2,1.5,.4,1),bnout .4s 1.9s forwards}
@@ -223,7 +225,7 @@ body.dial #boost{display:none!important}body.dial #rk{top:250px!important}body.d
 <div id="msg"></div><div id="feed"></div><div id="chev"></div><div id="hlp"><svg viewBox="0 0 24 24" width="14" height="14"><circle cx="12" cy="12" r="9" fill="none" stroke="#4a3228" stroke-width="3"/><path d="M12 12 V21 M12 12 L4 8 M12 12 L20 8" stroke="#4a3228" stroke-width="3"/></svg>HELP STEERING</div>
 <button id="boost" type="button">BOOST</button>
 <div id="lights" style="display:none"><div class="lamps"><i></i><i></i><i></i></div><b></b></div>
-<div id="banner"><b></b><span></span></div>
+<div id="banner"><b></b><i></i><span></span></div>
 <div id="title">
 <div class="tick" aria-hidden="true"><b>NEWS</b><div class="tk"><span id="tk"></span></div></div>
 <h1 class="logo" id="logo" aria-label="Thumb Circuit"></h1>
@@ -240,7 +242,7 @@ body.dial #boost{display:none!important}body.dial #rk{top:250px!important}body.d
 <div class="trow2"><button class="tb" id="bHow" type="button">How to play</button><button class="tb" id="bDrv" type="button">Drivers</button><button class="tb" id="bStk" type="button">Stickers</button><button class="tb" id="bSet" type="button">Settings</button></div>
 <div class="lvrow" id="lvRow"></div>
 <p class="best" id="best"></p>
-<p class="legal">Sample v7.57 &middot; Forged by LFC Foundry &middot; MIT License</p>
+<p class="legal">Sample v7.58 &middot; Forged by LFC Foundry &middot; MIT License</p>
 </div>
 </div>
 <div id="panel" style="display:none"><div class="card"><button id="cx" type="button" aria-label="Close">X</button>
@@ -3014,7 +3016,7 @@ function rw(i){return WX?RW+WX[i]:RW}
 function ow(i,off){return WX&&(off>=RW-10||off<=10-RW)?off+(off>0?WX[i]:-WX[i]):off}
 function wxInit(TR){WX=null;if(!TR.wx||!WXK.on)return;WX=new Float32Array(N);var sc=N/(TR.wn||N);TR.wx.forEach(function(b){var a=Math.round(b[0]*sc),e=Math.round(b[1]*sc),B=WXK.blend,v=b[2]*WXK.k;for(var j=a-B;j<=e+B;j++){var f=j<a?(j-a+B)/B:(j>e?(e+B-j)/B:1);f=f*f*(3-2*f);var q=((j%N)+N)%N;WX[q]=Math.max(WX[q],v*f)}})}
 var WXK={on:1,k:1,blend:30};
-var opt={cli:1,fab:0,nfd:0,nsr:1,stp:0,alm:1,rmt:1,hun:1,wrp:1,gsp:1,pcn:1,rhl:1,pdm:1,stk:1,srb:1,rcs:1,abh:0,gpk:1,scb:1,trm:1,bmp:0,fpo:1,fss:1,svr:1,grm:1,cfl:1,ppk:1,steer:2,assist:1,vib:1,car:'hatch',tod:0,view:1,gl:1,drv:'pip',trk:0,col:'',str:'',dif:1,bnc:1,scr:1,sens:1,cup:0,rs:0,hh:1,chs:2,trb:1,ltl:1,pb:1,ge:0,cyc:1,bcv:3,cbo:1,glw:1,pcg:1,gfh:1,sav:1,rov:1,sls:1,rail:1,fp:1,phd:1,srk:1,spi:1,fps:1,rib:1,hls:1,dial:1,gcc:1,dka:1,orw:0,one:0}
+var opt={cli:1,fab:0,nfd:0,nsr:1,stp:0,alm:1,rmt:1,hun:1,wrp:1,gsp:1,pcn:1,rhl:1,pdm:1,stk:1,srb:1,rcs:1,abh:0,gpk:1,scb:1,trm:1,bch:1,bmp:0,fpo:1,fss:1,svr:1,grm:1,cfl:1,ppk:1,steer:2,assist:1,vib:1,car:'hatch',tod:0,view:1,gl:1,drv:'pip',trk:0,col:'',str:'',dif:1,bnc:1,scr:1,sens:1,cup:0,rs:0,hh:1,chs:2,trb:1,ltl:1,pb:1,ge:0,cyc:1,bcv:3,cbo:1,glw:1,pcg:1,gfh:1,sav:1,rov:1,sls:1,rail:1,fp:1,phd:1,srk:1,spi:1,fps:1,rib:1,hls:1,dial:1,gcc:1,dka:1,orw:0,one:0}
 var DIF=[0.93,1.01,1.08],DIFN=['Easy','Normal','Hard'],DIFM=[1,1.25,1.5],difB=0;;var ctx2=ctx,glc=document.getElementById('glc'),fxc=document.getElementById('fxc'),fxx=fxc.getContext('2d'),pxc=document.getElementById('pxc'),pxx=pxc?pxc.getContext('2d'):null,PXS=2,glReady=false,RS=2,rsCap=3,wasG=null,gov={on:1,n:0,sum:0,note:'none'};
 function glOn(){return opt.gl===1&&glReady&&GLR.ok()}
 var NF=72,KV=0,SHA=0.34,STAT={hatch:{v:1,a:1.3,g:1,s:1},sedan:{v:1,a:1.2,g:1.1,s:0.95},sports:{v:1.06,a:1.5,g:0.92,s:1},truck:{v:0.96,a:1.05,g:1.15,s:0.88},kart:{v:0.95,a:1.6,g:1.25,s:1.1},monster:{v:0.98,a:1.1,g:1.12,s:0.92},bike:{v:1.04,a:1.7,g:0.95,s:1.22},trike:{v:1.02,a:1.45,g:1.04,s:1.12},van:{v:1.1,a:1.75,g:0.84,s:1.15},robo:{v:0.9,a:0.9,g:0.82,s:0.8},f1:{v:1.12,a:1.7,g:1.3,s:1.06}};
@@ -3556,7 +3558,7 @@ function update(dt){
  if(onRoad&&bumpT<=0)crowd=Math.min(1,crowd+(drvK==='pip'?0.01:0.008)*dt);
  var lapN=Math.floor(car.p/L)+1;
  if(lapN>car.lap&&!finished){if(lapN>car.lap)pcnLap();car.lap=lapN;if(lapN>LAPS){}else{ppGo();var b2=5+Math.floor(crowd*10);coins+=b2;if(lapN===LAPS){turboOn()?(banner('TURBO LAP!',(chaseD>0?'You 8% faster':'Everyone 8% faster')+', fans x1.5   +'+b2+' coins',1),nTurbo++):banner('FINAL LAP!','Lap '+(lapN-1)+' done   +'+b2+' coins',1);shakeT=0.3;flashT=0.4;flashK=0}else banner('LAP '+(lapN-1)+' DONE','+'+b2+' coins',0);for(var lq=0;lq<30;lq++)emit(car.x+(Math.random()-0.5)*200,car.y+(Math.random()-0.5)*200,(Math.random()-0.5)*80,(Math.random()-0.5)*80,0.8+Math.random()*0.6,5);vib(25);pk.forEach(function(p){p.got=false});resetDyn()}}
- if(car.p>=LAPS*L&&!finished&&!demo){finished=true;phReq=opt.phd?1:0;if(opt.trk===6&&!save.cupOpen){save.cupOpen=1;cupNew=1;store()}finishT=runTime;var b=10+Math.floor(crowd*20);coins+=b;var pos=rank();finPos=pos;var gpf=1e9;rivals.forEach(function(q){gpf=Math.min(gpf,Math.abs(q.p-car.p))});banner(pos===1?'YOU WIN!':['','','2nd PLACE','3rd PLACE','4th PLACE'][pos],(gpf<70?'PHOTO FINISH!':'FINISH!')+'   +'+b+' coins',2);for(var cf=0;cf<90;cf++)emit(car.x+(Math.random()-0.5)*260,car.y+(Math.random()-0.5)*300,(Math.random()-0.5)*60+car.vx*0.5,(Math.random()-0.5)*60+car.vy*0.5,1.2+Math.random()*1.2,5);vib([40,40,80]);setTimeout(finale,1900)}
+ if(car.p>=LAPS*L&&!finished&&!demo){finished=true;phReq=opt.phd?1:0;if(opt.trk===6&&!save.cupOpen){save.cupOpen=1;cupNew=1;store()}finishT=runTime;var b=10+Math.floor(crowd*20);coins+=b;var pos=rank();finPos=pos;var gpf=1e9;rivals.forEach(function(q){gpf=Math.min(gpf,Math.abs(q.p-car.p))});banner(pos===1?'YOU WIN!':['','','2nd PLACE','3rd PLACE','4th PLACE'][pos],(gpf<70?'PHOTO FINISH!':'FINISH!')+'   +'+b+' coins',2);bchFin();for(var cf=0;cf<90;cf++)emit(car.x+(Math.random()-0.5)*260,car.y+(Math.random()-0.5)*300,(Math.random()-0.5)*60+car.vx*0.5,(Math.random()-0.5)*60+car.vy*0.5,1.2+Math.random()*1.2,5);vib([40,40,80]);setTimeout(finale,1900)}
  // camera lookahead
  zoomStep(dt);
  var spf0=Math.hypot(car.vx,car.vy)/(W*0.9),ldk=opt.ltl&&st==='run'&&!demo?0.52+0.06*clamp((spf0-0.8)/0.2,0,1)*Math.abs(Math.sin(car.th)):0.52,lx=car.x+car.vx*ldk,ly=car.y+car.vy*ldk,k=1-Math.exp(-dt*7);chevStep(dt,spf0);cam.x+=(lx-cam.x)*k;cam.y+=(ly-cam.y)*k;if(shakeT>0)shakeT-=dt;
@@ -3932,7 +3934,7 @@ function report(){
  var a=Array.prototype.slice.call(frames,0,nf).sort(function(x,y){return x-y}),n=a.length,sum=0;for(var i=0;i<n;i++)sum+=a[i];
  var avg=n?sum/n:0,p95=n?a[Math.floor(n*0.95)]:0,worst=n?a[n-1]:0,fps=avg?1000/avg:0;
  var verdict=fps>=55?'smooth (about 60 FPS)':(fps>=40?'ok, some drops':'choppy');
- var t=['Thumb Circuit sample v7.57 results',
+ var t=['Thumb Circuit sample v7.58 results',
  'Car: '+opt.car+' (paint '+meCol(opt.car).join(' / ')+'), driver: '+DRV[opt.drv].n+', upgrades engine '+lv('eng')+' tires '+lv('tir')+' turbo '+lv('tur')+' body '+lv('bod')+', wallet '+wallet()+', level '+lvl()+' ('+(save.xp||0)+' XP, +'+xpGain+' this race, rivals x'+rivK().toFixed(2)+'), rivals: '+rivals.map(function(r){return r.pers.name+' ('+r.kind+')'}).join(', '),
  'Turns cost speed '+(opt.scr?'on':'off')+', Bouncy edges '+(opt.bnc?'on':'off')+', Rivals: '+(DIFN[opt.dif]||'Normal')+' (rewards x'+(DIFM[opt.dif]||1)+' for a top 3 finish, bonus coins this race '+difB+'), '+'Steering: '+(opt.steer===1?'1 slide thumb':'2 drag a target')+', thumb reach '+['short','medium','long'][opt.sens|0]+', road help '+(opt.assist?'on':'off (coins and fans x1.5)'),
  'Track: '+TRACKS[curTrk].n+', view: '+(opt.view?'tilted':'top-down')+', time of day: '+TOD[opt.tod].n,
@@ -3953,6 +3955,7 @@ function report(){
  'Curtains (last close and open): '+(curtN?curtN+' frames, slowest '+curtMax.toFixed(1)+' ms, over 25 ms '+curtJ:'not run yet'),
  'Device: '+(navigator.hardwareConcurrency||'?')+' cores, memory '+(navigator.deviceMemory?navigator.deviceMemory+' GB':'not reported')+', screen '+screen.width+'x'+screen.height+', touch points '+(navigator.maxTouchPoints||0)+(performance.memory?', page memory '+Math.round(performance.memory.usedJSHeapSize/1048576)+' MB':'')+', page open '+Math.round(performance.now()/1000)+' s, races this visit '+nRaces,
  'Clean Bend: '+(opt.scb?'on':'off')+', grass trips lap 1: '+(SCB.gt[1]||0)+', lap 2: '+(SCB.gt[2]||0)+', CLEAN BEND! pays: '+SCB.n+', grass sectors marked: '+SCB.mk,
+ 'Best Chase: '+(opt.bch?(BCH.best?BCH.best.x.toFixed(1)+' s at '+bchT(BCH.best.t)+' on '+BCH.best.nm+', +'+BCH.best.c+' coins':'none'):'off')+', samples '+BCH.s.length,
  'Verdict: '+verdict,
  'Your notes (steering feel 1-5, graphics 1-5, rivals fun 1-5, speed feel 1-5, anything wrong): '].join('\n');
  els.out.value=t;return t}
@@ -3981,7 +3984,7 @@ var lightEl=document.getElementById('lights'),lightN=-1,bannerEl=document.getEle
 var gChip=null;function goalChip(t){if(!gChip){gChip=document.createElement('div');gChip.style.cssText='position:fixed;left:8px;top:62px;z-index:4;pointer-events:none;max-width:calc(100vw - 132px);box-sizing:border-box;text-align:left;font:800 13px Bricolage Grotesque,sans-serif;color:#4a3228;background:linear-gradient(#fff8e6,#fbe9c0);border:3px solid #c98d4a;border-radius:14px;box-shadow:0 3px 0 #8a5a2a;padding:5px 12px;line-height:1.25';document.body.appendChild(gChip)}if(t){gChip.innerHTML='<small style="display:block;font-size:10.5px;letter-spacing:.06em">3 GOALS FOR THIS RACE</small>'+t.replace(/&/g,'&amp;');gChip.style.display='block'}else gChip.style.display='none'}
 function lights(c){if(c<=0&&gChip)gChip.style.display='none';var n=c<=0?4:(c>3?0:4-Math.ceil(c));if(n===lightN)return;lightN=n;lightEl.className=n===4?'go':'on'+n;lightEl.lastChild.textContent=['GET READY','READY','SET','SET','GO!'][n];lightEl.style.display='flex';if(n===4)setTimeout(function(){if(lightN===4)lightEl.style.display='none'},1100)}
 function lightsOff(){lightN=-1;lightEl.style.display='none'}
-function banner(a,b,big){if(demo)return;bannerEl.className='';bannerEl.firstChild.textContent=a;bannerEl.lastChild.textContent=b;void bannerEl.offsetWidth;bannerEl.className=big===2?'show big stay':(big?'show lap fin':'show lap')}
+function banner(a,b,big){if(demo)return;bannerEl.className='';bannerEl.firstChild.textContent=a;bannerEl.lastChild.textContent=b;bannerEl.children[1].textContent='';void bannerEl.offsetWidth;bannerEl.className=big===2?'show big stay':(big?'show lap fin':'show lap')}
 function finale(){if(st!=='run'&&st!=='pause')return;hideCard();if(!curt){endRun();return}st='done';curtW=performance.now();curtMax=0;curtN=0;curtJ=0;curt.close().then(function(){bannerEl.className='';PDM.lead=pdmK.lead;endRun();PDM.lead=0;return curt.open()})}
 try{curt=StageCurtains.create({container:document.body,color:'#c8322c',maxPixelRatio:2});curt.prepare()}catch(e){curt=null}
 // ---- title page, cards, saved bits ----
@@ -4089,7 +4092,7 @@ var ww={t:0,ok:0,on:0,n:0,tot:0,el:null};
 function wwOff(){ww.t=0;ww.ok=0;if(ww.on){ww.on=0;ww.el.className=''}}
 var fm={s:-1,b:-1,d:-1,o:0};function fmTxt(){var f=function(v){return v<0?'not yet':v.toFixed(1)+' s'};return 'steer '+f(fm.s)+', boost '+f(fm.b)+', drift '+f(fm.d)+', off road in the first 20 s '+fm.o.toFixed(1)+' s'+(save.races>1?'':' (first race on this save)')}
 function fmStep(dt){var rt=runTime/1000;if(fm.s<0&&Math.abs(car.uS)>0.3)fm.s=rt;if(fm.b<0&&boostT>0)fm.b=rt;if(fm.d<0&&car.dft)fm.d=rt;if(rt<20&&Math.abs(car.lat)>rw(car.idx))fm.o+=dt}
-function wwStep(dt){hudFadeStep(dt);ribStep();ppStep();cflStep();if(st==='run'&&count<=0&&!finished){fmStep(dt);fhStep(dt);fsStep(dt);bmpStep(dt);pcnStep(dt);cliStep(dt);scbTrip();scbStep(dt);rcsStep(dt)}if(st!=='run'||count>0||finished||car.air>0){wwOff();return}var tg=T.tg[car.idx|0],fx=Math.sin(tg),fy=-Math.cos(tg),v=car.vx*fx+car.vy*fy,hd=Math.cos(wrapA(car.th-tg));
+function wwStep(dt){hudFadeStep(dt);ribStep();ppStep();cflStep();if(st==='run'&&count<=0&&!finished){fmStep(dt);fhStep(dt);fsStep(dt);bmpStep(dt);pcnStep(dt);cliStep(dt);scbTrip();scbStep(dt);bchStep(dt);rcsStep(dt)}if(st!=='run'||count>0||finished||car.air>0){wwOff();return}var tg=T.tg[car.idx|0],fx=Math.sin(tg),fy=-Math.cos(tg),v=car.vx*fx+car.vy*fy,hd=Math.cos(wrapA(car.th-tg));
  var back=(v<-25)||(hd<-0.35&&v<20);if(back){ww.t+=dt;ww.ok=0;if(ww.t>2)ww.tot+=dt}else{ww.ok+=dt;if(ww.ok>0.4)ww.t=0}
  if(!ww.on&&ww.t>2){ww.on=1;ww.n++;var turn=wrapA(tg-car.th);ww.el.className='on'+(turn<0?' lf':'');if(opt.vib)vib([40,60,40])}else if(ww.on&&ww.t===0){ww.on=0;ww.el.className=''}}
 window.__tc.ww=function(){return {on:ww.on,n:ww.n,t:ww.t,tot:ww.tot}};
@@ -4098,7 +4101,7 @@ window.__tc.ww=function(){return {on:ww.on,n:ww.n,t:ww.t,tot:ww.tot}};
 // The thumb can end the 1 s recovery (lean over 30%), and turning back to the road within 0.6 s by thumb earns SAVE! (half the lost speed back).
 // The pop now shows the real time lost (until speed is back to 95% of before the hit).
 var fhK=1,fh=null,nScr=0,scrT=0,nOvr=0,nSave=0,fhLost=0,fhN=0;
-function fhReset(){cliReset();scbReset();rcsReset();HUN.race=0;pcnReset();bmpReset();FS.hit=0;FS.pin=0;FS.gap=9;FS.sc=null;FS.cd=0;FS.n=0;FS.pk=0;FS.nr=0;fh=null;nScr=0;scrT=0;nOvr=0;nSave=0;fhLost=0;fhN=0}
+function fhReset(){bchReset();cliReset();scbReset();rcsReset();HUN.race=0;pcnReset();bmpReset();FS.hit=0;FS.pin=0;FS.gap=9;FS.sc=null;FS.cd=0;FS.n=0;FS.pk=0;FS.nr=0;fh=null;nScr=0;scrT=0;nOvr=0;nSave=0;fhLost=0;fhN=0}
 function fenceHit(c,Nx,Ny){if(demo||!opt.gfh){fhK=1;return wallBounce(c,Nx,Ny)}var vo=c.vx*Nx+c.vy*Ny;if(vo<=0)return 0;var sp=Math.hypot(c.vx,c.vy)||1,ang=Math.asin(clamp(vo/sp,0,1))*57.3;fhK=clamp((ang-20)/25,0,1);
  if(c===car){FS.hit=1;FS.nx=Nx;FS.ny=Ny;FS.k=fhK;FS.sp=sp}var sx=c.vx-Nx*vo,sy=c.vy-Ny*vo;sx*=0.995;sy*=0.995;
  if(fhK<=0){c.vx=sx;c.vy=sy;nScr++;scrT+=1/60;if(Math.random()<0.6)emit(c.x+Nx*10,c.y+Ny*10,(Math.random()-0.5)*90-Nx*40,(Math.random()-0.5)*90-Ny*40,0.35,2);if(!fh)fhPre=sp;return vo*0.2}
@@ -4475,6 +4478,18 @@ window.__tc.WXK=WXK;window.__tc.wx=function(){return WX?Array.prototype.slice.ca
 window.__tc.scbK=scbK;window.__tc.scb=function(){return {n:SCB.n,mk:SCB.mk,log:SCB.log,gt:SCB.gt,m:SCB.m}};
 
 window.__tc.trmK=trmK;window.__tc.rwc=function(){return RWC};
+
+// ---- v7.58 Best Chase (M52, switch opt.bch) ----
+var bchK={t0:12,win:10,cps:3,min:1,dt:0.25,px:330},BCH={s:[],acc:0,best:null};
+function bchReset(){BCH.s.length=0;BCH.acc=0;BCH.best=null}
+function bchT(t){var s=Math.max(0,Math.floor(t));return Math.floor(s/60)+':'+(s%60<10?'0':'')+(s%60)}
+function bchStep(dt){if(!opt.bch||demo)return;BCH.acc+=dt;if(BCH.acc<bchK.dt)return;BCH.acc-=bchK.dt;var t=runTime/1000;if(t<bchK.t0)return;
+ var ri=-1,gp=1e9;for(var i=0;i<rivals.length;i++){var d=rivals[i].p-car.p;if(d>0&&d<gp){gp=d;ri=i}}BCH.s.push([t,ri<0?-1:gp,ri])}
+function bchFin(){var s=BCH.s,n=s.length,bd=0,bi=-1,bj=-1;for(var i=0;i<n;i++){if(s[i][2]<0)continue;for(var j=i+1;j<n&&s[j][0]-s[i][0]<=bchK.win+1e-6;j++){if(s[j][2]!==s[i][2])break;var dr=s[i][1]-s[j][1];if(dr>bd){bd=dr;bi=i;bj=j}}}
+ if(bi<0)return;var x=Math.round(bd/bchK.px*10)/10;if(x<0.1)return;var c=Math.max(bchK.min,Math.round(x*bchK.cps));coins+=c;
+ var nm=(rivals[s[bi][2]].pers||{}).name||'the car ahead';BCH.best={x:x,t:s[bi][0],t1:s[bj][0],nm:nm,c:c};
+ bannerEl.children[1].textContent='BEST CHASE: you closed '+x.toFixed(1)+' s on '+nm+' ('+bchT(s[bi][0])+')  +'+c+' coins'}
+window.__tc.bchK=bchK;window.__tc.bch=function(){return {best:BCH.best,n:BCH.s.length}};
 
 })();
 
