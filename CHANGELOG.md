@@ -2,6 +2,9 @@
 
 Short, plain lines. Each version is one playable sample page in `play/`.
 
+## v7.54
+- Candy Ridge: the three worst bends are about 25% wider, so the road, curbs and fences follow the new edge.
+
 ## v7.53
 - Gold Pick is on: finish lap 1 in 3rd or worse and the pick row gets a fourth gold card, where boost, coins and draft all double for that lap.
 
