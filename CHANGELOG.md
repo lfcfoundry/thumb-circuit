@@ -2,6 +2,9 @@
 
 Short, plain lines. Each version is one playable sample page in `play/`.
 
+## v7.62
+- Pick Your Pose: in the Garage, choose the pose your driver does on the podium. By place is the default. Wave, Spin and Banana split are free. Jump and Bounce unlock with sticker pages.
+
 ## v7.61
 - Sticker Slap: in the Garage, put a sticker you have won on your hood, left or right side. It shows on your car in races and in the garage, and rivals never get them.
 
