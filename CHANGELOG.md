@@ -2,6 +2,9 @@
 
 Short, plain lines. Each version is one playable sample page in `play/`.
 
+## v7.46
+- Sticker Book: 8 stickers per Road to the Big Top town (win, RAZOR!, flip, last-bend pass, rematch win, saved photo, 3 stars, town duel); locked ones show ?; a full page unlocks that town's paint; Stickers button on the title. Test knob for the grudge shove (unchanged).
+
 ## v7.45
 - Podium Pop: when a race ends the top three pop onto a podium (3rd, 2nd, 1st, 0.4 s apart) with a pose each; at 4th or lower your driver shrugs. Tap to skip. The photo and prize box wait for it.
 
