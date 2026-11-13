@@ -2,6 +2,9 @@
 
 Short, plain lines. Each version is one playable sample page in `play/`.
 
+## v7.57
+- Smoother ground drawing after long play, especially in Firefox: ground tiles reuse a small pool of canvases. No visible change.
+
 ## v7.56
 - Small pop-ups (Closing In, Shake It Off, Clean Bend) are smaller and show at most once every 4 seconds. Rewards are still paid; big pop-ups are unchanged.
 
