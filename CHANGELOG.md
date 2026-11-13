@@ -2,6 +2,12 @@
 
 Short, plain lines. Each version is one playable sample page in `play/`.
 
+## v7.49
+- Side-rub test switch (still off): every second rub on the same rival adds a grudge point.
+
+## v7.48
+- Test switch for graded side rubs (off): a light side contact becomes a short RUB instead of a BUMP.
+
 ## v7.47
 - Fair grudge shove (a grudge rival bumps no harder than others), Closing In pays +2 when the car ahead holds a grudge of 2 or more, and Podium Pop shows only when you finish top 3.
 
