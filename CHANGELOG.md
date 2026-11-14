@@ -2,6 +2,9 @@
 
 Short, plain lines. Each version is one playable sample page in `play/`.
 
+## v7.64
+- Turn Flags (off by default, in Settings): a flag stands on the outside edge of each real bend, where to start turning. It turns green with ON TIME if you turn in within 0.15 s of it. Information only.
+
 ## v7.63
 - Speedup: the minimap redraws only when the map changes, and the car dots move without redrawing the map. Firefox runs a little smoother. Chrome is unchanged.
 
