@@ -2,6 +2,9 @@
 
 Short, plain lines. Each version is one playable sample page in `play/`.
 
+## v7.68
+- Race-start jitter fix: the car pictures no longer bake in the background during a race, so the start stays smooth. Laptop Firefox check still pending.
+
 ## v7.67
 - Hatch and sedan are easier to tell apart: new proportions, roof add-ons and new default paints.
 
