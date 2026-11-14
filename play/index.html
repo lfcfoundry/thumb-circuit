@@ -2,7 +2,7 @@
 <html lang="en"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
 <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'unsafe-inline' 'wasm-unsafe-eval'; style-src 'unsafe-inline'; img-src data:; font-src data:">
-<title>Thumb Circuit sample page v7.66</title>
+<title>Thumb Circuit sample page v7.67</title>
 <style>
 html,body{margin:0;height:100%;background:#5a3d30;overflow:hidden;overscroll-behavior:none;touch-action:none;-webkit-user-select:none;user-select:none;font-family:ui-rounded,"Trebuchet MS",Verdana,sans-serif;color:#4a3228}
 #wrap{position:fixed;inset:0;display:flex;justify-content:center;align-items:flex-start}
@@ -248,7 +248,7 @@ body.dial #boost{display:none!important}body.dial #rk{top:250px!important}body.d
 <div class="trow2"><button class="tb" id="bHow" type="button">How to play</button><button class="tb" id="bDrv" type="button">Drivers</button><button class="tb" id="bStk" type="button">Stickers</button><button class="tb" id="bSet" type="button">Settings</button></div>
 <div class="lvrow" id="lvRow"></div>
 <p class="best" id="best"></p>
-<p class="legal">Sample v7.66 &middot; Forged by LFC Foundry &middot; MIT License</p>
+<p class="legal">Sample v7.67 &middot; Forged by LFC Foundry &middot; MIT License</p>
 </div>
 </div>
 <div id="panel" style="display:none"><div class="card"><button id="cx" type="button" aria-label="Close">X</button>
@@ -3016,6 +3016,12 @@ var VS_PT='in vec2 aP;in vec4 j0;in vec4 j1;in vec4 j2;uniform vec2 uCam;uniform
 
 (function(){
 'use strict';
+(function(){var A=ART2,SB=A.SB,om={hatch:A.models.hatch,sedan:A.models.sedan};
+ function scl(ps,sx,sy,sz){return ps.map(function(q){var f=q.fn;return {fn:function(u,v){var t=f(u,v).slice();t[0]*=sx;t[1]*=sy;t[2]*=sz;if(t.length>=6){var nx=t[3]/sx,ny=t[4]/sy,nz=t[5]/sz,l=Math.hypot(nx,ny,nz)||1;t[3]=nx/l;t[4]=ny/l;t[5]=nz/l}return t},material:q.material,nu:q.nu,nv:q.nv}})}
+ var RK=A.ramp('#3a3a48'),LT=A.ramp('#ffd25a'),BX=A.ramp('#ffb347'),SP=A.ramp('#2f4a7a');
+ A.models.hatch=function(c,s){var ps=om.hatch(c,s).concat([A.P(SB.rod([-6,-1,13.2],[-6,7,13.2],0.7,0.7),RK,6,8),A.P(SB.rod([6,-1,13.2],[6,7,13.2],0.7,0.7),RK,6,8),A.P(SB.rod([-6,0.5,13.4],[6,0.5,13.4],0.7,0.7),RK,6,8),A.P(SB.rod([-6,5.5,13.4],[6,5.5,13.4],0.7,0.7),RK,6,8),A.P(A.se([4.2,2.6,1.6],[0,2.8,15],0.5),BX,8,12)]);return scl(ps,1.08,0.82,1.15)};
+ A.models.sedan=function(c,s){var ps=om.sedan(c,s).concat([A.P(A.se([3,1.6,1.1],[0,1.5,14.2],0.5),LT,8,12),A.P(A.se([8.6,1.6,0.6],[0,16.6,10.4],0.5),SP,8,12)]);return scl(ps,0.94,1.2,0.9)};
+ var w=A.WH;w.hatch=[w.hatch[0]*1.08,[w.hatch[1][0]*0.82,w.hatch[1][1]*0.82]].concat(w.hatch.slice(2));w.sedan=[w.sedan[0]*0.94,[w.sedan[1][0]*1.2,w.sedan[1][1]*1.2]].concat(w.sedan.slice(2))})();
 var cv=document.getElementById('cv'),ctx=cv.getContext('2d',{alpha:false});
 var mini=document.getElementById('mini'),mctx=mini.getContext('2d'),gauge=document.getElementById('gauge'),gctx=gauge.getContext('2d');
 var W=360,VW=360,H=640,SC=3,dpr=1,RW=97,LAPS=2,L=0,WX=null;
@@ -3095,7 +3101,7 @@ function ss(x){return x*x*(3-2*x)}
 // ---- sprites ----
 var decals=[],sheepL=[],birds=[],birdT=2;
 var SPR={decal:[],prop:{},car:{},tree:[],bush:[],coin:null,star:null,bolt:null,stand:null,barn:null,house:null,pat:{}};
-var CARDEF={hatch:['#e85446','#fff3dc'],sedan:['#5aa0e6','#fff3dc'],sports:['#ffcf4a','#e85446'],truck:['#7fcf6a','#c9a06f'],kart:['#b38ad6','#ffd25a'],monster:['#3fa856','#ffc934'],bike:['#e8862e','#2f3a4a'],trike:['#2fa8a0','#fff3dc'],van:['#c9b28a','#e85446'],robo:['#a2a8b0','#5a6068'],f1:['#d8322e','#fff3dc']};
+var CARDEF={hatch:['#ff8a2a','#2f3a4a'],sedan:['#2f9e5a','#ffd25a'],sports:['#ffcf4a','#e85446'],truck:['#7fcf6a','#c9a06f'],kart:['#b38ad6','#ffd25a'],monster:['#3fa856','#ffc934'],bike:['#e8862e','#2f3a4a'],trike:['#2fa8a0','#fff3dc'],van:['#c9b28a','#e85446'],robo:['#a2a8b0','#5a6068'],f1:['#d8322e','#fff3dc']};
 function meCol(kind){return [opt.col||CARDEF[kind][0],opt.str||CARDEF[kind][1]]}
 function meKey(kind){return kind+opt.view+'|'+opt.col+'|'+opt.str+skKey()}
 function getCar(kind,me){var key=me?meKey(kind):kind+opt.view+(ALT[kind]?ALT[kind][0]:'');if(SPR.car[key])return SPR.car[key];var d=me?meCol(kind):(ALT[kind]||CARDEF[kind]);if(!glOn()){var fr=me?skBake(kind,d):ART2.bakeCar(kind,d[0],d[1],NF,opt.view?0.75:0);SPR.car[key]=fr.map(toCv);return SPR.car[key]}
@@ -3957,7 +3963,7 @@ function report(){
  var a=Array.prototype.slice.call(frames,0,nf).sort(function(x,y){return x-y}),n=a.length,sum=0;for(var i=0;i<n;i++)sum+=a[i];
  var avg=n?sum/n:0,p95=n?a[Math.floor(n*0.95)]:0,worst=n?a[n-1]:0,fps=avg?1000/avg:0;
  var verdict=fps>=55?'smooth (about 60 FPS)':(fps>=40?'ok, some drops':'choppy');
- var t=['Thumb Circuit sample v7.66 results',
+ var t=['Thumb Circuit sample v7.67 results',
  'Car: '+opt.car+' (paint '+meCol(opt.car).join(' / ')+'), driver: '+DRV[opt.drv].n+', upgrades engine '+lv('eng')+' tires '+lv('tir')+' turbo '+lv('tur')+' body '+lv('bod')+', wallet '+wallet()+', level '+lvl()+' ('+(save.xp||0)+' XP, +'+xpGain+' this race, rivals x'+rivK().toFixed(2)+'), rivals: '+rivals.map(function(r){return r.pers.name+' ('+r.kind+')'}).join(', '),
  'Turns cost speed '+(opt.scr?'on':'off')+', Bouncy edges '+(opt.bnc?'on':'off')+', Rivals: '+(DIFN[opt.dif]||'Normal')+' (rewards x'+(DIFM[opt.dif]||1)+' for a top 3 finish, bonus coins this race '+difB+'), '+'Steering: '+(opt.steer===1?'1 slide thumb':'2 drag a target')+', thumb reach '+['short','medium','long'][opt.sens|0]+', road help '+(opt.assist?'on':'off (coins and fans x1.5)'),
  'Track: '+TRACKS[curTrk].n+', view: '+(opt.view?'tilted':'top-down')+', time of day: '+TOD[opt.tod].n,
