@@ -2,6 +2,9 @@
 
 Short, plain lines. Each version is one playable sample page in `play/`.
 
+## v7.78
+- Eight driver portraits redrawn (owner-approved).
+
 ## v7.77
 - Trophy shelf (working name): your story ribbons and rival cups sit on a shelf on the Road to the Big Top card. A Previously on recap opens with your star count. Fancy has a red scarf and a red bandana, and Prince Chimp is the big bad.
 
