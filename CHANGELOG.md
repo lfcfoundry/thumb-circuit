@@ -2,6 +2,9 @@
 
 Short, plain lines. Each version is one playable sample page in `play/`.
 
+## v8.01
+- The Suburbs: streetlights light the finish stretch, and houses, parks, schools and gas stations line the road. Lose streaks and rematch lines in the story.
+
 ## v8.00
 - New track: The Suburbs. The sun sets during the race, and streetlights light parts of the road. Beach race 2 in the story now runs on it. Big Top Overnight is steady night.
 
