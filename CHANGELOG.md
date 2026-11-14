@@ -2,6 +2,9 @@
 
 Short, plain lines. Each version is one playable sample page in `play/`.
 
+## v8.00
+- New track: The Suburbs. The sun sets during the race, and streetlights light parts of the road. Beach race 2 in the story now runs on it. Big Top Overnight is steady night.
+
 ## v7.79
 - Driver portraits: Nia has a new look, and Priya and Diego are back to their originals.
 
