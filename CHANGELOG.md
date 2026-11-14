@@ -2,6 +2,9 @@
 
 Short, plain lines. Each version is one playable sample page in `play/`.
 
+## v7.76
+- Story pass 3: a rival intro scene when you first reach each town, a mid-chapter beat after the second race of each town, and an epilogue after your first final-duel win, with a Read the epilogue button once the road is complete.
+
 ## v7.75
 - Campaign story: a first-day intro scene, win and lose lines for each rival duel, a Fancy portrait, and a finale poster with your face and name, with a Save poster button.
 
