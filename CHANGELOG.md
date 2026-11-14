@@ -2,6 +2,9 @@
 
 Short, plain lines. Each version is one playable sample page in `play/`.
 
+## v7.75
+- Campaign story: a first-day intro scene, win and lose lines for each rival duel, a Fancy portrait, and a finale poster with your face and name, with a Save poster button.
+
 ## v7.74
 - Story: you are the rookie. Chapter text and rival duel lines use your driver name, and your portrait sits beside the story on the Road to the Big Top card. The change screen is also titled Who Is Racing?.
 
