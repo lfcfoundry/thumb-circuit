@@ -2,6 +2,9 @@
 
 Short, plain lines. Each version is one playable sample page in `play/`.
 
+## v7.79
+- Driver portraits: Nia has a new look, and Priya and Diego are back to their originals.
+
 ## v7.78
 - Eight driver portraits redrawn (owner-approved).
 
