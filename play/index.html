@@ -2,7 +2,7 @@
 <html lang="en"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
 <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'unsafe-inline' 'wasm-unsafe-eval'; style-src 'unsafe-inline'; img-src data:; font-src data:">
-<title>Thumb Circuit sample page v7.73</title>
+<title>Thumb Circuit sample page v7.74</title>
 <style>
 html,body{margin:0;height:100%;background:#5a3d30;overflow:hidden;overscroll-behavior:none;touch-action:none;-webkit-user-select:none;user-select:none;font-family:ui-rounded,"Trebuchet MS",Verdana,sans-serif;color:#4a3228}
 #wrap{position:fixed;inset:0;display:flex;justify-content:center;align-items:flex-start}
@@ -236,6 +236,7 @@ body.dial #boost{display:none!important}body.dial #rk{top:250px!important}body.d
 .pkf{padding:2px;border:3px solid transparent;border-radius:50%;background:none;cursor:pointer}.pkf.on{border-color:#e08a2c;background:#fff1c4}
 .pkf .face{width:100%!important;height:auto!important;display:block}
 .pkg{width:100%;padding:12px;border:0;border-radius:12px;background:#3fa856;color:#fff;font-family:inherit;font-weight:bold;font-size:16px;cursor:pointer;min-height:44px}.pkg:disabled{opacity:.4;cursor:default}
+.tstory{display:flex;align-items:center;gap:10px}.tstory .face{flex:none;float:none;margin:0}
 </style></head><body class="title">
 <div id="wrap"><canvas id="cv"></canvas><canvas id="glc"></canvas><canvas id="fxc"></canvas><canvas id="pxc"></canvas><div id="fpl"></div></div>
 <div id="hud"><span class="pill" id="lap">LAP 1/2</span><span class="pill" id="coins">COINS 0</span><span class="pill" id="pos">P3</span><span class="meter"><i id="crowd"></i></span><button id="menuBtn" type="button">MENU</button></div>
@@ -261,7 +262,7 @@ body.dial #boost{display:none!important}body.dial #rk{top:250px!important}body.d
 <div class="trow2"><button class="tb" id="bHow" type="button">How to play</button><button class="tb" id="bDrv" type="button">Drivers</button><button class="tb" id="bStk" type="button">Stickers</button><button class="tb" id="bSet" type="button">Settings</button></div>
 <div class="lvrow" id="lvRow"></div>
 <p class="best" id="best"></p>
-<p class="legal">Sample v7.73 &middot; Forged by LFC Foundry &middot; MIT License</p>
+<p class="legal">Sample v7.74 &middot; Forged by LFC Foundry &middot; MIT License</p>
 </div>
 </div>
 <div id="panel" style="display:none"><div class="card"><button id="cx" type="button" aria-label="Close">X</button>
@@ -3479,12 +3480,12 @@ var TGOAL={coins:function(n){return ['Collect '+n+' coins',function(){return coi
  road:function(){return ['Spend less than 2 seconds off the road',function(){return offT<2}]},drift:function(n){return ['Drift for '+n+' seconds in total',function(){return driftTime>=n}]},fans:function(n){return ['Win '+n+' fans in the race',function(){return fanPts>=n}]},
  draft:function(n){return ['Slipstream a rival '+(n>1?n+' times':'once'),function(){return nDraft>=n}]},ram:function(){return ['Ram a rival while boosting',function(){return nRam>0}]},clean:function(){return ['Hit the fence no more than once',function(){return (MX.fence||0)<=1}]}};
 var TOWNS=[
- {n:'Meadow',ev:[[0,0,'coins',20],[0,1,'short'],[1,0,'rocket']],duel:[0,'Blaze'],s:'The Fruit Circus is rolling to the Grand Circuit finals, and somebody has pinched its star car. Fancy needs a ticket out of Meadow. Win a star in each race to move on.',d:'Blaze guards the road out of town. "Nobody leaves Meadow faster than me!"'},
- {n:'Orchard',ev:[[2,0,'road'],[2,1,'drift',5],[2,2,'fans',20]],duel:[2,'Mellow'],s:'Apple pickers swear they saw a shiny car heading for the coast. Mind the speed bump.',d:'Mellow yawns at the start line. "Race you to the cider stand. No rush."'},
- {n:'Beach',ev:[[3,0,'coins',30],[6,0,'draft',2],[3,1,'ram']],duel:[3,'Prince Chimp'],s:'Prince Chimp is on his tiki throne, grinning. He knows something about that car.',d:'Prince Chimp hops off his throne. "Beat me on my own beach and I might talk!"'},
- {n:'Candy',ev:[[4,0,'clean'],[4,1,'drift',8],[4,2,'rocket']],duel:[4,'Careful'],s:'Chimp pointed at the candy hills and laughed. The trail is sticky, and so is the road.',d:'Careful polishes a mirror. "I never crash. You will."'},
- {n:'Glacier',ev:[[5,0,'coins',35],[5,2,'road'],[6,1,'fans',30]],duel:[5,'Pineapple Pete'],s:'The pineapple crew hold the ice pass. They only open it for racers who can keep it on the road.',d:'Pineapple Pete taps his helmet. "Past me is the Big Top. Good luck, banana."'},
- {n:'Big Top',ev:[[7,0,'fans',30],[7,1,'drift',10],[7,2,'clean']],duel:[7,'Prince Chimp'],s:'The stolen star car is parked under the Big Top, and Prince Chimp is in the driving seat. Three shows, then the final duel.',d:'Prince Chimp revs the star car. "One last lap around the loop. Winner keeps the car!"'}];
+ {n:'Meadow',ev:[[0,0,'coins',20],[0,1,'short'],[1,0,'rocket']],duel:[0,'Blaze'],s:'The Fruit Circus is rolling to the Grand Circuit finals, and somebody has pinched its star car. Fancy needs a ticket out of Meadow, and {you}, the newest rookie at the Fruit Circus, is the only one who can race for it. Win a star in each race to move on.',d:'Blaze guards the road out of town. "A rookie named {you}? Nobody leaves Meadow faster than me!"'},
+ {n:'Orchard',ev:[[2,0,'road'],[2,1,'drift',5],[2,2,'fans',20]],duel:[2,'Mellow'],s:'Apple pickers swear they saw a shiny car heading for the coast. Fancy rides along and teaches {you} the road. Mind the speed bump.',d:'Mellow yawns at the start line. "Rookie {you}, race you to the cider stand. No rush."'},
+ {n:'Beach',ev:[[3,0,'coins',30],[6,0,'draft',2],[3,1,'ram']],duel:[3,'Prince Chimp'],s:'Prince Chimp is on his tiki throne, grinning. He knows something about that car, and he is curious about the rookie, {you}.',d:'Prince Chimp hops off his throne. "Beat me on my own beach, rookie {you}, and I might talk!"'},
+ {n:'Candy',ev:[[4,0,'clean'],[4,1,'drift',8],[4,2,'rocket']],duel:[4,'Careful'],s:'Chimp pointed at the candy hills and laughed. The trail is sticky, and so is the road. Fancy says {you} is getting good, but not that good yet.',d:'Careful polishes a mirror. "I never crash. Rookie {you} will."'},
+ {n:'Glacier',ev:[[5,0,'coins',35],[5,2,'road'],[6,1,'fans',30]],duel:[5,'Pineapple Pete'],s:'The pineapple crew hold the ice pass. They only open it for racers who can keep it on the road. {you} is not a rookie anymore, so prove it.',d:'Pineapple Pete taps his helmet. "Past me is the Big Top, {you}. Good luck, banana."'},
+ {n:'Big Top',ev:[[7,0,'fans',30],[7,1,'drift',10],[7,2,'clean']],duel:[7,'Prince Chimp'],s:'The stolen star car is parked under the Big Top, and Prince Chimp is in the driving seat. Three shows, then the final duel. The newest rookie against the biggest rival, {you}.',d:'Prince Chimp revs the star car. "One last lap around the loop, {you}. Winner keeps the car!"'}];
 var TREW=['sedan','trike','bike','van','truck','f1'],tour=-1,tourBack=0,tourOpt=null,tourRes=null;
 function tSave(){if(!save.tour)save.tour={st:[],loss:[]};return save.tour}
 function tNode(i){var tw=Math.floor(i/4),k=i%4,W2=TOWNS[tw];if(!W2)return null;if(k===3)return {i:i,tw:tw,duel:1,trk:W2.duel[0],tod:tw%3===2?1:0,who:W2.duel[1],name:W2.n+' duel',gt:'Beat '+W2.duel[1]+' in a one on one race'};var e=W2.ev[k],g=TGOAL[e[2]](e[3]);return {i:i,tw:tw,duel:0,trk:e[0],tod:e[1],name:W2.n+' race '+(k+1),gt:g[0],gf:g[1]}}
@@ -3493,7 +3494,7 @@ function tStars(){var S=tSave(),n=0,i;for(i=0;i<24;i++)n+=S.st[i]||0;return n}
 function starEl(n){var r=el('span','sr'),i;for(i=0;i<3;i++)r.appendChild(el('i',i<n?'on':''));return r}
 function tourCard(){var S=tSave(),at=tAt(),host=document.getElementById('tourList'),nd=tNode(Math.min(at,23)),done=at>=24;host.textContent='';
  document.getElementById('tourStars').textContent='Stars '+tStars()+' of 72';
- document.getElementById('tourStory').textContent=done?'Fancy drove the star car back to the Fruit Circus, and Prince Chimp got a front row seat. The road to the Big Top is complete. Replay any event for more stars.':(nd.duel?TOWNS[nd.tw].d:TOWNS[nd.tw].s);
+ var tsE=document.getElementById('tourStory');tsE.textContent='';tsE.appendChild(faceEl(meFace(),40));tsE.appendChild(document.createTextNode(stx(done?'{you} drove the star car back to the Fruit Circus, and Fancy handed over the star badge. The road to the Big Top is complete, and the rookie is now the star. Replay any event for more stars.':(nd.duel?TOWNS[nd.tw].d:TOWNS[nd.tw].s))));
  TOWNS.forEach(function(W2,tw){var row=el('div','twn'+(tw*4>at?' lock':'')),k;row.appendChild(el('b','',(tw+1)+'. '+W2.n));var chips=el('div','tch');for(k=0;k<4;k++){(function(i){var st=S.st[i]||0,b=el('button','tc'+(i===tourSel?' sel':'')+(i>at?' lock':'')+(k===3?' du':''),(k===3?'Duel':'Race '+(k+1))+'\n'+(i>at?'locked':(st?'':'new')));if(st)b.appendChild(starEl(st));b.type='button';b.addEventListener('click',function(){if(i>at)return;tourSel=i;tourCard()});chips.appendChild(b)})(tw*4+k)}row.appendChild(chips);host.appendChild(row)});
  if(tourSel<0||tourSel>at||tourSel>23)tourSel=Math.min(at,23);var sn=tNode(tourSel);
  document.getElementById('tourGoal').textContent=sn.name+' on '+TRACKS[sn.trk].n+(sn.tod?(sn.tod===1?', at sunset':', at dusk'):'')+'.  Stars: '+(sn.duel?'finish, win, win by 3 seconds.':'finish in the top three, '+sn.gt.charAt(0).toLowerCase()+sn.gt.slice(1)+', win.')+(sn.duel&&(S.loss[sn.tw]||0)?'  Your rival is a little slower after each loss.':'');
@@ -3977,7 +3978,7 @@ function report(){
  var a=Array.prototype.slice.call(frames,0,nf).sort(function(x,y){return x-y}),n=a.length,sum=0;for(var i=0;i<n;i++)sum+=a[i];
  var avg=n?sum/n:0,p95=n?a[Math.floor(n*0.95)]:0,worst=n?a[n-1]:0,fps=avg?1000/avg:0;
  var verdict=fps>=55?'smooth (about 60 FPS)':(fps>=40?'ok, some drops':'choppy');
- var t=['Thumb Circuit sample v7.73 results',
+ var t=['Thumb Circuit sample v7.74 results',
  'Car: '+opt.car+' (paint '+meCol(opt.car).join(' / ')+'), driver: '+pName()+', upgrades engine '+lv('eng')+' tires '+lv('tir')+' turbo '+lv('tur')+' body '+lv('bod')+', wallet '+wallet()+', level '+lvl()+' ('+(save.xp||0)+' XP, +'+xpGain+' this race, rivals x'+rivK().toFixed(2)+'), rivals: '+rivals.map(function(r){return r.pers.name+' ('+r.kind+')'}).join(', '),
  'Turns cost speed '+(opt.scr?'on':'off')+', Bouncy edges '+(opt.bnc?'on':'off')+', Rivals: '+(DIFN[opt.dif]||'Normal')+' (rewards x'+(DIFM[opt.dif]||1)+' for a top 3 finish, bonus coins this race '+difB+'), '+'Steering: '+(opt.steer===1?'1 slide thumb':'2 drag a target')+', thumb reach '+['short','medium','long'][opt.sens|0]+', road help '+(opt.assist?'on':'off (coins and fans x1.5)'),
  'Track: '+TRACKS[curTrk].n+', view: '+(opt.view?'tilted':'top-down')+', time of day: '+TOD[opt.tod].n,
@@ -4720,6 +4721,7 @@ function pFaceCv(id){if(pfC[id])return pfC[id];var f=pFind(id)||PBK[0],c=documen
 function pFaceEl(id,px){var c=document.createElement('canvas');c.width=c.height=128;c.getContext('2d').drawImage(pFaceCv(id),0,0);c.style.width=c.style.height=px+'px';c.className='face pface';return c}
 
 // ---- v7.73 Pick Your Driver (working title): your name and face, saved. ----
+function stx(t){return String(t).split('{you}').join(pName())}
 var PK={order:null,off:0,custom:'',face:'juno'};
 function pName(){return save.pn||DRV[opt.drv].n}
 function meFace(){return save.pf?'pf:'+save.pf:opt.drv}
@@ -4730,7 +4732,7 @@ function pkClose(){var o=document.getElementById('pk');if(o&&o.parentNode)o.pare
 function pkPick(name,id,done){save.pn=name;save.pf=id;store();pkClose();if(opt.vib)vibRaw(20);try{bestLine()}catch(e){}if(done)done()}
 function pkShow(done,change){pkClose();if(!PK.order){PK.order=PBK.map(function(p,i){return i});for(var i=PK.order.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1)),t=PK.order[i];PK.order[i]=PK.order[j];PK.order[j]=t}}
  var o=el('div'),cd=el('div','pkc'),row=el('div','pkr'),k;o.id='pk';o.setAttribute('role','dialog');o.setAttribute('aria-label','Pick your driver');
- cd.appendChild(el('h2','',change?'Change your driver':'Who is racing?'));cd.appendChild(el('p','pkh','Tap a driver to race as them.'));
+ cd.appendChild(el('h2','','Who is racing?'));cd.appendChild(el('p','pkh','Tap a driver to race as them.'));
  for(k=0;k<3;k++)(function(p){var b=el('button','pkb');b.type='button';b.appendChild(pFaceEl(p.id,68));b.appendChild(el('span','',p.n));b.addEventListener('click',function(){pkPick(p.n,p.id,done)});row.appendChild(b)})(PBK[PK.order[(PK.off+k)%PBK.length]]);
  cd.appendChild(row);var more=el('button','pkm','Show 3 more');more.type='button';more.addEventListener('click',function(){PK.off=(PK.off+3)%PBK.length;pkShow(done,change)});cd.appendChild(more);
  cd.appendChild(el('p','pkh','Or type your own name and pick a face.'));
