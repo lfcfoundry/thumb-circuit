@@ -2,8 +2,14 @@
 
 Short, plain lines. Each version is one playable sample page in `play/`.
 
+## v7.71
+- Night headlights are dimmer and narrower, and each vehicle type has its own beam: sports narrow and long, monster wide, bike thin, kart short, robot a spotlight. Day pictures are unchanged.
+
 ## v7.70
 - Smoother steering on long cars in Firefox: the lean and front-wheel angle follow a smoothed steering value, so side-to-side jitter stops. The speed report has a Side jitter line.
+
+## v7.69
+- minor internal build, not published
 
 ## v7.68
 - Race-start jitter fix: the car pictures no longer bake in the background during a race, so the start stays smooth. Laptop Firefox check still pending.
