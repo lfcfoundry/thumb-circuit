@@ -2,6 +2,9 @@
 
 Short, plain lines. Each version is one playable sample page in `play/`.
 
+## v7.67
+- Hatch and sedan are easier to tell apart: new proportions, roof add-ons and new default paints.
+
 ## v7.66
 - Speed: faster title screen and scenery setup. The minimap and speedometer are now semi-transparent, and they fade more when your car is under them. Announcements, countdown lights, messages and the feed sit above every HUD element.
 
