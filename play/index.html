@@ -2,7 +2,7 @@
 <html lang="en"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
 <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'unsafe-inline' 'wasm-unsafe-eval'; style-src 'unsafe-inline'; img-src data:; font-src data:">
-<title>Thumb Circuit sample page v7.75</title>
+<title>Thumb Circuit sample page v7.76</title>
 <style>
 html,body{margin:0;height:100%;background:#5a3d30;overflow:hidden;overscroll-behavior:none;touch-action:none;-webkit-user-select:none;user-select:none;font-family:ui-rounded,"Trebuchet MS",Verdana,sans-serif;color:#4a3228}
 #wrap{position:fixed;inset:0;display:flex;justify-content:center;align-items:flex-start}
@@ -241,6 +241,8 @@ body.dial #boost{display:none!important}body.dial #rk{top:250px!important}body.d
 .itc .itl{display:flex;gap:10px;align-items:center;margin:10px 0;text-align:left}.itc .itb{background:#fff1c4;border:2px solid #c98d4a;border-radius:12px;padding:8px 10px;font-size:14px;line-height:1.3;font-weight:bold}
 .dql{display:flex;gap:8px;align-items:center;margin:6px 0;text-align:left}.dqb{background:#fff1c4;border:2px solid #c98d4a;border-radius:12px;padding:6px 8px;font-size:13px;font-weight:bold}
 .ptr{text-align:center;margin:8px 0}.ptc{width:100%;max-width:320px;display:block;margin:8px auto;border:3px solid #4a3228;border-radius:12px;background:#fff3dc}
+
+.dqc{margin:8px 0;padding:6px;border:2px dashed #c98d4a;border-radius:12px;text-align:left}.dqc b{font-size:13px}
 </style></head><body class="title">
 <div id="wrap"><canvas id="cv"></canvas><canvas id="glc"></canvas><canvas id="fxc"></canvas><canvas id="pxc"></canvas><div id="fpl"></div></div>
 <div id="hud"><span class="pill" id="lap">LAP 1/2</span><span class="pill" id="coins">COINS 0</span><span class="pill" id="pos">P3</span><span class="meter"><i id="crowd"></i></span><button id="menuBtn" type="button">MENU</button></div>
@@ -266,7 +268,7 @@ body.dial #boost{display:none!important}body.dial #rk{top:250px!important}body.d
 <div class="trow2"><button class="tb" id="bHow" type="button">How to play</button><button class="tb" id="bDrv" type="button">Drivers</button><button class="tb" id="bStk" type="button">Stickers</button><button class="tb" id="bSet" type="button">Settings</button></div>
 <div class="lvrow" id="lvRow"></div>
 <p class="best" id="best"></p>
-<p class="legal">Sample v7.75 &middot; Forged by LFC Foundry &middot; MIT License</p>
+<p class="legal">Sample v7.76 &middot; Forged by LFC Foundry &middot; MIT License</p>
 </div>
 </div>
 <div id="panel" style="display:none"><div class="card"><button id="cx" type="button" aria-label="Close">X</button>
@@ -3496,7 +3498,7 @@ function tNode(i){var tw=Math.floor(i/4),k=i%4,W2=TOWNS[tw];if(!W2)return null;i
 function tAt(){var S=tSave(),i=0;while(i<24&&(S.st[i]||0)>0)i++;return i}
 function tStars(){var S=tSave(),n=0,i;for(i=0;i<24;i++)n+=S.st[i]||0;return n}
 function starEl(n){var r=el('span','sr'),i;for(i=0;i<3;i++)r.appendChild(el('i',i<n?'on':''));return r}
-function tourCard(){var S=tSave(),at=tAt(),host=document.getElementById('tourList'),nd=tNode(Math.min(at,23)),done=at>=24;host.textContent='';if(save.tourIn!==1&&!pkSkip()){save.tourIn=1;store();if(!S.st.length)setTimeout(introShow,250)}if(done)host.appendChild(posterEl());
+function tourCard(){var S=tSave(),at=tAt(),host=document.getElementById('tourList'),nd=tNode(Math.min(at,23)),done=at>=24;host.textContent='';if(save.tourIn!==1&&!pkSkip()){save.tourIn=1;store();if(!S.st.length)setTimeout(introShow,250)}if(done){host.appendChild(posterEl());host.appendChild(epiBtn())}tscCheck(at);
  document.getElementById('tourStars').textContent='Stars '+tStars()+' of 72';
  var tsE=document.getElementById('tourStory');tsE.textContent='';tsE.appendChild(faceEl(meFace(),40));tsE.appendChild(document.createTextNode(stx(done?'{you} drove the star car back to the Fruit Circus, and Fancy handed over the star badge. The road to the Big Top is complete, and the rookie is now the star. Replay any event for more stars.':(nd.duel?TOWNS[nd.tw].d:TOWNS[nd.tw].s))));
  TOWNS.forEach(function(W2,tw){var row=el('div','twn'+(tw*4>at?' lock':'')),k;row.appendChild(el('b','',(tw+1)+'. '+W2.n));var chips=el('div','tch');for(k=0;k<4;k++){(function(i){var st=S.st[i]||0,b=el('button','tc'+(i===tourSel?' sel':'')+(i>at?' lock':'')+(k===3?' du':''),(k===3?'Duel':'Race '+(k+1))+'\n'+(i>at?'locked':(st?'':'new')));if(st)b.appendChild(starEl(st));b.type='button';b.addEventListener('click',function(){if(i>at)return;tourSel=i;tourCard()});chips.appendChild(b)})(tw*4+k)}row.appendChild(chips);host.appendChild(row)});
@@ -3512,7 +3514,7 @@ function tourEnd(pl){var sn=tNode(tour),S=tSave(),stars=0,goal=false,won=pl===1;
  tourRes={first:!!(sn.duel&&won&&!old),sn:sn,stars:stars,gain:gain,goal:goal,won:won,rew:rew,pl:pl};store()}
 function tourBox(){var b=document.getElementById('tourBox');b.textContent='';if(!tourRes)return;var r=tourRes,d=el('div','lvup');var hb=el('b','','ROAD TO THE BIG TOP  '+r.sn.name+'  '+(r.stars?'':'no star yet'));if(r.stars)hb.appendChild(starEl(r.stars));d.appendChild(hb);
  var t=r.sn.duel?(r.won?'You beat '+r.sn.who+'!':(finished?r.sn.who+' won this time. Your rival will be a little slower on the next try.':'Duel not finished.')):('Top three: '+(r.pl<=3&&finished?'yes':'no')+'.  '+r.sn.gt+': '+(r.goal?'yes':'no')+'.  Win: '+(r.won?'yes':'no')+'.');
- if(r.sn.duel&&finished&&DUELT[r.sn.tw]){var qd=el('div','dql');qd.appendChild(faceEl(r.sn.who.toLowerCase(),40));qd.appendChild(el('div','dqb',r.sn.who+': "'+stx(r.won?DUELT[r.sn.tw].w:DUELT[r.sn.tw].l)+'"'));d.appendChild(qd)}gspShow(b,r);d.appendChild(el('span','',t+(r.gain?'  New stars pay +'+r.gain*10+' coins.':'')+(r.rew?'  You earned the '+r.rew+', and 50 coins!':'')+(r.stars?'':'  Earn at least one star to move on.')));b.appendChild(d);if(r.first&&r.sn.tw===5)b.appendChild(posterEl())}
+ if(r.sn.duel&&finished&&DUELT[r.sn.tw]){var qd=el('div','dql');qd.appendChild(faceEl(r.sn.who.toLowerCase(),40));qd.appendChild(el('div','dqb',r.sn.who+': "'+stx(r.won?DUELT[r.sn.tw].w:DUELT[r.sn.tw].l)+'"'));d.appendChild(qd)}gspShow(b,r);d.appendChild(el('span','',t+(r.gain?'  New stars pay +'+r.gain*10+' coins.':'')+(r.rew?'  You earned the '+r.rew+', and 50 coins!':'')+(r.stars?'':'  Earn at least one star to move on.')));b.appendChild(d);if(r.first&&r.sn.tw===5){b.appendChild(posterEl());epiAuto()}if(!r.sn.duel&&r.sn.i%4===1&&finished&&r.stars)midAuto(r.sn.tw,b)}
 function rivK(){return demo?1:(1+Math.min(0.1,0.012*(lvl()-1)))*(DIF[opt.dif]||1)*(opt.assist?1:NA.rk)}
 // ---- rivals ----
 var PERS=[{name:'Blaze',v:1.04,c:0.55,mist:0.07,block:true,line:0.2},{name:'Mellow',v:1.0,c:0.8,mist:0,block:false,line:-0.55},{name:'Careful',v:0.93,c:1.25,mist:0,block:false,line:0.3}];
@@ -3982,7 +3984,7 @@ function report(){
  var a=Array.prototype.slice.call(frames,0,nf).sort(function(x,y){return x-y}),n=a.length,sum=0;for(var i=0;i<n;i++)sum+=a[i];
  var avg=n?sum/n:0,p95=n?a[Math.floor(n*0.95)]:0,worst=n?a[n-1]:0,fps=avg?1000/avg:0;
  var verdict=fps>=55?'smooth (about 60 FPS)':(fps>=40?'ok, some drops':'choppy');
- var t=['Thumb Circuit sample v7.75 results',
+ var t=['Thumb Circuit sample v7.76 results',
  'Car: '+opt.car+' (paint '+meCol(opt.car).join(' / ')+'), driver: '+pName()+', upgrades engine '+lv('eng')+' tires '+lv('tir')+' turbo '+lv('tur')+' body '+lv('bod')+', wallet '+wallet()+', level '+lvl()+' ('+(save.xp||0)+' XP, +'+xpGain+' this race, rivals x'+rivK().toFixed(2)+'), rivals: '+rivals.map(function(r){return r.pers.name+' ('+r.kind+')'}).join(', '),
  'Turns cost speed '+(opt.scr?'on':'off')+', Bouncy edges '+(opt.bnc?'on':'off')+', Rivals: '+(DIFN[opt.dif]||'Normal')+' (rewards x'+(DIFM[opt.dif]||1)+' for a top 3 finish, bonus coins this race '+difB+'), '+'Steering: '+(opt.steer===1?'1 slide thumb':'2 drag a target')+', thumb reach '+['short','medium','long'][opt.sens|0]+', road help '+(opt.assist?'on':'off (coins and fans x1.5)'),
  'Track: '+TRACKS[curTrk].n+', view: '+(opt.view?'tilted':'top-down')+', time of day: '+TOD[opt.tod].n,
@@ -4791,9 +4793,42 @@ function introShow(){var o=el('div'),cd=el('div','pkc itc');o.id='pk';o.appendCh
  cd.appendChild(ln(fancyEl(52),'Bad news: the star car is gone, and Prince Chimp is grinning about it.'));
  cd.appendChild(ln(save.pf?pFaceEl(save.pf,52):faceEl(opt.drv,52),'Then I will race to get it back. Where do I start?'));
  cd.appendChild(ln(fancyEl(52),'Meadow. Win a star in each race to open the road. Ready?'));
- var b=el('button','pkg',"Let's go!");b.type='button';b.addEventListener('click',function(){pkClose()});cd.appendChild(b);document.body.appendChild(o)}
+ var b=el('button','pkg',"Let's go!");b.type='button';b.addEventListener('click',function(){pkClose();if(!pkSkip()&&scBit('tsc',0))setTimeout(function(){rivalIntro(0)},150)});cd.appendChild(b);document.body.appendChild(o)}
 window.__tc.intro=introShow;window.__tc.poster=posterCv;
 window.__tc.tourBoxT=function(r,f){tourRes=r;finished=f;tourBox()};
+
+
+// ---- v7.76 story pass 3: rival intro scene per town, mid-chapter beat after race 2, epilogue. ----
+var RIVI=[
+ [['blaze','Hey, new face! I am Blaze, and nobody leaves Meadow faster than me.'],['m','I am {you}. I only need one ticket out of town.'],['f','Blaze guards the road. Win a star in each race and he has to race you for it.']],
+ [['mellow','Oh, hello. Mellow. Apples? Cider? Nobody races before lunch.'],['m','Have you seen a shiny star car come through?'],['mellow','Maybe. Ask me after the race. Slowly.'],['f','He is faster than he looks, {you}.']],
+ [['prince chimp','A rookie in my kingdom! I am Prince Chimp. Bananas are free, answers are not.'],['m','Where is the star car?'],['prince chimp','Beat me on my beach and maybe I will remember.'],['f','Careful, {you}. He loves to chat when he is winning.']],
+ [['careful','Do not touch the paint. I am Careful, and I have never crashed.'],['m','Never? In the whole circus?'],['careful','Not once. The candy hills are slippery, so I am even more careful.'],['f','Stay clean, {you}. Gentle steering beats a hard shove.']],
+ [['pineapple pete','Halt, banana! I am Pineapple Pete, keeper of the ice pass.'],['m','The Big Top is right behind you, Pete.'],['pineapple pete','Then you know how hard I will race. Show me you can keep it on the road.'],['f','You are not just a rookie anymore, {you}. Go show him.']],
+ [['prince chimp','Well, well, the rookie made it. Nice little star car, is it not? It is mine now.'],['m','It is the Fruit Circus car, Chimp. I am taking it home.'],['prince chimp','Three shows first. Then one last lap around the loop.'],['f','Everyone is watching, {you}. Have fun out there.']]];
+var MIDB=[
+ [['f','Two races down in Meadow, {you}! The crowd is starting to cheer your name.'],['m','I felt that last corner. Blaze is next, right?'],['f','Right. Win a star in the next race and he will race you for the road.']],
+ [['f','Good drive in Orchard, {you}. The pickers are waving at you.'],['m','A farmer gave me an apple! I think it is a good luck apple.'],['f','Keep it. The cider stand is up next, and Mellow is waiting.']],
+ [['f','Look at that beach, {you}. Prince Chimp keeps peeking at your lap times.'],['m','Is he nervous?'],['f','A little. He is also taking notes. Keep going.']],
+ [['f','Sticky road, {you}, and you are still clean. Even Careful noticed.'],['m','I am not going to say I never crash.'],['f','Smart. Just keep the next lap smooth.']],
+ [['f','The ice is shiny and so are you, {you}. Two races down at the pass.'],['m','My thumb is cold, but I feel great.'],['f','Pineapple Pete will not go easy. One more race, then the duel.']],
+ [['f','Two shows done under the Big Top, {you}! Hear that crowd?'],['m','That crowd is loud. Is it all for me?'],['f','Some of it. One more show, then the final duel for the star car.']]];
+var EPIL=[['f','The star car is home, {you}, and the whole Fruit Circus is cheering.'],['m','I am still a little dizzy. This morning I was the newest rookie.'],['f','Tonight you are the star on the poster.'],['blaze','Okay, okay. I want a rematch. Slowly this time.'],['m','Tell Prince Chimp the banana stand is on me.'],['f','Ha! Same time tomorrow, {you}? There are always more stars to win.']];
+function scFace(w,px){return w==='f'?fancyEl(px):w==='m'?(save.pf?pFaceEl(save.pf,px):faceEl(opt.drv,px)):faceEl(w,px)}
+function scLines(L,host){L.forEach(function(p){var d=el('div','itl');d.appendChild(scFace(p[0],52));d.appendChild(el('div','itb',stx(p[1])));host.appendChild(d)})}
+function scBit(k,tw){var b=1<<tw;if((save[k]|0)&b)return false;save[k]=(save[k]|0)|b;store();return true}
+function sceneShow(title,L,btn){var o=el('div'),cd=el('div','pkc itc');o.id='pk';o.appendChild(cd);cd.appendChild(el('h2','',title));scLines(L,cd);var b=el('button','pkg',btn||'Continue');b.type='button';b.addEventListener('click',function(){pkClose()});cd.appendChild(b);document.body.appendChild(o)}
+function rivalIntro(tw){if(!RIVI[tw])return;scBit('tsc',tw);sceneShow(TOWNS[tw].n+': meet '+TOWNS[tw].duel[1],RIVI[tw],'To the start line!')}
+function tscCheck(at){var tw=at>>2;if(at<24&&at%4===0&&tw>0&&!pkSkip()&&scBit('tsc',tw))setTimeout(function(){rivalIntro(tw)},250)}
+function midEl(tw){var d=el('div','dqc itc');d.appendChild(el('b','','Halfway through '+TOWNS[tw].n));scLines(MIDB[tw],d);return d}
+function midAuto(tw,b){if(!pkSkip()&&MIDB[tw]&&scBit('tsm',tw))b.appendChild(midEl(tw))}
+function epiShow(){sceneShow('Epilogue: the new star',EPIL,'Take a bow')}
+function epiAuto(){if(!pkSkip()&&!save.tsE){save.tsE=1;store();setTimeout(epiShow,900)}}
+function epiBtn(){var b=el('button','big alt phs','Read the epilogue');b.type='button';b.addEventListener('click',epiShow);return b}
+window.__tc.rival=rivalIntro;window.__tc.epi=epiShow;
+window.__tc.mid=function(tw){sceneShow('Halfway through '+TOWNS[tw].n,MIDB[tw],'Keep going!')};
+window.__tc.midBox=function(tw){window.__tc.tourBoxT({first:0,sn:{duel:0,i:tw*4+1,tw:tw,gt:'Collect coins',name:TOWNS[tw].n+' race 2'},stars:1,gain:1,goal:false,won:false,rew:'',pl:2},true);document.getElementById('tourBox').appendChild(midEl(tw));openCard('results')};
+window.__tc.duel=function(tw,won){window.__tc.tourBoxT({first:!!(won&&tw===5),sn:{duel:1,i:tw*4+3,tw:tw,who:TOWNS[tw].duel[1],name:TOWNS[tw].n+' duel'},stars:won?2:0,gain:won?2:0,goal:false,won:!!won,rew:'',pl:won?1:2},true);openCard('results')};
 
 })();
 
