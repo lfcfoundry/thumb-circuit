@@ -2,7 +2,7 @@
 <html lang="en"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
 <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'unsafe-inline' 'wasm-unsafe-eval'; style-src 'unsafe-inline'; img-src data:; font-src data:">
-<title>Thumb Circuit sample page v7.62</title>
+<title>Thumb Circuit sample page v7.63</title>
 <style>
 html,body{margin:0;height:100%;background:#5a3d30;overflow:hidden;overscroll-behavior:none;touch-action:none;-webkit-user-select:none;user-select:none;font-family:ui-rounded,"Trebuchet MS",Verdana,sans-serif;color:#4a3228}
 #wrap{position:fixed;inset:0;display:flex;justify-content:center;align-items:flex-start}
@@ -246,7 +246,7 @@ body.dial #boost{display:none!important}body.dial #rk{top:250px!important}body.d
 <div class="trow2"><button class="tb" id="bHow" type="button">How to play</button><button class="tb" id="bDrv" type="button">Drivers</button><button class="tb" id="bStk" type="button">Stickers</button><button class="tb" id="bSet" type="button">Settings</button></div>
 <div class="lvrow" id="lvRow"></div>
 <p class="best" id="best"></p>
-<p class="legal">Sample v7.62 &middot; Forged by LFC Foundry &middot; MIT License</p>
+<p class="legal">Sample v7.63 &middot; Forged by LFC Foundry &middot; MIT License</p>
 </div>
 </div>
 <div id="panel" style="display:none"><div class="card"><button id="cx" type="button" aria-label="Close">X</button>
@@ -3913,13 +3913,18 @@ var hudGK='',hudMK='',hudMI=null;function drawGauge(){
  g.font='bold 14px ui-rounded,"Trebuchet MS",Verdana,sans-serif';g.textAlign='center';g.fillText(String(kmh),cxg,cyg+18);g.font='bold 8px ui-rounded,Verdana,sans-serif';g.fillText('mph',cxg,cyg+27);
  if(dl)dialRing(g,cxg,cyg,R+7);g.setTransform(1,0,0,1,0,0)}
 function drawMini(){
- var q=mapC.sc*dpr*16,mk=mini.width+'|'+dpr+'|'+mapC.sc+'|'+mapC.ox+'|'+mapC.oy+'|'+Math.round(car.x*q)+','+Math.round(car.y*q);for(var j=0;j<rivals.length;j++)mk+='|'+Math.round(rivals[j].x*q)+','+Math.round(rivals[j].y*q);if(mk===hudMK&&hudMI===mapC.img)return;hudMK=mk;hudMI=mapC.img;
- var g=mctx,u=dpr;g.setTransform(1,0,0,1,0,0);g.clearRect(0,0,mini.width,mini.height);g.drawImage(mapC.img,0,0);g.scale(u,u);
- function mx(x){return x*mapC.sc+mapC.ox}function my(y){return y*mapC.sc+mapC.oy}
- var cols=['#ffcf4a','#5aa0e6','#7fcf6a'];
- for(var i=0;i<rivals.length;i++){g.fillStyle=cols[i];g.beginPath();g.arc(mx(rivals[i].x),my(rivals[i].y),3,0,7);g.fill()}
- g.fillStyle='#e85446';g.strokeStyle='#fff';g.lineWidth=1.5;g.beginPath();g.arc(mx(car.x),my(car.y),4,0,7);g.fill();g.stroke();
- g.setTransform(1,0,0,1,0,0)}
+ var mk=mini.width+'|'+dpr+'|'+mapC.sc+'|'+mapC.ox+'|'+mapC.oy;
+ if(mk!==hudMK||hudMI!==mapC.img){hudMK=mk;hudMI=mapC.img;var g=mctx;g.setTransform(1,0,0,1,0,0);g.clearRect(0,0,mini.width,mini.height);g.drawImage(mapC.img,0,0)}
+ mdUpd()}
+var MD=null;
+function mdMake(){var st=document.createElement('style');st.textContent='#mdots{position:fixed;right:11px;top:67px;z-index:3;pointer-events:none;overflow:hidden;border-radius:9px;transition:opacity .2s}#mdots span{position:absolute;left:0;top:0;border-radius:50%;will-change:transform}body.title #mdots{display:none}body.nightui #mdots{filter:brightness(.7) sepia(.12)}';document.head.appendChild(st);
+ var d=document.createElement('div');d.id='mdots';mini.parentNode.insertBefore(d,mini.nextSibling);var cols=['#ffcf4a','#5aa0e6','#7fcf6a'],sp=[],i,e;
+ for(i=0;i<4;i++){e=document.createElement('span');if(i<3)e.style.cssText='width:6px;height:6px;margin:-3px 0 0 -3px;background:'+cols[i];else e.style.cssText='width:6.5px;height:6.5px;margin:-3.25px 0 0 -3.25px;background:#e85446;box-shadow:0 0 0 1.5px #fff';d.appendChild(e);sp.push({e:e,t:'',v:1})}
+ MD={d:d,sp:sp,w:'',h:'',o:null}}
+function mdSet(o,x,y,on){if(on!==o.v){o.v=on;o.e.style.display=on?'':'none'}if(!on)return;var t='translate('+x.toFixed(2)+'px,'+y.toFixed(2)+'px)';if(t!==o.t){o.t=t;o.e.style.transform=t}}
+function mdUpd(){if(!MD)mdMake();var d=MD.d;if(mini.style.width!==MD.w||mini.style.height!==MD.h){MD.w=mini.style.width;MD.h=mini.style.height;d.style.width=MD.w;d.style.height=MD.h}
+ var op=mini.style.opacity;if(op!==MD.o){MD.o=op;d.style.opacity=op}
+ var sc=mapC.sc,ox=mapC.ox,oy=mapC.oy,i;for(i=0;i<3;i++){var r=rivals[i];mdSet(MD.sp[i],r?r.x*sc+ox:0,r?r.y*sc+oy:0,!!r)}mdSet(MD.sp[3],car.x*sc+ox,car.y*sc+oy,true)}
 function frame(t){
  requestAnimationFrame(frame);tAll=t/1000;if(curtW){if(t-curtW<2400){var cg=t-lastAll;if(lastAll&&t-curtW>20){curtN++;if(cg>curtMax)curtMax=cg;if(cg>25)curtJ++}}}lastAll=t;
  if(st==='title'){var d0=t-last;last=t;if(d0>250)d0=250;var sa=opt.assist;opt.assist=1;demo=true;update(Math.min(d0,50)/1000);opt.assist=sa;atrStep(Math.min(d0,250)/1000);draw();drawTT(t);return}
@@ -3938,7 +3943,7 @@ function report(){
  var a=Array.prototype.slice.call(frames,0,nf).sort(function(x,y){return x-y}),n=a.length,sum=0;for(var i=0;i<n;i++)sum+=a[i];
  var avg=n?sum/n:0,p95=n?a[Math.floor(n*0.95)]:0,worst=n?a[n-1]:0,fps=avg?1000/avg:0;
  var verdict=fps>=55?'smooth (about 60 FPS)':(fps>=40?'ok, some drops':'choppy');
- var t=['Thumb Circuit sample v7.62 results',
+ var t=['Thumb Circuit sample v7.63 results',
  'Car: '+opt.car+' (paint '+meCol(opt.car).join(' / ')+'), driver: '+DRV[opt.drv].n+', upgrades engine '+lv('eng')+' tires '+lv('tir')+' turbo '+lv('tur')+' body '+lv('bod')+', wallet '+wallet()+', level '+lvl()+' ('+(save.xp||0)+' XP, +'+xpGain+' this race, rivals x'+rivK().toFixed(2)+'), rivals: '+rivals.map(function(r){return r.pers.name+' ('+r.kind+')'}).join(', '),
  'Turns cost speed '+(opt.scr?'on':'off')+', Bouncy edges '+(opt.bnc?'on':'off')+', Rivals: '+(DIFN[opt.dif]||'Normal')+' (rewards x'+(DIFM[opt.dif]||1)+' for a top 3 finish, bonus coins this race '+difB+'), '+'Steering: '+(opt.steer===1?'1 slide thumb':'2 drag a target')+', thumb reach '+['short','medium','long'][opt.sens|0]+', road help '+(opt.assist?'on':'off (coins and fans x1.5)'),
  'Track: '+TRACKS[curTrk].n+', view: '+(opt.view?'tilted':'top-down')+', time of day: '+TOD[opt.tod].n,

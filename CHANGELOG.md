@@ -2,6 +2,9 @@
 
 Short, plain lines. Each version is one playable sample page in `play/`.
 
+## v7.63
+- Speedup: the minimap redraws only when the map changes, and the car dots move without redrawing the map. Firefox runs a little smoother. Chrome is unchanged.
+
 ## v7.62
 - Pick Your Pose: in the Garage, choose the pose your driver does on the podium. By place is the default. Wave, Spin and Banana split are free. Jump and Bounce unlock with sticker pages.
 
