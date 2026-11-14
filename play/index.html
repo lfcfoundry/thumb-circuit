@@ -2,7 +2,7 @@
 <html lang="en"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
 <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'unsafe-inline' 'wasm-unsafe-eval'; style-src 'unsafe-inline'; img-src data:; font-src data:">
-<title>Thumb Circuit sample page v7.67</title>
+<title>Thumb Circuit sample page v7.68</title>
 <style>
 html,body{margin:0;height:100%;background:#5a3d30;overflow:hidden;overscroll-behavior:none;touch-action:none;-webkit-user-select:none;user-select:none;font-family:ui-rounded,"Trebuchet MS",Verdana,sans-serif;color:#4a3228}
 #wrap{position:fixed;inset:0;display:flex;justify-content:center;align-items:flex-start}
@@ -248,7 +248,7 @@ body.dial #boost{display:none!important}body.dial #rk{top:250px!important}body.d
 <div class="trow2"><button class="tb" id="bHow" type="button">How to play</button><button class="tb" id="bDrv" type="button">Drivers</button><button class="tb" id="bStk" type="button">Stickers</button><button class="tb" id="bSet" type="button">Settings</button></div>
 <div class="lvrow" id="lvRow"></div>
 <p class="best" id="best"></p>
-<p class="legal">Sample v7.67 &middot; Forged by LFC Foundry &middot; MIT License</p>
+<p class="legal">Sample v7.68 &middot; Forged by LFC Foundry &middot; MIT License</p>
 </div>
 </div>
 <div id="panel" style="display:none"><div class="card"><button id="cx" type="button" aria-label="Close">X</button>
@@ -3108,7 +3108,7 @@ function getCar(kind,me){var key=me?meKey(kind):kind+opt.view+(ALT[kind]?ALT[kin
  var K=opt.view?0.75:0,parts=null,a=[];function one(k){Object.defineProperty(a,k,{configurable:true,enumerable:true,get:function(){if(!parts)parts=me?mdlMe(kind,d):ART2.models[kind](d[0],d[1]);var c=toCv(ART2.bake(parts,-k/NF*Math.PI*2,K,72,72,1.5,36,K>0?44:36));Object.defineProperty(a,k,{value:c,writable:true,enumerable:true,configurable:true});return c}})}
  for(var k=0;k<NF;k++)one(k);SPR.car[key]=a;lazyQ.push({a:a,k:0});lazyGo();return a}
 var lazyQ=[],lazyOn=false;function lazyGo(){if(lazyOn||!lazyQ.length)return;lazyOn=true;var ric=window.requestIdleCallback||function(f){return setTimeout(function(){f({timeRemaining:function(){return 8}})},60)};
- ric(function step(dl){lazyOn=false;while(lazyQ.length&&dl.timeRemaining()>6){var q=lazyQ[0];void q.a[q.k];q.k++;if(q.k>=NF)lazyQ.shift()}if(lazyQ.length){lazyOn=true;ric(step)}})}
+ ric(function step(dl){lazyOn=false;if(st==='run'&&!demo){lazyOn=true;setTimeout(function(){ric(step)},1500);return}while(lazyQ.length&&dl.timeRemaining()>6){var q=lazyQ[0];void q.a[q.k];q.k++;if(q.k>=NF)lazyQ.shift()}if(lazyQ.length){lazyOn=true;ric(step)}})}
 function carImg(kind,th,me){var a=getCar(kind,me),k=Math.round(-th/(Math.PI*2)*NF);k=((k%NF)+NF)%NF;return a[k]}
 var SPHI=0;function sprite3(parts,w,h,ox,oy,outl){var main=toCv(ART2.bake(parts,SPHI,KV,w,h,1.5,ox,oy,outl)),mask=KV>0?toCv(ART2.bake(parts,SPHI,0,w,h,1.5,ox,oy,outl)):main,sx=Math.min(22,Math.round(6*SH)),sy=Math.min(22,Math.round(7*SH));var sh=mk(w+24,h+24,function(g){g.drawImage(mask,sx,sy);g.globalCompositeOperation='source-in';g.fillStyle='rgba(30,50,20,'+SHA+')';g.fillRect(0,0,w+24,h+24)});var c=mk(w+24,h+24,function(g){g.drawImage(sh,0,0);g.drawImage(main,0,0)});c.ax=ox;c.ay=oy;return c}
 var dk=document.createElement('canvas'),dkx=dk.getContext('2d');
@@ -3963,7 +3963,7 @@ function report(){
  var a=Array.prototype.slice.call(frames,0,nf).sort(function(x,y){return x-y}),n=a.length,sum=0;for(var i=0;i<n;i++)sum+=a[i];
  var avg=n?sum/n:0,p95=n?a[Math.floor(n*0.95)]:0,worst=n?a[n-1]:0,fps=avg?1000/avg:0;
  var verdict=fps>=55?'smooth (about 60 FPS)':(fps>=40?'ok, some drops':'choppy');
- var t=['Thumb Circuit sample v7.67 results',
+ var t=['Thumb Circuit sample v7.68 results',
  'Car: '+opt.car+' (paint '+meCol(opt.car).join(' / ')+'), driver: '+DRV[opt.drv].n+', upgrades engine '+lv('eng')+' tires '+lv('tir')+' turbo '+lv('tur')+' body '+lv('bod')+', wallet '+wallet()+', level '+lvl()+' ('+(save.xp||0)+' XP, +'+xpGain+' this race, rivals x'+rivK().toFixed(2)+'), rivals: '+rivals.map(function(r){return r.pers.name+' ('+r.kind+')'}).join(', '),
  'Turns cost speed '+(opt.scr?'on':'off')+', Bouncy edges '+(opt.bnc?'on':'off')+', Rivals: '+(DIFN[opt.dif]||'Normal')+' (rewards x'+(DIFM[opt.dif]||1)+' for a top 3 finish, bonus coins this race '+difB+'), '+'Steering: '+(opt.steer===1?'1 slide thumb':'2 drag a target')+', thumb reach '+['short','medium','long'][opt.sens|0]+', road help '+(opt.assist?'on':'off (coins and fans x1.5)'),
  'Track: '+TRACKS[curTrk].n+', view: '+(opt.view?'tilted':'top-down')+', time of day: '+TOD[opt.tod].n,
