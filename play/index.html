@@ -2,7 +2,7 @@
 <html lang="en"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
 <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'unsafe-inline' 'wasm-unsafe-eval'; style-src 'unsafe-inline'; img-src data:; font-src data:">
-<title>Thumb Circuit sample page v7.71</title>
+<title>Thumb Circuit sample page v7.72</title>
 <style>
 html,body{margin:0;height:100%;background:#5a3d30;overflow:hidden;overscroll-behavior:none;touch-action:none;-webkit-user-select:none;user-select:none;font-family:ui-rounded,"Trebuchet MS",Verdana,sans-serif;color:#4a3228}
 #wrap{position:fixed;inset:0;display:flex;justify-content:center;align-items:flex-start}
@@ -248,7 +248,7 @@ body.dial #boost{display:none!important}body.dial #rk{top:250px!important}body.d
 <div class="trow2"><button class="tb" id="bHow" type="button">How to play</button><button class="tb" id="bDrv" type="button">Drivers</button><button class="tb" id="bStk" type="button">Stickers</button><button class="tb" id="bSet" type="button">Settings</button></div>
 <div class="lvrow" id="lvRow"></div>
 <p class="best" id="best"></p>
-<p class="legal">Sample v7.71 &middot; Forged by LFC Foundry &middot; MIT License</p>
+<p class="legal">Sample v7.72 &middot; Forged by LFC Foundry &middot; MIT License</p>
 </div>
 </div>
 <div id="panel" style="display:none"><div class="card"><button id="cx" type="button" aria-label="Close">X</button>
@@ -3603,9 +3603,9 @@ function moveRival(r,dt,go){
  if(r.bowT>0)lineD+=(r.bowS||1)*RW*0.5;var dT=lineD;
  // block / avoid
  var dpPl=car.p-r.p,pl=Math.abs(dpPl)<160;
- if(pr.block&&dpPl<-10&&dpPl>-170&&Math.abs(car.lat-r.d)<70)dT=clamp(car.lat,-RW*0.7,RW*0.7);
- for(var o=0;o<rivals.length;o++){var q=rivals[o];if(q===r)continue;var dq=q.p-r.p;if(dq>0&&dq<80&&Math.abs(q.d-r.d)<34){dT=r.d>q.d?Math.max(dT,q.d+44):Math.min(dT,q.d-44);if(dq<45)vt=Math.min(vt,q.v*0.96)}}
- if(car.p>r.p&&car.p-r.p<70&&Math.abs(car.lat-r.d)<30&&pr.name!=='Blaze'){dT=r.d>car.lat?Math.max(dT,car.lat+46):Math.min(dT,car.lat-46)}
+ if(pr.block&&dpPl<-10&&dpPl>-170&&Math.abs(car.lat-r.d)<70){var bt0=clamp(car.lat,-RW*0.7,RW*0.7);if(!r.blk)r.bt=r.d;r.bt+=(bt0-r.bt)*Math.min(1,dt*5);r.blk=1;dT=r.bt}else r.blk=0;
+ var avq0=r.avq;r.avq=null;for(var o=0;o<rivals.length;o++){var q=rivals[o];if(q===r)continue;var dq=q.p-r.p;if(dq>(avq0===q?-12:0)&&dq<(avq0===q?86:80)&&Math.abs(q.d-r.d)<(avq0===q?50:34)){r.avq=q;dT=r.d>q.d?Math.max(dT,q.d+44):Math.min(dT,q.d-44);if(dq<45)vt=Math.min(vt,q.v*0.96)}}
+ var avc0=r.avc;r.avc=0;if(car.p>r.p-(avc0?12:0)&&car.p-r.p<(avc0?76:70)&&Math.abs(car.lat-r.d)<(avc0?50:30)&&pr.name!=='Blaze'){r.avc=1;dT=r.d>car.lat?Math.max(dT,car.lat+46):Math.min(dT,car.lat-46)}
  if(LOOP){var dlp=LOOP.i-ni;if(dlp>0&&dlp<45)dT=LOOP.l0}
  dT=clamp(dT,-RW*0.8,RW*0.8);if(!go){dT=r.d;vt=0}
  if(r.spin>0){var f0=(1.3-r.spin)/1.3;r.spin-=dt;if(r.tum&&f0<0.72&&(1.3-r.spin)/1.3>=0.72){for(var lq2=0;lq2<14;lq2++)emit(r.x,r.y,(Math.random()-0.5)*150,(Math.random()-0.5)*110,0.5,lq2%3?0:2);if(!demo&&Math.abs(r.x-car.x)<260)shakeT=Math.max(shakeT,0.18)}if(r.spin<=0)r.tum=0;vt*=0.4;dT=clamp(r.d+Math.sign(r.d||1)*40,-RW*0.9,RW*0.9)}
@@ -3964,7 +3964,7 @@ function report(){
  var a=Array.prototype.slice.call(frames,0,nf).sort(function(x,y){return x-y}),n=a.length,sum=0;for(var i=0;i<n;i++)sum+=a[i];
  var avg=n?sum/n:0,p95=n?a[Math.floor(n*0.95)]:0,worst=n?a[n-1]:0,fps=avg?1000/avg:0;
  var verdict=fps>=55?'smooth (about 60 FPS)':(fps>=40?'ok, some drops':'choppy');
- var t=['Thumb Circuit sample v7.71 results',
+ var t=['Thumb Circuit sample v7.72 results',
  'Car: '+opt.car+' (paint '+meCol(opt.car).join(' / ')+'), driver: '+DRV[opt.drv].n+', upgrades engine '+lv('eng')+' tires '+lv('tir')+' turbo '+lv('tur')+' body '+lv('bod')+', wallet '+wallet()+', level '+lvl()+' ('+(save.xp||0)+' XP, +'+xpGain+' this race, rivals x'+rivK().toFixed(2)+'), rivals: '+rivals.map(function(r){return r.pers.name+' ('+r.kind+')'}).join(', '),
  'Turns cost speed '+(opt.scr?'on':'off')+', Bouncy edges '+(opt.bnc?'on':'off')+', Rivals: '+(DIFN[opt.dif]||'Normal')+' (rewards x'+(DIFM[opt.dif]||1)+' for a top 3 finish, bonus coins this race '+difB+'), '+'Steering: '+(opt.steer===1?'1 slide thumb':'2 drag a target')+', thumb reach '+['short','medium','long'][opt.sens|0]+', road help '+(opt.assist?'on':'off (coins and fans x1.5)'),
  'Track: '+TRACKS[curTrk].n+', view: '+(opt.view?'tilted':'top-down')+', time of day: '+TOD[opt.tod].n,
@@ -4122,7 +4122,7 @@ var ww={t:0,ok:0,on:0,n:0,tot:0,el:null};
 function wwOff(){ww.t=0;ww.ok=0;if(ww.on){ww.on=0;ww.el.className=''}}
 var fm={s:-1,b:-1,d:-1,o:0};function fmTxt(){var f=function(v){return v<0?'not yet':v.toFixed(1)+' s'};return 'steer '+f(fm.s)+', boost '+f(fm.b)+', drift '+f(fm.d)+', off road in the first 20 s '+fm.o.toFixed(1)+' s'+(save.races>1?'':' (first race on this save)')}
 function fmStep(dt){var rt=runTime/1000;if(fm.s<0&&Math.abs(car.uS)>0.3)fm.s=rt;if(fm.b<0&&boostT>0)fm.b=rt;if(fm.d<0&&car.dft)fm.d=rt;if(rt<20&&Math.abs(car.lat)>rw(car.idx))fm.o+=dt}
-function wwStep(dt){var vk=1-Math.exp(-dt/0.07);VDL+=(car.dl-VDL)*(vk>1?1:vk);jitStep(dt);hudFadeStep(dt);ribStep();ppStep();cflStep();if(st==='run'&&count<=0&&!finished){fmStep(dt);fhStep(dt);fsStep(dt);bmpStep(dt);pcnStep(dt);cliStep(dt);scbTrip();scbStep(dt);tifStep(dt);bchStep(dt);rcsStep(dt)}if(st!=='run'||count>0||finished||car.air>0){wwOff();return}var tg=T.tg[car.idx|0],fx=Math.sin(tg),fy=-Math.cos(tg),v=car.vx*fx+car.vy*fy,hd=Math.cos(wrapA(car.th-tg));
+function wwStep(dt){var vk=1-Math.exp(-dt/0.07);VDL+=(car.dl-VDL)*(vk>1?1:vk);jitStep(dt);rjStep(dt);hudFadeStep(dt);ribStep();ppStep();cflStep();if(st==='run'&&count<=0&&!finished){fmStep(dt);fhStep(dt);fsStep(dt);bmpStep(dt);pcnStep(dt);cliStep(dt);scbTrip();scbStep(dt);tifStep(dt);bchStep(dt);rcsStep(dt)}if(st!=='run'||count>0||finished||car.air>0){wwOff();return}var tg=T.tg[car.idx|0],fx=Math.sin(tg),fy=-Math.cos(tg),v=car.vx*fx+car.vy*fy,hd=Math.cos(wrapA(car.th-tg));
  var back=(v<-25)||(hd<-0.35&&v<20);if(back){ww.t+=dt;ww.ok=0;if(ww.t>2)ww.tot+=dt}else{ww.ok+=dt;if(ww.ok>0.4)ww.t=0}
  if(!ww.on&&ww.t>2){ww.on=1;ww.n++;var turn=wrapA(tg-car.th);ww.el.className='on'+(turn<0?' lf':'');if(opt.vib)vib([40,60,40])}else if(ww.on&&ww.t===0){ww.on=0;ww.el.className=''}}
 window.__tc.ww=function(){return {on:ww.on,n:ww.n,t:ww.t,tot:ww.tot}};
@@ -4595,13 +4595,14 @@ window.__tc.tif=function(){return {fl:TIF.fl.length,n:TIF.n,ok:TIF.ok,er:TIF.er,
 window.__tc.hudK=hudK;
 var JIT={a:null,b:null,t:0,last:0,pl:0,pd:0,dl0:0};
 function jitNew(){return {f:0,slow:0,max:0,lr:0,dr:0}}
-var VDL=0;function jitReset(){VDL=0;JIT.a=jitNew();JIT.b=jitNew();JIT.t=0;JIT.last=0;JIT.pl=0;JIT.pd0=0;JIT.sl=0;JIT.sd=0}
+var VDL=0;var RJ={t:0,p:[],s:[],a:[],b:[]};function rjStep(dt){if(demo||st!=='run'||count>0||finished)return;RJ.t+=dt;for(var i=0;i<rivals.length;i++){var r=rivals[i],dd=r.d-(RJ.p[i]===undefined?r.d:RJ.p[i]);RJ.p[i]=r.d;if(Math.abs(dd)>0.4){var sg=dd>0?1:-1;if(RJ.s[i]&&sg!==RJ.s[i]){RJ.b[i]=(RJ.b[i]||0)+1;if(RJ.t<8)RJ.a[i]=(RJ.a[i]||0)+1}RJ.s[i]=sg}}}
+function jitReset(){RJ.t=0;RJ.p=[];RJ.s=[];RJ.a=[];RJ.b=[];VDL=0;JIT.a=jitNew();JIT.b=jitNew();JIT.t=0;JIT.last=0;JIT.pl=0;JIT.pd0=0;JIT.sl=0;JIT.sd=0}
 function jitStep(dt){if(demo||st!=='run'||count>0||finished||!JIT.a)return;var n=performance.now(),w=JIT.last?n-JIT.last:0;JIT.last=n;JIT.t+=dt;var A=JIT.a,B=JIT.b,X=JIT.t<8?A:null,i;
  var lat=car.lat||0,dl=car.dl||0,dL=lat-JIT.pl,dD=dl-JIT.pd0;JIT.pl=lat;JIT.pd0=dl;
  var rl=0,rd=0;if(Math.abs(dL)>0.05){var sg=dL>0?1:-1;if(JIT.sl&&sg!==JIT.sl)rl=1;JIT.sl=sg}
  if(Math.abs(dD)>0.002){var sd=dD>0?1:-1;if(JIT.sd&&sd!==JIT.sd)rd=1;JIT.sd=sd}
  [A,B].forEach(function(Q,k){if(k===0&&JIT.t>=8)return;Q.f++;if(w>25)Q.slow++;if(w>Q.max)Q.max=w;Q.lr+=rl;Q.dr+=rd})}
-function jitTxt(){var A=JIT.a,B=JIT.b;if(!A||!B||!B.f)return 'no race yet';function f(Q){return Q.f+' frames, '+Q.slow+' slow, slowest '+Math.round(Q.max)+' ms, sideways reversals '+Q.lr+', steering reversals '+Q.dr}return 'first 8 s: '+f(A)+' | whole race: '+f(B)+' | car '+opt.car+(demo?' (demo)':'')}
+function jitTxt(){var A=JIT.a,B=JIT.b;if(!A||!B||!B.f)return 'no race yet';function f(Q){return Q.f+' frames, '+Q.slow+' slow, slowest '+Math.round(Q.max)+' ms, sideways reversals '+Q.lr+', steering reversals '+Q.dr}return 'first 8 s: '+f(A)+' | whole race: '+f(B)+' | rival cars sideways reversals, first 8 s: '+rivals.map(function(r,i){return RJ.a[i]||0}).join('/')+', whole race: '+rivals.map(function(r,i){return RJ.b[i]||0}).join('/')+' | car '+opt.car+(demo?' (demo)':'')}
 window.__tc.jit=function(){return {a:JIT.a,b:JIT.b}};
 
 })();
