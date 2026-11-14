@@ -2,6 +2,9 @@
 
 Short, plain lines. Each version is one playable sample page in `play/`.
 
+## v7.66
+- Speed: faster title screen and scenery setup. The minimap and speedometer are now semi-transparent, and they fade more when your car is under them. Announcements, countdown lights, messages and the feed sit above every HUD element.
+
 ## v7.65
 - Small build: the play page is now a 213 KB file (was 630 KB). It is font-trimmed, minified and packed, opens about 40 ms slower, and plays the same. The font license stays inside the file.
 - Speedup: the speedometer canvas is a little larger, with see-through padding, so Firefox can paint it off the main thread. It looks the same, and Firefox runs a little smoother.

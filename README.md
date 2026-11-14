@@ -6,7 +6,7 @@
 
 [**Play the sample**](https://lfcfoundry.github.io/thumb-circuit/play/) · [**About**](https://lfcfoundry.github.io/thumb-circuit/) · [**Source code**](https://github.com/lfcfoundry/thumb-circuit)
 
-![sample v7.65 test](https://img.shields.io/badge/sample-v7.65%20test-informational) ![MIT](https://img.shields.io/badge/MIT-informational) ![free](https://img.shields.io/badge/free-informational) ![no ads, no accounts](https://img.shields.io/badge/no%20ads%20no%20accounts-informational) ![works offline](https://img.shields.io/badge/works%20offline-informational) ![no sound](https://img.shields.io/badge/no%20sound-informational)
+![sample v7.66 test](https://img.shields.io/badge/sample-v7.66%20test-informational) ![MIT](https://img.shields.io/badge/MIT-informational) ![free](https://img.shields.io/badge/free-informational) ![no ads, no accounts](https://img.shields.io/badge/no%20ads%20no%20accounts-informational) ![works offline](https://img.shields.io/badge/works%20offline-informational) ![no sound](https://img.shields.io/badge/no%20sound-informational)
 
 </div>
 
@@ -49,7 +49,7 @@ A rewarding, incremental racing loop you can play with a single thumb, in the sa
 
 ## Status
 
-**Sample, version 7.65 (test build).** v7.x has passed robot races only so far; it has not had full human testing. The sample is playable and changes often, so small things still move between versions. It now has a campaign, "Road to the Big Top," with six towns. Steering with road help off is still being tuned. The real game build is not started yet. See the [changelog](CHANGELOG.md) for what changed in each version. Only Chromium has been checked for v5.31 and later, so Firefox and WebKit are unverified.
+**Sample, version 7.66 (test build).** v7.x has passed robot races only so far; it has not had full human testing. The sample is playable and changes often, so small things still move between versions. It now has a campaign, "Road to the Big Top," with six towns. Steering with road help off is still being tuned. The real game build is not started yet. See the [changelog](CHANGELOG.md) for what changed in each version. Only Chromium has been checked for v5.31 and later, so Firefox and WebKit are unverified.
 
 ## Docs
 
