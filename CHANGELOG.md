@@ -2,6 +2,9 @@
 
 Short, plain lines. Each version is one playable sample page in `play/`.
 
+## v7.73
+- Your driver: at load you pick one of three driver names, or type your own and pick one of 24 painted faces. It is saved, you can change it on the Drivers screen, and it shows in results, the podium, headlines and the report. Skipped in test files. The start delay (Chase start) now defaults to 0 for everyone.
+
 ## v7.72
 - Rival cars no longer jitter sideways at the start. Dodge and block rules have a hold band and a short smoothing.
 
