@@ -2,7 +2,7 @@
 <html lang="en"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
 <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'unsafe-inline' 'wasm-unsafe-eval'; style-src 'unsafe-inline'; img-src data:; font-src data:">
-<title>Thumb Circuit sample page v7.76</title>
+<title>Thumb Circuit sample page v7.77</title>
 <style>
 html,body{margin:0;height:100%;background:#5a3d30;overflow:hidden;overscroll-behavior:none;touch-action:none;-webkit-user-select:none;user-select:none;font-family:ui-rounded,"Trebuchet MS",Verdana,sans-serif;color:#4a3228}
 #wrap{position:fixed;inset:0;display:flex;justify-content:center;align-items:flex-start}
@@ -243,6 +243,8 @@ body.dial #boost{display:none!important}body.dial #rk{top:250px!important}body.d
 .ptr{text-align:center;margin:8px 0}.ptc{width:100%;max-width:320px;display:block;margin:8px auto;border:3px solid #4a3228;border-radius:12px;background:#fff3dc}
 
 .dqc{margin:8px 0;padding:6px;border:2px dashed #c98d4a;border-radius:12px;text-align:left}.dqc b{font-size:13px}
+
+.shf{margin:6px 0;padding:6px;border:2px solid #c98d4a;border-radius:12px;background:#fff1c4}.shf b{font-size:13px}.shr{display:flex;gap:4px;justify-content:space-between;margin:4px 0}.shs{display:flex;flex-direction:column;align-items:center;font-size:10px;font-weight:bold;opacity:.75}.shs.on{opacity:1}.shb{display:flex;gap:4px;align-items:center;font-size:11px;font-weight:bold}.shi{width:14px;height:18px;border:2px solid #a89a8c;border-radius:3px 3px 8px 8px;background:#e4ddd2;display:block}.shi.on{border-color:#4a3228;background:#e24a3a}
 </style></head><body class="title">
 <div id="wrap"><canvas id="cv"></canvas><canvas id="glc"></canvas><canvas id="fxc"></canvas><canvas id="pxc"></canvas><div id="fpl"></div></div>
 <div id="hud"><span class="pill" id="lap">LAP 1/2</span><span class="pill" id="coins">COINS 0</span><span class="pill" id="pos">P3</span><span class="meter"><i id="crowd"></i></span><button id="menuBtn" type="button">MENU</button></div>
@@ -268,7 +270,7 @@ body.dial #boost{display:none!important}body.dial #rk{top:250px!important}body.d
 <div class="trow2"><button class="tb" id="bHow" type="button">How to play</button><button class="tb" id="bDrv" type="button">Drivers</button><button class="tb" id="bStk" type="button">Stickers</button><button class="tb" id="bSet" type="button">Settings</button></div>
 <div class="lvrow" id="lvRow"></div>
 <p class="best" id="best"></p>
-<p class="legal">Sample v7.76 &middot; Forged by LFC Foundry &middot; MIT License</p>
+<p class="legal">Sample v7.77 &middot; Forged by LFC Foundry &middot; MIT License</p>
 </div>
 </div>
 <div id="panel" style="display:none"><div class="card"><button id="cx" type="button" aria-label="Close">X</button>
@@ -3498,7 +3500,7 @@ function tNode(i){var tw=Math.floor(i/4),k=i%4,W2=TOWNS[tw];if(!W2)return null;i
 function tAt(){var S=tSave(),i=0;while(i<24&&(S.st[i]||0)>0)i++;return i}
 function tStars(){var S=tSave(),n=0,i;for(i=0;i<24;i++)n+=S.st[i]||0;return n}
 function starEl(n){var r=el('span','sr'),i;for(i=0;i<3;i++)r.appendChild(el('i',i<n?'on':''));return r}
-function tourCard(){var S=tSave(),at=tAt(),host=document.getElementById('tourList'),nd=tNode(Math.min(at,23)),done=at>=24;host.textContent='';if(save.tourIn!==1&&!pkSkip()){save.tourIn=1;store();if(!S.st.length)setTimeout(introShow,250)}if(done){host.appendChild(posterEl());host.appendChild(epiBtn())}tscCheck(at);
+function tourCard(){var S=tSave(),at=tAt(),host=document.getElementById('tourList'),nd=tNode(Math.min(at,23)),done=at>=24;host.textContent='';if(save.tourIn!==1&&!pkSkip()){save.tourIn=1;store();if(!S.st.length)setTimeout(introShow,250)}if(done){host.appendChild(posterEl());host.appendChild(epiBtn())}tscCheck(at);host.insertBefore(shelfEl(),host.firstChild);recapCheck(at);
  document.getElementById('tourStars').textContent='Stars '+tStars()+' of 72';
  var tsE=document.getElementById('tourStory');tsE.textContent='';tsE.appendChild(faceEl(meFace(),40));tsE.appendChild(document.createTextNode(stx(done?'{you} drove the star car back to the Fruit Circus, and Fancy handed over the star badge. The road to the Big Top is complete, and the rookie is now the star. Replay any event for more stars.':(nd.duel?TOWNS[nd.tw].d:TOWNS[nd.tw].s))));
  TOWNS.forEach(function(W2,tw){var row=el('div','twn'+(tw*4>at?' lock':'')),k;row.appendChild(el('b','',(tw+1)+'. '+W2.n));var chips=el('div','tch');for(k=0;k<4;k++){(function(i){var st=S.st[i]||0,b=el('button','tc'+(i===tourSel?' sel':'')+(i>at?' lock':'')+(k===3?' du':''),(k===3?'Duel':'Race '+(k+1))+'\n'+(i>at?'locked':(st?'':'new')));if(st)b.appendChild(starEl(st));b.type='button';b.addEventListener('click',function(){if(i>at)return;tourSel=i;tourCard()});chips.appendChild(b)})(tw*4+k)}row.appendChild(chips);host.appendChild(row)});
@@ -3984,7 +3986,7 @@ function report(){
  var a=Array.prototype.slice.call(frames,0,nf).sort(function(x,y){return x-y}),n=a.length,sum=0;for(var i=0;i<n;i++)sum+=a[i];
  var avg=n?sum/n:0,p95=n?a[Math.floor(n*0.95)]:0,worst=n?a[n-1]:0,fps=avg?1000/avg:0;
  var verdict=fps>=55?'smooth (about 60 FPS)':(fps>=40?'ok, some drops':'choppy');
- var t=['Thumb Circuit sample v7.76 results',
+ var t=['Thumb Circuit sample v7.77 results',
  'Car: '+opt.car+' (paint '+meCol(opt.car).join(' / ')+'), driver: '+pName()+', upgrades engine '+lv('eng')+' tires '+lv('tir')+' turbo '+lv('tur')+' body '+lv('bod')+', wallet '+wallet()+', level '+lvl()+' ('+(save.xp||0)+' XP, +'+xpGain+' this race, rivals x'+rivK().toFixed(2)+'), rivals: '+rivals.map(function(r){return r.pers.name+' ('+r.kind+')'}).join(', '),
  'Turns cost speed '+(opt.scr?'on':'off')+', Bouncy edges '+(opt.bnc?'on':'off')+', Rivals: '+(DIFN[opt.dif]||'Normal')+' (rewards x'+(DIFM[opt.dif]||1)+' for a top 3 finish, bonus coins this race '+difB+'), '+'Steering: '+(opt.steer===1?'1 slide thumb':'2 drag a target')+', thumb reach '+['short','medium','long'][opt.sens|0]+', road help '+(opt.assist?'on':'off (coins and fans x1.5)'),
  'Track: '+TRACKS[curTrk].n+', view: '+(opt.view?'tilted':'top-down')+', time of day: '+TOD[opt.tod].n,
@@ -4764,11 +4766,11 @@ function fancyCv(){if(fancyCv.c)return fancyCv.c;var c=document.createElement('c
  g.save();g.beginPath();g.arc(64,64,61,0,7);g.clip();g.fillStyle='#d8f2e8';g.fillRect(0,0,128,128);g.fillStyle='rgba(255,255,255,.4)';for(var ra=0;ra<10;ra++){g.beginPath();g.moveTo(64,70);g.arc(64,70,90,ra*0.6283+0.1,ra*0.6283+0.38);g.closePath();g.fill()}
  g.translate(64,70);g.rotate(-0.22);g.fillStyle='#ffd84a';g.beginPath();g.ellipse(0,0,34,52,0,0,7);g.fill();g.stroke();g.fillStyle='#6a4630';g.beginPath();g.rect(-6,-62,12,14);g.fill();g.stroke();g.fillStyle='#e8b830';g.beginPath();g.ellipse(0,50,9,5,0,0,7);g.fill();g.stroke();
  g.fillStyle='rgba(255,255,255,.5)';g.beginPath();g.ellipse(-16,-14,5,16,0,0,7);g.fill();
- [[-11,-8],[11,-8]].forEach(function(p){g.fillStyle='#fff';g.beginPath();g.arc(p[0],p[1],7.5,0,7);g.fill();g.stroke();g.fillStyle='#2a1e18';g.beginPath();g.arc(p[0]+1,p[1]+1,3.6,0,7);g.fill()});
- g.strokeStyle='#d8a020';g.lineWidth=2.6;g.beginPath();g.arc(11,-8,10.5,0,7);g.stroke();g.beginPath();g.moveTo(21,-4);g.lineTo(28,22);g.stroke();g.strokeStyle=K;g.lineWidth=3.2;
+ g.fillStyle='#e24a3a';g.beginPath();g.rect(-34,-19,68,21);g.fill();g.stroke();g.beginPath();g.moveTo(33,-9);g.lineTo(48,-22);g.lineTo(46,-6);g.closePath();g.fill();g.stroke();[[-11,-8],[11,-8]].forEach(function(p){g.fillStyle='#fff';g.beginPath();g.arc(p[0],p[1],7.5,0,7);g.fill();g.stroke();g.fillStyle='#2a1e18';g.beginPath();g.arc(p[0]+1,p[1]+1,3.6,0,7);g.fill()});
+ g.strokeStyle=K;g.lineWidth=3.2;
  g.fillStyle='rgba(240,104,104,.45)';g.beginPath();g.arc(-20,8,5,0,7);g.arc(20,8,5,0,7);g.fill();
  g.beginPath();g.moveTo(-9,12);g.quadraticCurveTo(0,24,9,12);g.stroke();
- g.fillStyle='#e24a3a';g.beginPath();g.moveTo(0,32);g.lineTo(-16,24);g.lineTo(-16,40);g.closePath();g.fill();g.stroke();g.beginPath();g.moveTo(0,32);g.lineTo(16,24);g.lineTo(16,40);g.closePath();g.fill();g.stroke();g.beginPath();g.arc(0,32,4,0,7);g.fill();g.stroke();
+ g.fillStyle='#e24a3a';g.beginPath();g.rect(-27,27,54,11);g.fill();g.stroke();g.beginPath();g.moveTo(8,38);g.lineTo(22,38);g.lineTo(24,58);g.lineTo(12,54);g.closePath();g.fill();g.stroke();
  g.restore();g.beginPath();g.arc(64,64,61,0,7);g.lineWidth=4;g.strokeStyle=K;g.stroke();return fancyCv.c=c}
 function fancyEl(px){var c=document.createElement('canvas');c.width=c.height=128;c.getContext('2d').drawImage(fancyCv(),0,0);c.style.width=c.style.height=px+'px';c.className='face pface';return c}
 function posterCv(){var c=document.createElement('canvas');c.width=360;c.height=480;var g=c.getContext('2d'),K='#4a3228',nm=pName(),i,F='800 28px "Bricolage Grotesque",sans-serif';g.textAlign='center';
@@ -4790,7 +4792,7 @@ function introShow(){var o=el('div'),cd=el('div','pkc itc');o.id='pk';o.appendCh
  function ln(face,t){var d=el('div','itl');d.appendChild(face);d.appendChild(el('div','itb',stx(t)));return d}
  cd.appendChild(el('h2','','Chapter 1: First Day'));
  cd.appendChild(ln(fancyEl(52),'Welcome to the Fruit Circus, {you}! I am Fancy. You are our newest rookie.'));
- cd.appendChild(ln(fancyEl(52),'Bad news: the star car is gone, and Prince Chimp is grinning about it.'));
+ cd.appendChild(ln(fancyEl(52),'Bad news: Prince Chimp stole the star car, and he is laughing about it.'));
  cd.appendChild(ln(save.pf?pFaceEl(save.pf,52):faceEl(opt.drv,52),'Then I will race to get it back. Where do I start?'));
  cd.appendChild(ln(fancyEl(52),'Meadow. Win a star in each race to open the road. Ready?'));
  var b=el('button','pkg',"Let's go!");b.type='button';b.addEventListener('click',function(){pkClose();if(!pkSkip()&&scBit('tsc',0))setTimeout(function(){rivalIntro(0)},150)});cd.appendChild(b);document.body.appendChild(o)}
@@ -4802,10 +4804,10 @@ window.__tc.tourBoxT=function(r,f){tourRes=r;finished=f;tourBox()};
 var RIVI=[
  [['blaze','Hey, new face! I am Blaze, and nobody leaves Meadow faster than me.'],['m','I am {you}. I only need one ticket out of town.'],['f','Blaze guards the road. Win a star in each race and he has to race you for it.']],
  [['mellow','Oh, hello. Mellow. Apples? Cider? Nobody races before lunch.'],['m','Have you seen a shiny star car come through?'],['mellow','Maybe. Ask me after the race. Slowly.'],['f','He is faster than he looks, {you}.']],
- [['prince chimp','A rookie in my kingdom! I am Prince Chimp. Bananas are free, answers are not.'],['m','Where is the star car?'],['prince chimp','Beat me on my beach and maybe I will remember.'],['f','Careful, {you}. He loves to chat when he is winning.']],
+ [['prince chimp','Bwahaha! A rookie in MY kingdom! I am Prince Chimp, and the star car is mine.'],['m','Where is the star car?'],['prince chimp','Beat me on my beach if you dare. You will not.'],['f','Careful, {you}. He loves to chat when he is winning.']],
  [['careful','Do not touch the paint. I am Careful, and I have never crashed.'],['m','Never? In the whole circus?'],['careful','Not once. The candy hills are slippery, so I am even more careful.'],['f','Stay clean, {you}. Gentle steering beats a hard shove.']],
  [['pineapple pete','Halt, banana! I am Pineapple Pete, keeper of the ice pass.'],['m','The Big Top is right behind you, Pete.'],['pineapple pete','Then you know how hard I will race. Show me you can keep it on the road.'],['f','You are not just a rookie anymore, {you}. Go show him.']],
- [['prince chimp','Well, well, the rookie made it. Nice little star car, is it not? It is mine now.'],['m','It is the Fruit Circus car, Chimp. I am taking it home.'],['prince chimp','Three shows first. Then one last lap around the loop.'],['f','Everyone is watching, {you}. Have fun out there.']]];
+ [['prince chimp','Well, well, the rookie made it. My star car, my Big Top, my rules.'],['m','It is the Fruit Circus car, Chimp. I am taking it home.'],['prince chimp','Three shows first. Then one last lap around the loop.'],['f','Everyone is watching, {you}. Have fun out there.']]];
 var MIDB=[
  [['f','Two races down in Meadow, {you}! The crowd is starting to cheer your name.'],['m','I felt that last corner. Blaze is next, right?'],['f','Right. Win a star in the next race and he will race you for the road.']],
  [['f','Good drive in Orchard, {you}. The pickers are waving at you.'],['m','A farmer gave me an apple! I think it is a good luck apple.'],['f','Keep it. The cider stand is up next, and Mellow is waiting.']],
@@ -4830,6 +4832,33 @@ window.__tc.mid=function(tw){sceneShow('Halfway through '+TOWNS[tw].n,MIDB[tw],'
 window.__tc.midBox=function(tw){window.__tc.tourBoxT({first:0,sn:{duel:0,i:tw*4+1,tw:tw,gt:'Collect coins',name:TOWNS[tw].n+' race 2'},stars:1,gain:1,goal:false,won:false,rew:'',pl:2},true);document.getElementById('tourBox').appendChild(midEl(tw));openCard('results')};
 window.__tc.duel=function(tw,won){window.__tc.tourBoxT({first:!!(won&&tw===5),sn:{duel:1,i:tw*4+3,tw:tw,who:TOWNS[tw].duel[1],name:TOWNS[tw].n+' duel'},stars:won?2:0,gain:won?2:0,goal:false,won:!!won,rew:'',pl:won?1:2},true);openCard('results')};
 
+
+// ---- v7.77 story pass 4: Trophy Shelf (working title) and a Previously-on recap card. ----
+var CUPC=['#e24a3a','#7fc24a','#ffb23a','#f27ab0','#5ab4e8','#8a5fd0'];
+function cupCv(tw,got){var c=document.createElement('canvas');c.width=c.height=64;var g=c.getContext('2d'),K='#4a3228';g.lineJoin='round';g.lineWidth=3;g.strokeStyle=got?K:'#a89a8c';
+ g.fillStyle=got?'#e8b830':'#d8d0c4';g.beginPath();g.rect(20,50,24,8);g.fill();g.stroke();g.beginPath();g.rect(28,40,8,10);g.fill();g.stroke();
+ g.fillStyle=got?CUPC[tw]:'#e4ddd2';g.beginPath();g.moveTo(14,8);g.lineTo(50,8);g.quadraticCurveTo(50,38,32,40);g.quadraticCurveTo(14,38,14,8);g.closePath();g.fill();g.stroke();
+ g.beginPath();g.arc(13,17,7,1.6,4.7);g.stroke();g.beginPath();g.arc(51,17,7,-1.6,1.5);g.stroke();
+ if(got){g.fillStyle='rgba(255,255,255,.55)';g.beginPath();g.ellipse(23,18,3,8,0,0,7);g.fill()}
+ else{g.fillStyle='#a89a8c';g.font='800 20px sans-serif';g.textAlign='center';g.fillText('?',32,30)}
+ return c}
+function shelfEl(){var S=tSave(),w=el('div','shf'),row=el('div','shr'),i,n=0;
+ w.appendChild(el('b','','Trophy Shelf'));
+ for(i=0;i<6;i++){var got=(S.st[i*4+3]||0)>0,s=el('div','shs'+(got?' on':''));if(got)n++;var c=cupCv(i,got);c.style.width=c.style.height='46px';s.appendChild(c);s.appendChild(el('span','',got?TOWNS[i].duel[1].split(' ').pop():'?'));row.appendChild(s)}
+ var star=el('div','shs'+(tAt()>=24?' on':'')),sc=cupCv(5,tAt()>=24);sc.style.width=sc.style.height='46px';star.appendChild(sc);star.appendChild(el('span','',tAt()>=24?'Star':'?'));row.appendChild(star);
+ w.appendChild(row);var rb=el('div','shb'),m=save.tsm|0,j,k=0;for(j=0;j<6;j++){var on=!!(m&(1<<j)),r=el('i','shi'+(on?' on':''));if(on)k++;rb.appendChild(r)}
+ rb.appendChild(el('span','',k+' of 6 story ribbons'));w.appendChild(rb);w.firstChild.textContent='Trophy Shelf: '+n+' of 6 rival cups';return w}
+var recapDone=0;
+function recapCheck(at,f){if(!f&&(recapDone||pkSkip()||at<1||at>=24||at%4===0))return;recapDone=1;var S=tSave(),tw=at>>2,pv=-1,i;for(i=0;i<6;i++)if((S.st[i*4+3]||0)>0)pv=i;
+ var L=[['f','Previously on the Road to the Big Top: '+stx('{you}')+' has '+tStars()+' of 72 stars.']];
+ if(pv>=0)L.push(['m','I beat '+TOWNS[pv].duel[1]+' in '+TOWNS[pv].n+'.']);else L.push(['m','I am still working on the first duel.']);
+ L.push(['f','Now you are in '+TOWNS[tw].n+', race '+((at%4)+1)+(at%4===3?' (the duel against '+TOWNS[tw].duel[1]+')':'')+'. Ready?']);
+ setTimeout(function(){sceneShow('Previously on...',L,'Back to the road')},250)}
+window.__tc.prog=function(n){var S=tSave(),i;S.st=[];for(i=0;i<n;i++)S.st[i]=2;save.tsm=n>=24?63:(1<<(n>>2))-1;store();tourCard()};
+window.__tc.recap=function(){recapCheck(tAt(),1)};
+window.__tc.shelf=function(){var h=document.getElementById('tourList');if(h)h.insertBefore(shelfEl(),h.firstChild)};
+
+window.__tc.open=function(n){openCard(n)};
 })();
 
 </script></body></html>
