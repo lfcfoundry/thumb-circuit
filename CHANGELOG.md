@@ -205,6 +205,9 @@ Short, plain lines. Each version is one playable sample page in `play/`.
 ## v7.01
 - Turbo Lap: the last lap is 8% faster for everyone, and fans come in at 1.5 times.
 
+## v7.00
+- minor internal build, not published
+
 ## v6.31
 - Free races have three goals to chase, shown during the countdown. Each goal met adds fans and coins.
 - Finishing fourth pays a small consolation.
@@ -251,6 +254,24 @@ Short, plain lines. Each version is one playable sample page in `play/`.
 - Skill seconds: drift boosts, shortcuts and fence hits show a small estimate in the results.
 - Drivers in the cars have helmets and shoulders. The roof is off the hatch, sedan, sports car and truck.
 
+## v6.19
+- minor internal build, not published
+
+## v6.18
+- minor internal build, not published
+
+## v6.17
+- minor internal build, not published
+
+## v6.16
+- minor internal build, not published
+
+## v6.15
+- minor internal build, not published
+
+## v6.14
+- minor internal build, not published
+
 ## v6.13
 - Autopilot is less: the car no longer follows the road by itself when the thumb is down.
 - The loop-de-loop only takes you in when you are lined up with it.
@@ -270,6 +291,21 @@ Short, plain lines. Each version is one playable sample page in `play/`.
 - Steering with road help off follows the bend more, and the car straightens up after a hit.
 - Ramps can skip a barrier when the landing is close to the road.
 - Position is a big gold number. The coin count has a coin picture.
+
+## v6.09
+- minor internal build, not published
+
+## v6.08
+- minor internal build, not published
+
+## v6.07
+- minor internal build, not published
+
+## v6.06
+- minor internal build, not published
+
+## v6.05
+- minor internal build, not published
 
 ## v6.04
 - The Boost button is gone. Boost is a flick up, or the space bar. Boost meters sit under the speedometer.
@@ -385,8 +421,29 @@ Short, plain lines. Each version is one playable sample page in `play/`.
 ## v5.10
 - Fence, grandstands with a crowd, track signs, and a start gantry.
 
-## v5.9
+## v5.09
 - Car wear, a smaller lap banner, a fix to road help, and slipstream.
 
 ## v5.2 to v5.8
 - Early sample pages: the first WebGL2 renderer with a Canvas fallback, the title page, and a bridge and river track.
+
+## v5.08
+- minor internal build, not published
+
+## v5.07
+- minor internal build, not published
+
+## v5.06
+- minor internal build, not published
+
+## v5.05
+- minor internal build, not published
+
+## v5.04
+- minor internal build, not published
+
+## v5.03
+- minor internal build, not published
+
+## v5.02
+- minor internal build, not published
