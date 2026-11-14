@@ -2,6 +2,9 @@
 
 Short, plain lines. Each version is one playable sample page in `play/`.
 
+## v7.74
+- Story: you are the rookie. Chapter text and rival duel lines use your driver name, and your portrait sits beside the story on the Road to the Big Top card. The change screen is also titled Who Is Racing?.
+
 ## v7.73
 - Who Is Racing?: at load you pick one of three driver names, or type your own and pick one of 24 painted faces. It is saved, you can change it on the Drivers screen, and it shows in results, the podium, headlines and the report. Skipped in test files. The start delay (Chase start) now defaults to 0 for everyone.
 
