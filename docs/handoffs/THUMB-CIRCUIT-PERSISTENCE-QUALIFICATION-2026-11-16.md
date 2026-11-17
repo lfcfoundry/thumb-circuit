@@ -18,6 +18,8 @@ The recovered implementation was reconstructed in a detached checkout:
 
 - Reconstructed HEAD: `b46bef4157ea1a11fa79dfcd8b079f16ce7976c1`
 - Parent: `3c389ef6b97960ff2a208f8675e2ff1e7709b73d`
+- Upstream `main` baseline: [`b46bef4157ea1a11fa79dfcd8b079f16ce7976c1`](https://github.com/lfcfoundry/thumb-circuit/commit/b46bef4157ea1a11fa79dfcd8b079f16ce7976c1)
+- Baseline parent: [`3c389ef6b97960ff2a208f8675e2ff1e7709b73d`](https://github.com/lfcfoundry/thumb-circuit/commit/3c389ef6b97960ff2a208f8675e2ff1e7709b73d)
 - Original session log: `/data/data/com.termux/files/home/thumb-circuit-save-integrity-rebuild-20261115/evidence/original-session-log.jsonl`
 - Session-log SHA-256: `c05bb43b5e990955295d8214cdaa3693a4bb75636d49468bfb240893152df2f4`
 
@@ -25,6 +27,8 @@ The reconstruction changed only:
 - `README.md`
 - `play/index.html`
 - `tests/persistence-browser.js`
+
+The reconstruction's final browser output records 22/22 checks on Chromium 157 in `evidence/persistence-browser-final.log`; that file has no matching exit-code sidecar. Earlier reconstruction attempts did fail, including a recovery-download timeout in `evidence/persistence-browser-run7.log` (exit 1). Those failures are retained and are not represented as passing runs.
 
 The save format and existing storage key `thumb-circuit-sample` were preserved. The design coordinates updated tabs using Web Locks, surfaces queued-save state, detects conflicts, reconciles uncertain writes, warns before unload, and offers a recovery download. Web Locks unavailability fails closed; it does not fall back to an uncoordinated write. Legacy tabs that do not use the lock can still bypass this coordination.
 
@@ -86,8 +90,10 @@ The remediation report records:
 - An 80-request save burst verified bounded active-plus-coalesced work.
 
 The report and state-machine notes are in the remediation checkout:
-- `evidence/remediation-report.md`
-- `evidence/remediation-state-machine.md`
+- `evidence/remediation-report.md` — `/data/data/com.termux/files/home/lfcfoundry/thumb-circuit-persistence-remediation-20261116/repo/evidence/remediation-report.md`
+- `evidence/remediation-state-machine.md` — `/data/data/com.termux/files/home/lfcfoundry/thumb-circuit-persistence-remediation-20261116/repo/evidence/remediation-state-machine.md`
+
+The recorded final run is `evidence/remediation-final6.log`, with exit code `0` in the adjacent `remediation-final6.exit`. The recorded process-termination probe is `evidence/process-crash-remediation.log`.
 
 ### Independent adversarial qualification
 
@@ -102,9 +108,13 @@ Six additional adversarial probes passed in headless Chromium 157:
 6. A 1,000-call save burst, with one active job plus one coalesced latest job and final generation persisted.
 
 **Important qualification:** the overall adversarial run did not pass. A seventh probe intended to initialize and finish actual races in two gameplay pages timed out while the game remained in its boot state with race controls disabled. This was a test-setup/qualification failure, not evidence of a persistence defect. The log is:
-`thumb-circuit-adversarial-qualification-20261116/evidence/adversarial-run1.log`
+`/data/data/com.termux/files/home/lfcfoundry/thumb-circuit-adversarial-qualification-20261116/evidence/adversarial-run1.log` (overall exit code `1`).
 
 Do not summarize that run as seven passing probes or as a clean overall exit.
+
+The independent review examined all 34 checks. Multi-tab storage and lock checks use distinct same-origin Chromium pages; storage-method failures are injected. Gameplay checks exercise the actual reward/result code but use the diagnostic warp hook instead of human driving. Recovery downloads compare Blob bytes, browser transfer/completion events, and the completed file contents. The stale-event regression injects a synthetic obsolete event payload; it does not force native browser event reordering. The full two-gameplay-page attempt is the seventh timed-out probe above.
+
+A separate attempt to rerun the 34-check suite from the independent qualification copy did not reach the first assertion: it exited `1` after timing out waiting for Chromium's DevTools endpoint. A direct headless Chromium smoke launch did expose DevTools, so the cause of that harness startup failure remains unresolved. This attempt is recorded in `/data/data/com.termux/files/home/lfcfoundry/thumb-circuit-adversarial-qualification-20261116/evidence/independent-34.log`; it is neither a passing test run nor an application test failure. The earlier remediation run's 34/34 result remains supported by its separate complete log and exit-code sidecar.
 
 ## Coverage limits and interpretation
 
@@ -115,6 +125,7 @@ The available evidence is primarily headless Chromium evidence. It does not esta
 - Successful simultaneous gameplay in two tabs; the attempted two-page gameplay probe did not get past boot.
 - Genuine quota exhaustion or all private-browsing storage behaviors.
 - Native browser delivery of the exact delayed/out-of-order storage-event scenario.
+- A dedicated conflict-to-exact-current-snapshot retry regression; source inspection shows the equality path, but the test case was not independently exercised.
 - Crash durability after browser or process termination.
 
 The project is a **browser game**. Android GUI testing is not inherently required merely because development and test tooling run in Termux on Android. Device-specific Android browser testing should be chosen only if Android/mobile browser behavior is an intended support target or a concrete platform-specific risk needs validation. Define the supported browser targets first; then prioritize actual gameplay and persistence testing in those browsers. Do not treat Android as a mandatory qualification target by default.
@@ -139,5 +150,15 @@ The project is a **browser game**. Android GUI testing is not inherently require
 7. Keep TC-05 explicit in documentation and UI semantics. Do not claim crash durability.
 8. Preserve the existing save key and JSON format unless a separately justified migration plan is approved.
 9. Do not add dependencies, alter unrelated files, rewrite project instructions, commit, push, or merge implementation changes without explicit authorization.
+
+## Local evidence map
+
+The source checkouts and raw logs below remain local and were not added to this documentation-only branch:
+
+- Reconstruction: `/data/data/com.termux/files/home/thumb-circuit-save-integrity-rebuild-20261115/`; original session-log copy and 22-check output are under `evidence/`.
+- Remediation: `/data/data/com.termux/files/home/lfcfoundry/thumb-circuit-persistence-remediation-20261116/repo/evidence/`; includes the report, state-machine notes, full 34/34 log and exit code, repeated concurrency runs, and process-kill probe.
+- Independent qualification: `/data/data/com.termux/files/home/lfcfoundry/thumb-circuit-adversarial-qualification-20261116/evidence/`; includes the six-pass/seventh-timeout run and the separate DevTools-startup timeout.
+
+The independent review was delivered as a review report in the preceding work session; no separate standalone Markdown report file was present in the qualification directory. This handoff records its conclusions against the preserved source and artifacts above.
 
 This branch is a documentation handoff only; it does not merge the remediated implementation into `main`.
