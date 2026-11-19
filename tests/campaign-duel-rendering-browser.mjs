@@ -1,6 +1,6 @@
 import { createRequire } from 'node:module';
 import { fileURLToPath } from 'node:url';
-const requireFromHarness = createRequire(process.env.PUPPETEER_HARNESS_PACKAGE || '/data/data/com.termux/files/home/browser-harness/package.json');
+const requireFromHarness = createRequire(process.env.PUPPETEER_HARNESS_PACKAGE || import.meta.url);
 const puppeteer = requireFromHarness('puppeteer-core');
 import fs from 'node:fs/promises';
 import http from 'node:http';
@@ -11,7 +11,8 @@ const scriptDir = path.dirname(fileURLToPath(import.meta.url));
 const repo = process.env.TC_REPO || path.resolve(scriptDir, '..');
 const output = process.env.TC_OUTPUT || path.join(path.dirname(repo), 'qa', `campaign-duel-${Date.now()}`);
 const testProgression = process.env.TEST_PROGRESSION !== '0';
-const browserPath = process.env.CHROMIUM_PATH || '/data/data/com.termux/files/usr/bin/chromium-browser';
+const browserPath = process.env.CHROMIUM_PATH;
+if (!browserPath) throw new Error('Set CHROMIUM_PATH to a Chrome or Chromium executable');
 const source = await fs.readFile(path.join(repo, 'play/index.html'));
 const originalText = source.toString('utf8');
 const instrumentedText = originalText.replace('function draw(){', 'function draw(){window.__tcDrawCount=(window.__tcDrawCount||0)+1;');

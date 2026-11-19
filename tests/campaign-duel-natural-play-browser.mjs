@@ -6,12 +6,13 @@ import path from 'node:path';
 import { createHash } from 'node:crypto';
 import { performance } from 'node:perf_hooks';
 
-const requireFromHarness = createRequire(process.env.PUPPETEER_HARNESS_PACKAGE || '/data/data/com.termux/files/home/browser-harness/package.json');
+const requireFromHarness = createRequire(process.env.PUPPETEER_HARNESS_PACKAGE || import.meta.url);
 const puppeteer = requireFromHarness('puppeteer-core');
 const scriptDir = path.dirname(fileURLToPath(import.meta.url));
 const repo = process.env.TC_REPO || path.resolve(scriptDir, '..');
 const output = process.env.TC_OUTPUT || path.join(path.dirname(repo), 'qa', `campaign-duel-natural-${Date.now()}`);
-const browserPath = process.env.CHROMIUM_PATH || '/data/data/com.termux/files/usr/bin/chromium-browser';
+const browserPath = process.env.CHROMIUM_PATH;
+if (!browserPath) throw new Error('Set CHROMIUM_PATH to a Chrome or Chromium executable');
 const profile = process.env.TC_PROFILE || path.join(output, 'profile');
 const port = Number(process.env.TC_PORT || 18761);
 const source = await fs.readFile(path.join(repo, 'play/index.html'));
