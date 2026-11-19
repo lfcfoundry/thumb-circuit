@@ -14,13 +14,13 @@ The reconstructed persistence implementation was remediated in an isolated check
 
 The recovered implementation was reconstructed in a detached checkout:
 
-`/data/data/com.termux/files/home/thumb-circuit-save-integrity-rebuild-20261115/repo`
+`<local-home>/thumb-circuit-save-integrity-rebuild-20261115/repo`
 
 - Reconstructed HEAD: `b46bef4157ea1a11fa79dfcd8b079f16ce7976c1`
 - Parent: `3c389ef6b97960ff2a208f8675e2ff1e7709b73d`
 - Upstream `main` baseline: [`b46bef4157ea1a11fa79dfcd8b079f16ce7976c1`](https://github.com/lfcfoundry/thumb-circuit/commit/b46bef4157ea1a11fa79dfcd8b079f16ce7976c1)
 - Baseline parent: [`3c389ef6b97960ff2a208f8675e2ff1e7709b73d`](https://github.com/lfcfoundry/thumb-circuit/commit/3c389ef6b97960ff2a208f8675e2ff1e7709b73d)
-- Original session log: `/data/data/com.termux/files/home/thumb-circuit-save-integrity-rebuild-20261115/evidence/original-session-log.jsonl`
+- Original session log: `<local-home>/thumb-circuit-save-integrity-rebuild-20261115/evidence/original-session-log.jsonl`
 - Session-log SHA-256: `c05bb43b5e990955295d8214cdaa3693a4bb75636d49468bfb240893152df2f4`
 
 The reconstruction changed only:
@@ -36,7 +36,7 @@ The save format and existing storage key `thumb-circuit-sample` were preserved. 
 
 A separate remediation checkout was used:
 
-`/data/data/com.termux/files/home/lfcfoundry/thumb-circuit-persistence-remediation-20261116/repo`
+`<local-home>/lfcfoundry/thumb-circuit-persistence-remediation-20261116/repo`
 
 - Base HEAD: `b46bef4157ea1a11fa79dfcd8b079f16ce7976c1`
 - Parent: `3c389ef6b97960ff2a208f8675e2ff1e7709b73d`
@@ -90,8 +90,8 @@ The remediation report records:
 - An 80-request save burst verified bounded active-plus-coalesced work.
 
 The report and state-machine notes are in the remediation checkout:
-- `evidence/remediation-report.md` — `/data/data/com.termux/files/home/lfcfoundry/thumb-circuit-persistence-remediation-20261116/repo/evidence/remediation-report.md`
-- `evidence/remediation-state-machine.md` — `/data/data/com.termux/files/home/lfcfoundry/thumb-circuit-persistence-remediation-20261116/repo/evidence/remediation-state-machine.md`
+- `evidence/remediation-report.md` — `<local-home>/lfcfoundry/thumb-circuit-persistence-remediation-20261116/repo/evidence/remediation-report.md`
+- `evidence/remediation-state-machine.md` — `<local-home>/lfcfoundry/thumb-circuit-persistence-remediation-20261116/repo/evidence/remediation-state-machine.md`
 
 The recorded final run is `evidence/remediation-final6.log`, with exit code `0` in the adjacent `remediation-final6.exit`. The recorded process-termination probe is `evidence/process-crash-remediation.log`.
 
@@ -108,13 +108,13 @@ Six additional adversarial probes passed in headless Chromium 157:
 6. A 1,000-call save burst, with one active job plus one coalesced latest job and final generation persisted.
 
 **Important qualification:** the overall adversarial run did not pass. A seventh probe intended to initialize and finish actual races in two gameplay pages timed out while the game remained in its boot state with race controls disabled. This was a test-setup/qualification failure, not evidence of a persistence defect. The log is:
-`/data/data/com.termux/files/home/lfcfoundry/thumb-circuit-adversarial-qualification-20261116/evidence/adversarial-run1.log` (overall exit code `1`).
+`<local-home>/lfcfoundry/thumb-circuit-adversarial-qualification-20261116/evidence/adversarial-run1.log` (overall exit code `1`).
 
 Do not summarize that run as seven passing probes or as a clean overall exit.
 
 The independent review examined all 34 checks. Multi-tab storage and lock checks use distinct same-origin Chromium pages; storage-method failures are injected. Gameplay checks exercise the actual reward/result code but use the diagnostic warp hook instead of human driving. Recovery downloads compare Blob bytes, browser transfer/completion events, and the completed file contents. The stale-event regression injects a synthetic obsolete event payload; it does not force native browser event reordering. The full two-gameplay-page attempt is the seventh timed-out probe above.
 
-A separate attempt to rerun the 34-check suite from the independent qualification copy did not reach the first assertion: it exited `1` after timing out waiting for Chromium's DevTools endpoint. A direct headless Chromium smoke launch did expose DevTools, so the cause of that harness startup failure remains unresolved. This attempt is recorded in `/data/data/com.termux/files/home/lfcfoundry/thumb-circuit-adversarial-qualification-20261116/evidence/independent-34.log`; it is neither a passing test run nor an application test failure. The earlier remediation run's 34/34 result remains supported by its separate complete log and exit-code sidecar.
+A separate attempt to rerun the 34-check suite from the independent qualification copy did not reach the first assertion: it exited `1` after timing out waiting for Chromium's DevTools endpoint. A direct headless Chromium smoke launch did expose DevTools, so the cause of that harness startup failure remains unresolved. This attempt is recorded in `<local-home>/lfcfoundry/thumb-circuit-adversarial-qualification-20261116/evidence/independent-34.log`; it is neither a passing test run nor an application test failure. The earlier remediation run's 34/34 result remains supported by its separate complete log and exit-code sidecar.
 
 ## Coverage limits and interpretation
 
@@ -128,7 +128,7 @@ The available evidence is primarily headless Chromium evidence. It does not esta
 - A dedicated conflict-to-exact-current-snapshot retry regression; source inspection shows the equality path, but the test case was not independently exercised.
 - Crash durability after browser or process termination.
 
-The project is a **browser game**. Android GUI testing is not inherently required merely because development and test tooling run in Termux on Android. Device-specific Android browser testing should be chosen only if Android/mobile browser behavior is an intended support target or a concrete platform-specific risk needs validation. Define the supported browser targets first; then prioritize actual gameplay and persistence testing in those browsers. Do not treat Android as a mandatory qualification target by default.
+The project is a **browser game**. Android GUI testing is not inherently required merely because development and test tooling run on a phone-based shell. Device-specific Android browser testing should be chosen only if Android/mobile browser behavior is an intended support target or a concrete platform-specific risk needs validation. Define the supported browser targets first; then prioritize actual gameplay and persistence testing in those browsers. Do not treat Android as a mandatory qualification target by default.
 
 ## Recommended project status
 
@@ -155,9 +155,9 @@ The project is a **browser game**. Android GUI testing is not inherently require
 
 The source checkouts and raw logs below remain local and were not added to this documentation-only branch:
 
-- Reconstruction: `/data/data/com.termux/files/home/thumb-circuit-save-integrity-rebuild-20261115/`; original session-log copy and 22-check output are under `evidence/`.
-- Remediation: `/data/data/com.termux/files/home/lfcfoundry/thumb-circuit-persistence-remediation-20261116/repo/evidence/`; includes the report, state-machine notes, full 34/34 log and exit code, repeated concurrency runs, and process-kill probe.
-- Independent qualification: `/data/data/com.termux/files/home/lfcfoundry/thumb-circuit-adversarial-qualification-20261116/evidence/`; includes the six-pass/seventh-timeout run and the separate DevTools-startup timeout.
+- Reconstruction: `<local-home>/thumb-circuit-save-integrity-rebuild-20261115/`; original session-log copy and 22-check output are under `evidence/`.
+- Remediation: `<local-home>/lfcfoundry/thumb-circuit-persistence-remediation-20261116/repo/evidence/`; includes the report, state-machine notes, full 34/34 log and exit code, repeated concurrency runs, and process-kill probe.
+- Independent qualification: `<local-home>/lfcfoundry/thumb-circuit-adversarial-qualification-20261116/evidence/`; includes the six-pass/seventh-timeout run and the separate DevTools-startup timeout.
 
 The independent review was delivered as a review report in the preceding work session; no separate standalone Markdown report file was present in the qualification directory. This handoff records its conclusions against the preserved source and artifacts above.
 
