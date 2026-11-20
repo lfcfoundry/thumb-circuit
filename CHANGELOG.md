@@ -2,6 +2,9 @@
 
 Short, plain lines. Each version is one playable sample page in `play/`.
 
+## v8.02
+- Speed guard: the picture drops in sharpness only after two slow stretches in a row, and comes back after about 10 seconds of smooth frames. One slow moment no longer blurs the picture for good.
+
 ## v8.01
 - The Suburbs: streetlights light the finish stretch, and houses, parks, schools and gas stations line the road. Lose streaks and rematch lines in the story.
 
