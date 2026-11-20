@@ -2,7 +2,7 @@
 <html lang="en"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
 <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'unsafe-inline' 'wasm-unsafe-eval'; style-src 'unsafe-inline'; img-src data:; font-src data:">
-<title>Thumb Circuit sample page v8.01</title>
+<title>Thumb Circuit sample page v8.02</title>
 <style>
 html,body{margin:0;height:100%;background:#5a3d30;overflow:hidden;overscroll-behavior:none;touch-action:none;-webkit-user-select:none;user-select:none;font-family:ui-rounded,"Trebuchet MS",Verdana,sans-serif;color:#4a3228}
 #wrap{position:fixed;inset:0;display:flex;justify-content:center;align-items:flex-start}
@@ -270,7 +270,7 @@ body.dial #boost{display:none!important}body.dial #rk{top:250px!important}body.d
 <div class="trow2"><button class="tb" id="bHow" type="button">How to play</button><button class="tb" id="bDrv" type="button">Drivers</button><button class="tb" id="bStk" type="button">Stickers</button><button class="tb" id="bSet" type="button">Settings</button></div>
 <div class="lvrow" id="lvRow"></div>
 <p class="best" id="best"></p>
-<p class="legal">Sample v8.01 &middot; Forged by LFC Foundry &middot; MIT License</p>
+<p class="legal">Sample v8.02 &middot; Forged by LFC Foundry &middot; MIT License</p>
 </div>
 </div>
 <div id="panel" style="display:none"><div class="card"><button id="cx" type="button" aria-label="Close">X</button>
@@ -3977,7 +3977,7 @@ var TTL={n:0,on:/tt=2/.test(location.hash)};function frame(t){
  var dtm=t-last;last=t;if(dtm>250)dtm=250;
  var sk=slowK()*fpK(dtm);if(nf<frames.length)frames[nf++]=dtm;if(count<=0&&!finished&&!demo){var ds=dtm/1000,rk=rank();if(car.sv>MX.top)MX.top=car.sv;MX.dist+=Math.max(0,car.sv)*ds;MX.posT[rk]+=ds;if(MX.posLast&&rk!==MX.posLast)MX.posCh++;MX.posLast=rk;if(rk>MX.worst)MX.worst=rk;if(boostT>0)MX.boostT+=ds;if(car.dft){MX.dft=(MX.dft||0)+ds;if(!MX.dfl)MX.dfn=(MX.dfn||0)+1}MX.dfl=car.dft;if(Math.abs(car.uS)>0.8)MX.steerT+=ds;if(car.lap!==MX.lapSeen){if(runTime>5000)MX.laps.push(runTime/1000);MX.lapSeen=car.lap}}if(count<=0&&!finished)runTime+=dtm*sk;if(sk<1!==slowOn){slowOn=sk<1;document.body.classList.toggle('slow',slowOn);if(slowOn)nPhoto++}
  if(!gov.frz){if(hitStop>0)hitStop--;else update(Math.min(dtm,50)/1000*sk)}if(!demo)wwStep(Math.min(dtm,250)/1000);draw();if(phReq)phTake();
- if(gov.on&&count<=0&&glOn()){gov.n++;gov.sum+=dtm;if(gov.n>=120){var av=gov.sum/gov.n;gov.n=0;gov.sum=0;if(av>21){if(RS>1){rsCap=RS-1;setup();gov.note='render scale lowered to x'+rsCap+' (was averaging '+av.toFixed(1)+' ms a frame)'}else{opt.gl=0;gov.note='switched to canvas (WebGL2 averaged '+av.toFixed(1)+' ms a frame at scale x1)';nf=0}}}}
+ if(gov.on&&count<=0&&glOn()){gov.n++;gov.sum+=Math.min(dtm,60);if(gov.n>=120){var av=gov.sum/gov.n;gov.n=0;gov.sum=0;if(av>21){gov.good=0;gov.bad=(gov.bad||0)+1;if(gov.bad>=2){gov.bad=0;if(RS>1){rsCap=Math.max(1,RS*0.75);gov.noRaise=gov.raised?1:0;setup();gov.note='render scale lowered to x'+rsCap.toFixed(2)+' (two slow stretches in a row, last averaging '+av.toFixed(1)+' ms a frame)'}else{opt.gl=0;gov.note='switched to canvas (WebGL2 averaged '+av.toFixed(1)+' ms a frame at scale x1, twice in a row)';nf=0}}}else{gov.bad=0;if(rsCap<3&&!gov.noRaise&&av<18.5){gov.good=(gov.good||0)+1;if(gov.good>=5){gov.good=0;gov.raised=1;rsCap=3;setup();gov.note='render scale restored to x'+Math.min(SC,rsCap).toFixed(2)+' after about 10 s of smooth frames'}}else gov.good=0}}}
 }
 function engine(){var u=navigator.userAgent;return /Firefox\//.test(u)?'Firefox (Gecko)':(/Chrome\/|Chromium\/|CriOS/.test(u)?'Chromium-based':'Safari/WebKit')}
 function endRun(){st='done';difB=0;nRaces++;goalsEval();fanGain=Math.round(fanPts*(opt.assist?1:1.5)*(1+0.25*rgMet));var fn0=save.fans||0;save.fans=fn0+fanGain;fanUps=LIV.filter(function(L){return L[3]&&fn0<L[3]&&save.fans>=L[3]});if(fn0<FANV.monster&&save.fans>=FANV.monster)fanUps.push(['the Monster truck',0,0,FANV.monster]);report();wk.want(false);var prize=0,pl=finPos||rank(),sec=finishT/1000,nb=false;if(finished){var bk=BK[opt.trk];if(!save[bk]||sec<save[bk]){save[bk]=sec;nb=true}if(pl===1)save.wins=(save.wins||0)+1;save.races=(save.races||0)+1;grudgeEnd();prize=[0,30,15,5,0][pl]||0;if(RG.length&&!cupTot){rgPay=5*rgMet;if(pl>3){rgCons=20}prize+=rgPay+rgCons}var dfk=pl<=3?(DIFM[opt.dif]||1):1;difB=Math.round((coins+prize)*(dfk-1));save.coins=wallet()+coins+prize+difB;var l0=lvl();xpGain=Math.round((20+([0,30,20,10,0][pl]||0)+Math.min(20,Math.floor(coins/5))+Math.min(20,2*(nRam+nAir+nClose+nSmash+nChain)))*dfk);lvUps=addXp(xpGain);store()}tourRes=null;if(tour>=0)tourEnd(pl);save.rep=report();store();
@@ -3988,7 +3988,7 @@ function report(){
  var a=Array.prototype.slice.call(frames,0,nf).sort(function(x,y){return x-y}),n=a.length,sum=0;for(var i=0;i<n;i++)sum+=a[i];
  var avg=n?sum/n:0,p95=n?a[Math.floor(n*0.95)]:0,worst=n?a[n-1]:0,fps=avg?1000/avg:0;
  var verdict=fps>=55?'smooth (about 60 FPS)':(fps>=40?'ok, some drops':'choppy');
- var t=['Thumb Circuit sample v8.01 results',
+ var t=['Thumb Circuit sample v8.02 results',
  'Car: '+opt.car+' (paint '+meCol(opt.car).join(' / ')+'), driver: '+pName()+', upgrades engine '+lv('eng')+' tires '+lv('tir')+' turbo '+lv('tur')+' body '+lv('bod')+', wallet '+wallet()+', level '+lvl()+' ('+(save.xp||0)+' XP, +'+xpGain+' this race, rivals x'+rivK().toFixed(2)+'), rivals: '+rivals.map(function(r){return r.pers.name+' ('+r.kind+')'}).join(', '),
  'Turns cost speed '+(opt.scr?'on':'off')+', Bouncy edges '+(opt.bnc?'on':'off')+', Rivals: '+(DIFN[opt.dif]||'Normal')+' (rewards x'+(DIFM[opt.dif]||1)+' for a top 3 finish, bonus coins this race '+difB+'), '+'Steering: '+(opt.steer===1?'1 slide thumb':'2 drag a target')+', thumb reach '+['short','medium','long'][opt.sens|0]+', road help '+(opt.assist?'on':'off (coins and fans x1.5)'),
  'Track: '+TRACKS[curTrk].n+', view: '+(opt.view?'tilted':'top-down')+', time of day: '+TOD[opt.tod].n,
