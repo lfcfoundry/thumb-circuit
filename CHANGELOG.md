@@ -2,6 +2,9 @@
 
 Short, plain lines. Each version is one playable sample page in `play/`.
 
+## v8.04
+- Crash slow motion is shorter and lighter (half a second at 70% speed, no freeze). Photo finish is unchanged.
+
 ## v8.03
 - Slow moments: the results report lists stretches of slow frames, with the time into the race, lap position and what was on screen. Report only; no look or speed change.
 
