@@ -65,7 +65,7 @@ body.running header,body.running main{display:none}
 <div style="margin:8px 0 0;font-size:14px"><a id="fresh" href="#">Load the newest copy of this page</a></div>
 <div id="newer"></div></div></header>
 <main><div class="in">
-<div class="bar"><button id="quick" class="primary">Quick run<small>about 1.5 minutes</small></button><button id="full">Full run<small>about 3 minutes</small></button><button id="long">Long run<small>about 11 minutes</small></button><button id="stop" disabled>Stop<small>keeps results</small></button><button id="copy">Copy results<small>as text</small></button></div>
+<div class="bar"><button id="quick" class="primary">Quick run<small>about 2 minutes</small></button><button id="full">Full run<small>about 3 minutes</small></button><button id="long">Long run<small>about 11 minutes</small></button><button id="stop" disabled>Stop<small>keeps results</small></button><button id="copy">Copy results<small>as text</small></button></div>
 <div class="card"><div id="dev" style="font-weight:600">Reading this computer...</div><div id="mine" class="note" style="margin:4px 0 0"></div></div>
 <div class="card"><div id="st">Ready. Use the window size you normally play in, keep this tab in front, and do not touch the game while it measures.</div><div class="prog"><i id="pb"></i></div><div id="sub"></div></div>
 <div class="score"><div id="t1"><b>-</b><span>frame rate in a real race</span></div><div id="t2"><b>-</b><span>what one frame really costs (full sharpness)</span></div><div id="t3"><b>-</b><span>spare time in each frame</span></div><div id="t4"><b>-</b><span>slow frames in the race (over 50 ms)</span></div></div>
@@ -80,7 +80,7 @@ body.running header,body.running main{display:none}
 <details><summary>What is measured</summary><div class="note" style="font-size:14px">
 <p>The page loads the newest game file from the play page and starts a race on The Suburbs directly, without going through the menus. The game runs with its own empty save, so your saved game is never read by the race and never changed. The page does read your saved settings once, only to report them.</p>
 <p><b>Real race:</b> the game drives itself from the start line with its speed guard on, like normal play. Each second the page records the typical and slowest frame, the time the game spends thinking (update) and issuing drawing commands (draw), and what the speed guard did.</p>
-<p><b>Real cost per frame:</b> the screen limits the game to one frame per refresh (60 FPS), so a frame that takes 4 ms and one that takes 15 ms both show as 16.7 ms. To see the real cost, the page freezes the race at the streetlights and draws 1, 2, 4, 8 and more copies of each frame until the computer falls behind, then divides. This is done at full sharpness, at picture size x1 and x0.5, with edge smoothing off, and with the canvas look (the fallback the speed guard can switch to).</p>
+<p><b>Real cost per frame:</b> the screen limits the game to one frame per refresh (60 FPS), so a frame that takes 4 ms and one that takes 15 ms both show as 16.7 ms. To see the real cost, the page freezes the race at the streetlights and draws 1, 2, 4, 8 and more copies of each frame until the computer falls behind, then divides. This is done at full sharpness, at picture size x1 and x0.5, with edge smoothing off, with the canvas look (the fallback the speed guard can switch to), and on Orchard Ring, which is seen from farther back and draws more (Full run: every track).</p>
 <p><b>Graphics card time:</b> where the browser offers a graphics card timer (Chrome usually does, Firefox does not), the page reads it directly as well.</p>
 <p><b>Call count:</b> for 60 frames the page counts every drawing call the game makes, and flags calls that make the browser wait for the graphics card; Firefox handles those slowly.</p></div></details>
 <details id="rawd"><summary>Results as text</summary><pre id="out">No results yet.</pre></details>
@@ -90,7 +90,7 @@ body.running header,body.running main{display:none}
 <script>
 (function(){
 'use strict';
-var VER='2.1',VDATE='2026.11.27';
+var VER='2.2',VDATE='2026.11.27';
 var Q=new URLSearchParams(location.search),GAME=Q.get('game')||'../play/';
 function $(i){return document.getElementById(i)}
 $('ver').firstChild.nodeValue='Tester '+VER;$('vdate').textContent=VDATE;$('v2').textContent='Tester '+VER;
@@ -161,8 +161,8 @@ async function loadGame(){var u=new URL(GAME,location.href);u.searchParams.set('
  log('game ready in '+((performance.now()-t0)/1000).toFixed(1)+' s; game screen '+gx('st')+'; window '+GW.innerWidth+'x'+GW.innerHeight);
  if(typeof gx('typeof startRace')!=='string'||gx('typeof startRace')!=='function')throw new Error('this game file does not fit the tester (no race start found)');
  var ok=gx(INSTALL);log('timing hooks: '+ok+'; WebGL2 in game: '+(gx('glOn()')?'on':'off')+'; graphics card timer in game: '+(GW.__tsH.ext?'yes':'no'));URL.revokeObjectURL(url)}
-async function startRace(){var k=gx("TRACKS.map(function(t){return t.n}).indexOf('The Suburbs')");if(k<0)k=gx('opt.trk');
- for(var a=1;a<=3;a++){say('Starting a race on The Suburbs (try '+a+' of 3)...');gx('opt.trk='+k+';startRace()');var t0=performance.now();
+async function startRace(tn){tn=tn||'The Suburbs';var k=gx("TRACKS.map(function(t){return t.n}).indexOf('"+tn+"')");if(k<0)k=gx('opt.trk');
+ for(var a=1;a<=3;a++){say('Starting a race on '+tn+' (try '+a+' of 3)...');gx('opt.trk='+k+';startRace()');var t0=performance.now();
   while(performance.now()-t0<30000){await sleep(200);if(stopped)throw new Error('stopped');if(gx('st')==='run')break}
   if(gx('st')==='run')break;log('race did not start; game screen '+gx('st')+'; buttons showing: '+buttons().join(' | '))}
  if(gx('st')!=='run')throw new Error('the race did not start (game screen: '+gx('st')+')');gx('demo=true');log('race running: '+gx('TRACKS[opt.trk].n')+', time of day '+gx('opt.tod')+', picture size x'+gx('RS').toFixed(2)+', game draws with '+(gx('glOn()')?'WebGL2':'the canvas look'))}
@@ -196,7 +196,7 @@ async function census(frames){var g=GW.__tsH.gl;if(!g||!gx('glOn()'))return null
 async function run(kind){if(busy)return;busy=true;stopped=false;var full=kind==='full',lng=kind==='long';
  RES={kind:kind,start:new Date(),rows:[],soak:[],events:[],errors:[],census:null,game:'',done:false,slow:null};LOG=[];T0=performance.now();
  $('quick').disabled=$('full').disabled=$('long').disabled=true;$('stop').disabled=false;document.body.classList.add('running');prog(0);
- var plan=full?{soak:120,scales:[0,2,1,0.75,0.5],twice:true}:lng?{soak:600,scales:[0,1,0.5],twice:false}:{soak:45,scales:[0,1,0.5],twice:false},stepsT=(full?190:lng?660:90),tStart=performance.now();
+ var plan=full?{soak:90,scales:[0,2,1,0.75,0.5],twice:true}:lng?{soak:600,scales:[0,1,0.5],twice:false}:{soak:45,scales:[0,1,0.5],twice:false},stepsT=(full?200:lng?670:100),tStart=performance.now();
  function P(){prog((performance.now()-tStart)/1000/stepsT)}
  try{log('tester '+VER+' ('+kind+' run); '+devLine());log(mineLine(ENV.mine));
   await loadGame();RES.game=GV;P();await startRace();P();
@@ -226,6 +226,11 @@ async function run(kind){if(busy)return;busy=true;stopped=false;var full=kind===
    say('Real cost: '+lab+' ('+(i+1)+' of '+order.length+')');await sleep(300);var prev=acc[lab],r=await loadTest(lab,prev?Math.max(1,prev.pts[prev.pts.length-1].N>>2):1);if(undo)undo();
    if(prev){prev.costs.push(r.cost);if(r.gpu!=null)prev.gpus.push(r.gpu);if(r.d!=null)prev.ds.push(r.d);prev.capped=prev.capped&&r.capped}else{acc[lab]={label:lab,skip:r.skip,costs:[r.cost],gpus:r.gpu!=null?[r.gpu]:[],ds:r.d!=null?[r.d]:[],capped:r.capped,pts:r.pts,k:R.k};RES.rows.push(acc[lab])}
    log(lab+': real cost '+f1(r.cost)+' ms per frame (copies '+r.pts.map(function(p){return p.N+'='+f1(p.avg)}).join(' ')+')'+(r.gpu!=null?', graphics card '+f1(r.gpu)+' ms':''));drawCost();P()}
+  /* other tracks: zoomed-out tracks such as Orchard Ring show more of the world and cost more */
+  var TR=full?gx("TRACKS.map(function(t){return t.n})").filter(function(n){return n!=='The Suburbs'}):['Orchard Ring'];
+  for(var ti=0;ti<TR.length&&!stopped;ti++){try{gx('gov.on=0;gov.frz=0;opt.gl=1;rsCap=3');GW.__ms=undefined;await startRace(TR[ti]);gx('demo=true;gov.on=0');var us=full?[0.6]:[0.3,0.6];
+    for(var ui=0;ui<us.length&&!stopped;ui++){gx('gov.frz=0;__tc.warp('+us[ui]+'*LAPS*L)');await sleep(300);gx('gov.frz=1');await sleep(300);var lab2=TR[ti]+' at '+Math.round(us[ui]*100)+'% of the lap (x'+gx('RS').toFixed(2)+')';say('Real cost: '+lab2);var r2=await loadTest(lab2,1);
+     RES.rows.push({label:lab2,k:'track',skip:r2.skip,costs:[r2.cost],gpus:r2.gpu!=null?[r2.gpu]:[],ds:r2.d!=null?[r2.d]:[],capped:r2.capped,pts:r2.pts});log(lab2+': real cost '+f1(r2.cost)+' ms (copies '+r2.pts.map(function(p){return p.N+'='+f1(p.avg)}).join(' ')+')'+(r2.gpu!=null?', graphics card '+f1(r2.gpu)+' ms':''));drawCost();P()}}catch(e){log('track '+TR[ti]+' skipped: '+(e.message||e));if(String(e.message)==='stopped')break}}
   RES.rows.forEach(function(r){r.cost=med(r.costs);r.gpu=r.gpus.length?med(r.gpus):null;r.d=r.ds.length?med(r.ds):null});
   RES.done=!stopped}
  catch(e){if(String(e.message)!=='stopped'){RES.fail=String(e.message||e);window.__tsErr('run stopped: '+RES.fail);RES.failButtons=buttons().join(' | ')}}
@@ -263,6 +268,7 @@ function findings(){var F=[],e=ENV,bad=function(t){F.push('<span class="bad">'+e
  if(f&&lo&&lo!==f)ok('At '+lo.label.toLowerCase()+' it costs '+f1(lo.cost)+' ms ('+chg(lo.cost,f.cost)+'), so '+(lo.cost<f.cost*0.6?'picture size matters a lot here.':'picture size is not the main cost here.'));
  if(f&&ms)ok('Edge smoothing off: '+f1(ms.cost)+' ms ('+chg(ms.cost,f.cost)+').');
  if(cv)(cv.cost>p?bad:ok)('The canvas look (the fallback the speed guard can switch to) costs '+(cv.skip?'at least ':'')+f1(cv.cost)+' ms per frame'+(f?(cv.cost>f.cost?', more than the WebGL2 look':', less than the WebGL2 look'):'')+(cv.cost>p?', so after that switch the game would crawl at about '+Math.round(1000/Math.max(cv.cost,p))+' FPS.':'.'));
+ var trs=RES.rows.filter(function(r){return r.k==='track'});if(f&&trs.length){var hv=trs.slice().sort(function(a,b){return b.cost-a.cost})[0];(hv.cost>p?bad:ok)('Heaviest other track: '+hv.label+' costs '+f1(hv.cost)+' ms per frame, '+(hv.cost/f.cost).toFixed(1)+'x The Suburbs'+(hv.cost>p?', more than one screen refresh, so it cannot hold 60 FPS here.':'.'))}
  if(RES.census&&RES.census.sync.length)bad('Each frame the game asks the browser '+RES.census.sync.join(', ')+' times for answers that make it wait for the graphics card; Firefox handles these slowly.');else if(RES.census)ok('The game makes no calls that wait for the graphics card ('+RES.census.calls.toFixed(0)+' drawing calls a frame).');
  RES.events.forEach(function(v){(/canvas/.test(v.t)?bad:ok)('Speed guard at '+v.s+' s: '+v.t+'.')});
  if(RES.soak.length>4){var a=RES.soak[1],b=RES.soak[RES.soak.length-1];if(b.dom>a.dom*1.3+50)bad('The game page grew from '+a.dom+' to '+b.dom+' page parts during the race (a possible leak).');if(a.heap&&b.heap&&b.heap>a.heap*1.5+20)bad('Game memory grew from '+a.heap+' to '+b.heap+' MB during the race.')}
