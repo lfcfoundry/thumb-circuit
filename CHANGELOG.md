@@ -2,6 +2,9 @@
 
 Short, plain lines. Each version is one playable sample page in `play/`.
 
+## v8.05
+- Crash slow motion no longer blurs the screen edges in Safari and on iPhone and iPad, where the blur slowed frames.
+
 ## v8.04
 - Crash slow motion is shorter and lighter (half a second at 70% speed, no freeze). Photo finish is unchanged.
 
