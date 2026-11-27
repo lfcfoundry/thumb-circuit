@@ -2880,7 +2880,7 @@ if(typeof module!=='undefined')module.exports=TRK;
 
 /* WebGL2 renderer for the Thumb Circuit sample: live 3D toy models over the painted ground canvas.
    Passes: shadow mask (planar projected, blurred) -> scene (ground + lit models + ink outline, MSAA) -> bloom -> screen. */
-var GLR=(function(){
+var GX={};window.__gx=GX;var GLR=(function(){
  var ptAt=null,ptv=null,ptb=null,ptCap=0,gl=null,cv=null,ok=false,P={},meshes={},W=0,H=0,RS=2,LW=0,LH=0,fb={},quad=null,groundTex=null,info='';
  function sh(type,src){var s=gl.createShader(type);gl.shaderSource(s,src);gl.compileShader(s);if(!gl.getShaderParameter(s,gl.COMPILE_STATUS))throw new Error('shader: '+gl.getShaderInfoLog(s));return s}
  function prog(vs,fs,attrs){var p=gl.createProgram();gl.attachShader(p,sh(gl.VERTEX_SHADER,'#version 300 es\nprecision highp float;\n'+vs));gl.attachShader(p,sh(gl.FRAGMENT_SHADER,'#version 300 es\nprecision highp float;\n'+fs));
@@ -2996,6 +2996,7 @@ var VS_PT='in vec2 aP;in vec4 j0;in vec4 j1;in vec4 j2;uniform vec2 uCam;uniform
  function render(F){if(!ok)return false;var i,o,u;
   gl.disable(gl.BLEND);gl.disable(gl.DEPTH_TEST);gl.disable(gl.CULL_FACE);
   // 1. shadow mask at ground resolution
+ if(!GX.sh){
   gl.bindFramebuffer(gl.FRAMEBUFFER,fb.m0.f);gl.viewport(0,0,fb.m0.w,fb.m0.h);scis(F,fb.m0.w,fb.m0.h,0.06);gl.colorMask(true,true,true,true);gl.clearColor(0,0,0,0);gl.clear(gl.COLOR_BUFFER_BIT);
   common(P.sh,F);u=P.sh.u;gl.uniform2f(u.uSunXY,F.sunXY[0],F.sunXY[1]);
   pack(F.objs);
@@ -3003,6 +3004,7 @@ var VS_PT='in vec2 aP;in vec4 j0;in vec4 j1;in vec4 j2;uniform vec2 uCam;uniform
   else for(var li=0;li<F.lamps.length;li+=2){var L=F.lamps[li],L2=F.lamps[li+1]||L,ch=li>>1;gl.colorMask(ch===0,ch===1,ch===2,ch===3);gl.uniform3f(u.uSh,(L.x+L2.x)/2,(L.y+L2.y)/2,L.z);gl.uniform4f(u.uCl,L.x,L.y,L.own===undefined?-1:L.own,1);gl.uniform2f(u.uCd,L.dx,L.dy);drawAll(false)}
   gl.colorMask(true,true,true,true);
   gl.useProgram(P.blur.p);for(var bi=0;bi<2;bi++){var bs=F.soft*(bi?0.45:1);gl.bindFramebuffer(gl.FRAMEBUFFER,fb.m1.f);gl.uniform2f(P.blur.u.uD,bs/LW,0);blit(P.blur,fb.m0.t);gl.bindFramebuffer(gl.FRAMEBUFFER,fb.m0.f);gl.uniform2f(P.blur.u.uD,0,bs/LH);blit(P.blur,fb.m1.t)}
+  }
   // 2. scene: ground, then models with depth
   gl.bindFramebuffer(gl.FRAMEBUFFER,fb.ms.f);gl.viewport(0,0,W,H);scis(F,W,H,0.01);gl.clearDepth(1);gl.clear(gl.DEPTH_BUFFER_BIT);
   gl.useProgram(P.ground.p);u=P.ground.u;lights(P.ground,F);gl.uniform2f(u.uCam,F.camX,F.camY);gl.uniform2f(u.uSize,LW,LH);gl.uniform1f(u.uNight,F.night);gl.uniform1f(u.uMoon,F.moon||0);gl.uniform1f(u.uTime,F.time||0);gl.uniform3fv(u.uCyc,F.cyc||[0,0,0]);gl.uniform1f(u.uSa,F.sa);gl.uniform3fv(u.uShade,F.shade);gl.uniform2f(u.uOff,F.off[0],F.off[1]);
@@ -3012,18 +3014,20 @@ var VS_PT='in vec2 aP;in vec4 j0;in vec4 j1;in vec4 j2;uniform vec2 uCam;uniform
   gl.enable(gl.DEPTH_TEST);gl.depthFunc(gl.LEQUAL);gl.depthMask(true);gl.enable(gl.CULL_FACE);gl.frontFace(F.ccw?gl.CCW:gl.CW);
   common(P.mesh,F);u=P.mesh.u;lights(P.mesh,F);gl.uniform3fv(u.uSun,F.sun);gl.uniform1f(u.uNight,F.night);
   gl.cullFace(gl.BACK);gl.uniform1f(u.uOut,0);gl.uniform1f(u.uOM,0);
-  drawAll(false);
+  if(!GX.models)drawAll(false);
   gl.cullFace(gl.FRONT);gl.uniform1f(u.uOut,1);gl.uniform1f(u.uOM,1);
-  drawAll(false);
+  if(!GX.models&&!GX.outline)drawAll(false);
   // cars hidden under something tall (the bridge deck) show through as a flat silhouette
   gl.cullFace(gl.BACK);gl.depthFunc(gl.GREATER);gl.depthMask(false);gl.uniform1f(u.uOM,2);gl.uniform1f(u.uFlat,25);
-  drawAll(true);
+  if(!GX.models)drawAll(true);
   gl.uniform1f(u.uFlat,0);gl.depthFunc(gl.LEQUAL);gl.depthMask(true);
   gl.disable(gl.CULL_FACE);gl.disable(gl.DEPTH_TEST);
   gl.bindFramebuffer(gl.READ_FRAMEBUFFER,fb.ms.f);gl.bindFramebuffer(gl.DRAW_FRAMEBUFFER,fb.scene.f);gl.blitFramebuffer(0,0,W,H,0,0,W,H,gl.COLOR_BUFFER_BIT,gl.NEAREST);
   // 3. bloom
+ if(!GX.bloom){
   gl.bindFramebuffer(gl.FRAMEBUFFER,fb.b0.f);gl.viewport(0,0,fb.b0.w,fb.b0.h);scis(F,fb.b0.w,fb.b0.h,0.05);gl.useProgram(P.bright.p);gl.uniform1f(P.bright.u.uTh,F.thresh);blit(P.bright,fb.scene.t);
   gl.useProgram(P.blur.p);for(i=0;i<2;i++){gl.bindFramebuffer(gl.FRAMEBUFFER,fb.b1.f);gl.uniform2f(P.blur.u.uD,(1+i)/fb.b0.w,0);blit(P.blur,fb.b0.t);gl.bindFramebuffer(gl.FRAMEBUFFER,fb.b0.f);gl.uniform2f(P.blur.u.uD,0,(1+i)/fb.b0.h);blit(P.blur,fb.b1.t)}
+  }
   // 4. to the screen
   gl.bindFramebuffer(gl.FRAMEBUFFER,null);gl.viewport(0,0,W,H);scis(F,W,H,0.005);gl.useProgram(P.fin.p);gl.activeTexture(gl.TEXTURE1);gl.bindTexture(gl.TEXTURE_2D,fb.b0.t);gl.uniform1i(P.fin.u.uB,1);gl.uniform1f(P.fin.u.uBloom,F.bloom);gl.uniform1f(P.fin.u.uVig,F.vig);blit(P.fin,fb.scene.t);
   if(F.pt&&(F.pt.nN+F.pt.nA)>0){var T=F.pt,n=T.nN+T.nA;gl.useProgram(P.pt.p);u=P.pt.u;gl.uniform2f(u.uCam,F.camX+(T.dx||0),F.camY+(T.dy||0));gl.uniform2f(u.uView,2/LW,2/LH);if(!ptAt){ptAt=gl.createTexture();var ac=document.createElement('canvas');ac.width=448;ac.height=64;var ag=ac.getContext('2d');for(var bi=0;bi<7;bi++){var gr=ag.createRadialGradient(bi*64+32,32,0,bi*64+32,32,32);for(var bj=0;bj<3;bj++){var bq=(bi*3+bj)*4;gr.addColorStop([0,0.45,1][bj],'rgba('+Math.round(T.bl[bq]*255)+','+Math.round(T.bl[bq+1]*255)+','+Math.round(T.bl[bq+2]*255)+','+T.bl[bq+3]+')')}ag.fillStyle=gr;ag.fillRect(bi*64,0,64,64)}
@@ -4949,22 +4953,22 @@ function med(a){a=a.slice().sort(function(x,y){return x-y});return a[a.length>>1
 function frames(n){return new Promise(function(r){var t=[],l=performance.now(),c=0;(function f(now){t.push(now-l);l=now;if(++c<n)requestAnimationFrame(f);else r(t.slice(2))})(l)})}
 function wk(){var W=T.wk(),n=W.u.length,t=[],u=[],d=[],g=[];for(var i=0;i<n;i++){u.push(W.u[i]);d.push(W.d[i]);g.push(W.g[i]);t.push(W.u[i]+W.d[i]+W.g[i])}T.wk(false);return {u:med(u),d:med(d),g:med(g),w:med(t),w95:p95(t),n:n}}
 function gl(){try{var c=document.createElement('canvas'),g=c.getContext('webgl2'),e=g&&g.getExtension('WEBGL_debug_renderer_info');return e?g.getParameter(e.UNMASKED_RENDERER_WEBGL):'not reported'}catch(e){return 'unknown'}}
-async function start(){var tr=document.getElementById('bTrk');T.TR[8].lv=0;tr.click();await sleep(400);var e=[].slice.call(document.getElementById('trkList').querySelectorAll('*')).filter(function(x){return /The Suburbs/.test(x.textContent)&&x.children.length<4}).pop();e.click();await sleep(300);document.getElementById('cx').click();await sleep(500);document.getElementById('bRace').click();await sleep(1200);
- var b=[].slice.call(document.querySelectorAll('button')).find(function(x){return /^Skip$/.test(x.textContent)&&x.offsetParent});if(b)b.click();for(var i=0;i<240&&T.st()!=='run';i++)await sleep(500);await sleep(2500);return T.st()==='run'}
+async function start(){var tr=document.getElementById('bTrk');T.TR[8].lv=0;tr.click();await sleep(400);var e=[].slice.call(document.getElementById('trkList').querySelectorAll('*')).filter(function(x){return /The Suburbs/.test(x.textContent)&&x.children.length<4}).pop();e.click();await sleep(300);document.getElementById('cx').click();await sleep(500);document.getElementById('bRace').click();await sleep(1200);try{T.slWarp(0.9)}catch(e){}
+ var b=[].slice.call(document.querySelectorAll('button')).find(function(x){return /^Skip$/.test(x.textContent)&&x.offsetParent});if(b)b.click();for(var i=0;i<40&&T.st()!=='run';i++)await sleep(500);await sleep(2500);return T.st()==='run'}
 function chart(){var rows=R.filter(function(r){return r.kind==='scale'}).map(function(r){return {rs:r.rs,med:r.w||0,p95:Math.max(r.w||0,r.w95||0)}}),W=340,rh=26,H=rows.length*rh+40,mx=Math.max.apply(null,rows.map(function(r){return r.p95}).concat([20]))*1.1,s='<svg viewBox="0 0 '+W+' '+H+'" width="100%" role="img"><text x="0" y="14" font-weight="bold">Game work per frame by picture size (ms, lower is better)</text>';
  rows.forEach(function(r,i){var y=26+i*rh,w=function(v){return 70+v/mx*(W-110)};s+='<text x="0" y="'+(y+13)+'">x'+r.rs.toFixed(2)+'</text><rect x="70" y="'+y+'" width="'+(w(r.p95)-70)+'" height="18" fill="var(--sw-us)" opacity=".3"/><rect x="70" y="'+y+'" width="'+(w(r.med)-70)+'" height="18" fill="var(--sw-us)"/><text x="'+(w(r.p95)+4)+'" y="'+(y+13)+'">'+r.med.toFixed(1)+'</text>'});
  var x60=70+16.7/mx*(W-110);s+='<line x1="'+x60+'" x2="'+x60+'" y1="20" y2="'+(H-4)+'" stroke="var(--sw-bad)" stroke-width="2"/><text x="'+(x60+3)+'" y="'+(H-6)+'">60 FPS</text></svg>';$('sw-ch').innerHTML=s}
 function tiles(){var sc=R.filter(function(r){return r.kind==='scale'});if(!sc.length)return;var top=sc[0],one=sc.filter(function(r){return Math.abs(r.rs-1)<0.01})[0],fast=sc.filter(function(r){return r.med<=17.5}).sort(function(a,b){return b.rs-a.rs})[0];
  $('sw-t').innerHTML='<div class="t '+(top.w<=12?'ok':'no')+'"><b>'+top.w.toFixed(1)+' ms</b>Game work, full sharpness (x'+top.rs.toFixed(2)+')</div><div class="t '+(one&&one.w<=12?'ok':'no')+'"><b>'+(one?one.w.toFixed(1)+' ms':'-')+'</b>Game work, sharpness x1</div><div class="t '+(top.w<=16?'ok':'no')+'"><b>'+Math.max(0,Math.round((1-top.w/16.7)*100))+'%</b>Spare time under 60 FPS (full)</div><div class="t"><b>'+top.g.toFixed(1)+' ms</b>Waiting for the graphics card (full)</div>'}
-function text(done){var d=T.rsx?'':'',L=['Thumb Circuit speed test (sharpness sweep), page v8.03-t2','Browser: '+navigator.userAgent,'Window: '+innerWidth+'x'+innerHeight+' at '+devicePixelRatio+'x; game canvas '+(T.geo?T.geo().join(','):'?')+'; hardware threads '+(navigator.hardwareConcurrency||'?')+'; graphics: '+gl(),'Track: The Suburbs, lap 2 night, near streetlights; 150 frames per sample'];
+function text(done){var d=T.rsx?'':'',L=['Thumb Circuit speed test (sharpness sweep), page v8.03-t3','Browser: '+navigator.userAgent,'Window: '+innerWidth+'x'+innerHeight+' at '+devicePixelRatio+'x; game canvas '+(T.geo?T.geo().join(','):'?')+'; hardware threads '+(navigator.hardwareConcurrency||'?')+'; graphics: '+gl(),'Track: The Suburbs, lap 2 night, near streetlights; 150 frames per sample'];
  R.forEach(function(r){L.push((r.kind==='scale'?'Scale x'+r.rs.toFixed(2):r.name)+' (applied x'+r.rs.toFixed(2)+'): frame '+r.med.toFixed(1)+' ms (95th '+r.p95.toFixed(1)+'), game work '+(r.w!==undefined?r.w.toFixed(1):'?')+' ms = update '+(r.u!==undefined?r.u.toFixed(1):'?')+' + draw '+(r.d!==undefined?r.d.toFixed(1):'?')+' + wait for the graphics card '+(r.g!==undefined?r.g.toFixed(1):'?')+', samples '+r.n)});
  var sc=R.filter(function(r){return r.kind==='scale'});if(sc.length>1){var a=sc[0],b=sc[sc.length-1];L.push('SUMMARY: game work at full sharpness '+(a.w||0).toFixed(1)+' ms vs '+(b.w||0).toFixed(1)+' ms at x'+b.rs.toFixed(2)+' (16.7 ms is the 60 FPS limit; frame time alone only shows that cap)'+(done?'':' (stopped early)'))}$('sw-o').textContent=L.join('\n');return L.join('\n')}
 async function run(){if(go)return;go=true;stop=false;R=[];$('sw').className='run';$('sw-q').disabled=true;$('sw-s').disabled=false;$('sw-st').textContent='Starting the race...';
- var ok=await start();if(!ok){$('sw').className='idle';$('sw-st').textContent='The race did not start. Reload and try again.';go=false;return}
+ var ok=await start();if(!ok)ok=await start();if(!ok)ok=await start();if(!ok){$('sw').className='idle';$('sw-st').textContent='The race did not start. Reload and try again.';go=false;return}
  var g=T.gov();g.on=0;var cap=[3,2,1.5,1.25,1,0.75,0.5],steps=[];cap.forEach(function(c){steps.push({k:'scale',c:c})});var plan=[];for(var rd=0;rd<2;rd++){(rd%2?steps.slice().reverse():steps).forEach(function(s){plan.push(s)})}
  var tot=plan.length,acc={};
  for(var i=0;i<tot&&!stop;i++){var s=plan[i];T.setRs(s.c);T.slWarp(0.9);await sleep(500);T.wk(true);var t=await frames(150),w=wk(),rs=T.rsx()[0],key=rs.toFixed(2);(acc[key]=acc[key]||{rs:rs,t:[],w:[]}).t=acc[key].t.concat(t);acc[key].w.push(w);$('sw-b').style.width=((i+1)/tot*100)+'%';$('sw-st').textContent='Sample '+(i+1)+' of '+tot}
- var sc0=T.scen(),sv=sc0.filter(function(o){return o.sp});T.setRs(3);var top=T.rsx()[0],ex=[['Streetlights off',function(){T.slOn(false)},function(){T.slOn(true)}],['New scenery off',function(){var a=T.scen();for(var q=a.length-1;q>=0;q--)if(a[q].sp)a.splice(q,1)},function(){var a=T.scen();sv.forEach(function(o){a.push(o)});a.sort(function(x,y){return x.y-y.y})}],['Edge smoothing 2 (instead of 4)',function(){window.__ms=2;T.setRs(3)},function(){window.__ms=4;T.setRs(3)}],['Edge smoothing off',function(){window.__ms=0;T.setRs(3)},function(){window.__ms=4;T.setRs(3)}],['Everything on',function(){},function(){}]];
+ var sc0=T.scen(),sv=sc0.filter(function(o){return o.sp});T.setRs(3);var top=T.rsx()[0],ex=[['Streetlights off',function(){T.slOn(false)},function(){T.slOn(true)}],['New scenery off',function(){var a=T.scen();for(var q=a.length-1;q>=0;q--)if(a[q].sp)a.splice(q,1)},function(){var a=T.scen();sv.forEach(function(o){a.push(o)});a.sort(function(x,y){return x.y-y.y})}],['Edge smoothing 2 (instead of 4)',function(){window.__ms=2;T.setRs(3)},function(){window.__ms=4;T.setRs(3)}],['Edge smoothing off',function(){window.__ms=0;T.setRs(3)},function(){window.__ms=4;T.setRs(3)}],['Shadows skipped',function(){window.__gx.sh=1},function(){window.__gx.sh=0}],['Bloom skipped',function(){window.__gx.bloom=1},function(){window.__gx.bloom=0}],['Model outlines skipped',function(){window.__gx.outline=1},function(){window.__gx.outline=0}],['All 3D models skipped',function(){window.__gx.models=1},function(){window.__gx.models=0}],['Everything on',function(){},function(){}]];
  for(var e=0;e<ex.length&&!stop;e++){ex[e][1]();T.slWarp(0.9);await sleep(500);T.wk(true);var tt=await frames(150),ww=wk();R.push({kind:'extra',name:ex[e][0]+' (full sharpness)',rs:top,med:med(tt),p95:p95(tt),n:tt.length,w:ww.w,w95:ww.w95,u:ww.u,d:ww.d,g:ww.g});ex[e][2]()}
  Object.keys(acc).map(Number).sort(function(a,b){return b-a}).forEach(function(k){var a=acc[k.toFixed(2)];R.push({kind:'scale',rs:a.rs,med:med(a.t),p95:p95(a.t),n:a.t.length,w:med(a.w.map(function(x){return x.w})),w95:med(a.w.map(function(x){return x.w95})),u:med(a.w.map(function(x){return x.u})),d:med(a.w.map(function(x){return x.d})),g:med(a.w.map(function(x){return x.g}))})});
  g.on=1;$('sw').className='idle';$('sw-q').disabled=false;$('sw-s').disabled=true;go=false;$('sw-st').textContent=stop?'Stopped. Results so far are below.':'Done. Tap Copy results and paste it to me.';chart();tiles();text(!stop)}
