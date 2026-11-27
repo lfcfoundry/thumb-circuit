@@ -2,6 +2,9 @@
 
 Short, plain lines. Each version is one playable sample page in `play/`.
 
+## v8.03
+- Slow moments: the results report lists stretches of slow frames, with the time into the race, lap position and what was on screen. Report only; no look or speed change.
+
 ## v8.02
 - Speed guard: the picture drops in sharpness only after two slow stretches in a row, and comes back after about 10 seconds of smooth frames. One slow moment no longer blurs the picture for good.
 
