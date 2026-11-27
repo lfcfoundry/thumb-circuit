@@ -65,7 +65,7 @@ body.running header,body.running main{display:none}
 <div style="margin:8px 0 0;font-size:14px"><a id="fresh" href="#">Load the newest copy of this page</a></div>
 <div id="newer"></div></div></header>
 <main><div class="in">
-<div class="bar"><button id="quick" class="primary">Quick run<small>about 1.5 minutes</small></button><button id="full">Full run<small>about 3 minutes</small></button><button id="stop" disabled>Stop<small>keeps results</small></button><button id="copy">Copy results<small>as text</small></button></div>
+<div class="bar"><button id="quick" class="primary">Quick run<small>about 1.5 minutes</small></button><button id="full">Full run<small>about 3 minutes</small></button><button id="long">Long run<small>about 11 minutes</small></button><button id="stop" disabled>Stop<small>keeps results</small></button><button id="copy">Copy results<small>as text</small></button></div>
 <div class="card"><div id="dev" style="font-weight:600">Reading this computer...</div><div id="mine" class="note" style="margin:4px 0 0"></div></div>
 <div class="card"><div id="st">Ready. Use the window size you normally play in, keep this tab in front, and do not touch the game while it measures.</div><div class="prog"><i id="pb"></i></div><div id="sub"></div></div>
 <div class="score"><div id="t1"><b>-</b><span>frame rate in a real race</span></div><div id="t2"><b>-</b><span>what one frame really costs (full sharpness)</span></div><div id="t3"><b>-</b><span>spare time in each frame</span></div><div id="t4"><b>-</b><span>slow frames in the race (over 50 ms)</span></div></div>
@@ -90,7 +90,7 @@ body.running header,body.running main{display:none}
 <script>
 (function(){
 'use strict';
-var VER='2.0',VDATE='2026.11.27';
+var VER='2.1',VDATE='2026.11.27';
 var Q=new URLSearchParams(location.search),GAME=Q.get('game')||'../play/';
 function $(i){return document.getElementById(i)}
 $('ver').firstChild.nodeValue='Tester '+VER;$('vdate').textContent=VDATE;$('v2').textContent='Tester '+VER;
@@ -176,9 +176,11 @@ function sum(m){return {n:m.t.length,med:med(m.t),p95:pct(m.t,0.95),mx:m.t.lengt
 async function loadTest(label,startN){var H=GW.__tsH,per=1000/ENV.hz,pts=[],N=startN||1,r;
  while(true){H.xd=N;await sleep(N>8?250:150);if(stopped)break;var m=await measure(N>=16?900:600,10);r=sum(m);pts.push({N:N,avg:r.avg,gpu:r.gpu,d:r.d});$('sub').textContent=label+': '+N+' cop'+(N>1?'ies':'y')+' per frame, '+f1(r.avg)+' ms';if(r.avg>=Math.max(55,per*3.2)||N>=64)break;N*=2}
  H.xd=1;/* fit frame time = fixed + per copy x copies on the points the screen does not cap; one frame costs fixed + one copy */
- var up=pts.filter(function(q){return q.avg>per*1.3}),L=pts[pts.length-1]||{N:1,avg:0},cost,capped=!up.length;
- if(up.length>=2){var A=up[up.length-2],B=up[up.length-1],sl=Math.max(0,(B.avg-A.avg)/(B.N-A.N)),fx=Math.max(0,A.avg-sl*A.N);cost=fx+sl}else if(up.length===1)cost=up[0].avg/up[0].N;else cost=L.avg/L.N;
- return {label:label,cost:capped?L.avg/L.N:cost,capped:capped,pts:pts,gpu:pts[0]?pts[0].gpu:null,d:pts[0]?pts[0].d:null}}
+ var up=pts.filter(function(q){return q.avg>per*1.5}),L=pts[pts.length-1]||{N:1,avg:0},cost,capped=!up.length,skip=false,d1=pts[0]?pts[0].d||0:0;
+ if(up.length>=2){/* least squares over every point the screen does not cap */var n=up.length,sx=0,sy=0,sxx=0,sxy=0;up.forEach(function(q){sx+=q.N;sy+=q.avg;sxx+=q.N*q.N;sxy+=q.N*q.avg});var sl=Math.max(0,(n*sxy-sx*sy)/(n*sxx-sx*sx)),fx=Math.max(0,(sy-sl*sx)/n);cost=fx+sl}else if(up.length===1)cost=up[0].avg/up[0].N;else cost=L.avg/L.N;
+ /* the frame cannot cost less than the drawing commands themselves; if many copies cost almost nothing the browser skipped them */
+ if(L.N>=8&&d1>0&&L.avg<L.N*d1*0.5){skip=true;cost=d1;capped=false}else if(cost<d1)cost=d1;
+ return {label:label,cost:capped?Math.max(L.avg/L.N,d1):cost,capped:capped,skip:skip,pts:pts,gpu:pts[0]?pts[0].gpu:null,d:pts[0]?pts[0].d:null}}
 async function census(frames){var g=GW.__tsH.gl;if(!g||!gx('glOn()'))return null;var P=Object.getPrototypeOf(g),names=[],C={},B={up:0},F=GW.__tsF;
  for(var k in P){try{if(typeof P[k]==='function'&&k!=='constructor')names.push(k)}catch(e){}}
  names.forEach(function(n){var o=P[n];C[n]=0;g[n]=function(){C[n]++;if(/^(texImage2D|texSubImage2D|texImage3D|texSubImage3D|bufferData|bufferSubData)$/.test(n)){var a=arguments[arguments.length-1];if(a&&a.byteLength)B.up+=a.byteLength;else if(a&&typeof a==='object'){var w=a.videoWidth||a.naturalWidth||a.width||0,h=a.videoHeight||a.naturalHeight||a.height||0;B.up+=w*h*4}}return o.apply(g,arguments)}});
@@ -191,10 +193,10 @@ async function census(frames){var g=GW.__tsH.gl;if(!g||!gx('glOn()'))return null
  return {frames:nf,calls:tot/nf,draws:draws/nf,up:B.up/nf,sync:syn.filter(function(s){return !/ 0\.0$/.test(s)}),top:top,tex:((C.texImage2D||0)+(C.texSubImage2D||0))/nf}}
 
 /* ---------- the run ---------- */
-async function run(kind){if(busy)return;busy=true;stopped=false;var full=kind==='full';
+async function run(kind){if(busy)return;busy=true;stopped=false;var full=kind==='full',lng=kind==='long';
  RES={kind:kind,start:new Date(),rows:[],soak:[],events:[],errors:[],census:null,game:'',done:false,slow:null};LOG=[];T0=performance.now();
- $('quick').disabled=$('full').disabled=true;$('stop').disabled=false;document.body.classList.add('running');prog(0);
- var plan=full?{soak:120,scales:[0,2,1,0.75,0.5],twice:true}:{soak:45,scales:[0,1,0.5],twice:false},stepsT=(full?190:110),tStart=performance.now();
+ $('quick').disabled=$('full').disabled=$('long').disabled=true;$('stop').disabled=false;document.body.classList.add('running');prog(0);
+ var plan=full?{soak:120,scales:[0,2,1,0.75,0.5],twice:true}:lng?{soak:600,scales:[0,1,0.5],twice:false}:{soak:45,scales:[0,1,0.5],twice:false},stepsT=(full?190:lng?660:90),tStart=performance.now();
  function P(){prog((performance.now()-tStart)/1000/stepsT)}
  try{log('tester '+VER+' ('+kind+' run); '+devLine());log(mineLine(ENV.mine));
   await loadGame();RES.game=GV;P();await startRace();P();
@@ -222,12 +224,12 @@ async function run(kind){if(busy)return;busy=true;stopped=false;var full=kind===
    else if(R.k==='lights'){gx('rsCap=3;setup();__tc.slOn(false)');lab='Streetlights off (full sharpness)';undo=function(){gx('__tc.slOn(true)')}}
    else if(R.k==='canvas'){gx('rsCap=3;opt.gl=0;setup()');lab='Canvas look (the fallback)';undo=function(){gx('opt.gl=1;setup()')}}
    say('Real cost: '+lab+' ('+(i+1)+' of '+order.length+')');await sleep(300);var prev=acc[lab],r=await loadTest(lab,prev?Math.max(1,prev.pts[prev.pts.length-1].N>>2):1);if(undo)undo();
-   if(prev){prev.costs.push(r.cost);if(r.gpu!=null)prev.gpus.push(r.gpu);if(r.d!=null)prev.ds.push(r.d);prev.capped=prev.capped&&r.capped}else{acc[lab]={label:lab,costs:[r.cost],gpus:r.gpu!=null?[r.gpu]:[],ds:r.d!=null?[r.d]:[],capped:r.capped,pts:r.pts,k:R.k};RES.rows.push(acc[lab])}
+   if(prev){prev.costs.push(r.cost);if(r.gpu!=null)prev.gpus.push(r.gpu);if(r.d!=null)prev.ds.push(r.d);prev.capped=prev.capped&&r.capped}else{acc[lab]={label:lab,skip:r.skip,costs:[r.cost],gpus:r.gpu!=null?[r.gpu]:[],ds:r.d!=null?[r.d]:[],capped:r.capped,pts:r.pts,k:R.k};RES.rows.push(acc[lab])}
    log(lab+': real cost '+f1(r.cost)+' ms per frame (copies '+r.pts.map(function(p){return p.N+'='+f1(p.avg)}).join(' ')+')'+(r.gpu!=null?', graphics card '+f1(r.gpu)+' ms':''));drawCost();P()}
   RES.rows.forEach(function(r){r.cost=med(r.costs);r.gpu=r.gpus.length?med(r.gpus):null;r.d=r.ds.length?med(r.ds):null});
   RES.done=!stopped}
  catch(e){if(String(e.message)!=='stopped'){RES.fail=String(e.message||e);window.__tsErr('run stopped: '+RES.fail);RES.failButtons=buttons().join(' | ')}}
- finally{try{if(GW&&GW.__tsH){GW.__tsH.on=0;GW.__tsH.xd=1}}catch(e){}$('gw').innerHTML='';fr=null;GW=null;document.body.classList.remove('running');busy=false;$('quick').disabled=$('full').disabled=false;$('stop').disabled=true;prog(RES.done?1:parseFloat($('pb').style.width)/100);
+ finally{try{if(GW&&GW.__tsH){GW.__tsH.on=0;GW.__tsH.xd=1}}catch(e){}$('gw').innerHTML='';fr=null;GW=null;document.body.classList.remove('running');busy=false;$('quick').disabled=$('full').disabled=$('long').disabled=false;$('stop').disabled=true;prog(RES.done?1:parseFloat($('pb').style.width)/100);
   drawCost();drawSoak();tiles();findings();report();say(RES.fail?'The run hit a problem: '+RES.fail+'. Tap Copy results and paste it to Claude.':RES.done?'Done. Tap Copy results and paste it to Claude.':'Stopped. The results so far are below; tap Copy results.','');document.title=(RES.done?'DONE ':'')+'Thumb Circuit speed tester'}}
 
 /* ---------- results ---------- */
@@ -250,15 +252,17 @@ function drawSoak(){if(!RES||!RES.soak.length)return;var d=RES.soak,W=640,H=220,
  s+='<path d="'+pk+'" fill="none" stroke="var(--us-pale)" stroke-width="2"/><path d="'+pm+'" fill="none" stroke="var(--us)" stroke-width="3"/>';
  s+='<text x="'+L+'" y="'+(H-8)+'" font-size="11" fill="var(--muted)">0 s</text><text x="'+(W-R)+'" y="'+(H-8)+'" text-anchor="end" font-size="11" fill="var(--muted)">'+n+' s</text><text x="'+((L+W-R)/2)+'" y="'+(H-8)+'" text-anchor="middle" font-size="11" fill="var(--muted)">ms per frame</text></svg>';$('c2').innerHTML=s;
  var st=soakStats();$('h2c').textContent='In a real race the game ran at '+st.fps.toFixed(0)+' FPS, with '+st.o50+' frame'+(st.o50===1?'':'s')+' over 50 ms'}
+function chg(v,base){var d=Math.round((v/base-1)*100);return Math.abs(d)<10?'about the same; differences under 10% are noise here':Math.abs(d)+'% '+(d<0?'less':'more')}
 function findings(){var F=[],e=ENV,bad=function(t){F.push('<span class="bad">'+esc(t)+'</span>')},ok=function(t){F.push(esc(t))};if(!RES)return;
  if(e.mine&&e.mine.gl===0)bad('Your saved game has Graphics set to Canvas, the fallback look. The speed guard can switch to it on its own when frames are slow, and the game then keeps it for every later race. To go back: in the game open Settings and pick Graphics: WebGL2.');
  if(e.webgl2&&!e.hw)bad('The browser says it is drawing without the graphics card (software drawing). Every frame then costs far more.');
+ var ww=parseInt(e.win),sw=screen.width;if(ww&&sw&&ww<sw*0.7)bad('This window is '+e.win+' but the screen is '+e.scr+'. The game only draws what fits in the window, so a small window can hide a slowdown. For the real test, make the window the size you play in (full screen if that is how you play).');
  if(!e.webgl2)bad('WebGL2 is not available in this browser, so the game uses the canvas look.');
  var sc=RES.rows.filter(function(r){return r.k==='scale'}),f=sc[0],lo=sc[sc.length-1],ms=RES.rows.filter(function(r){return r.k==='msaa'})[0],cv=RES.rows.filter(function(r){return r.k==='canvas'})[0],p=per();
  if(f)(f.cost>p?bad:ok)('One frame really costs '+f1(f.cost)+' ms at full sharpness (x'+(RES.full||0).toFixed(2)+'); one screen refresh is '+f1(p)+' ms.');
- if(f&&lo&&lo!==f)ok('At '+lo.label.toLowerCase()+' it costs '+f1(lo.cost)+' ms ('+Math.round((1-lo.cost/f.cost)*100)+'% less), so '+(lo.cost<f.cost*0.6?'picture size matters a lot here.':'picture size is not the main cost here.'));
- if(f&&ms)ok('Edge smoothing off: '+f1(ms.cost)+' ms ('+Math.round((1-ms.cost/f.cost)*100)+'% '+(ms.cost<=f.cost?'less':'more')+').');
- if(cv)(cv.cost>p?bad:ok)('The canvas look (the fallback the speed guard can switch to) costs '+f1(cv.cost)+' ms per frame'+(f?(cv.cost>f.cost?', more than the WebGL2 look':', less than the WebGL2 look'):'')+(cv.cost>p?', so after that switch the game would crawl at about '+Math.round(1000/Math.max(cv.cost,p))+' FPS.':'.'));
+ if(f&&lo&&lo!==f)ok('At '+lo.label.toLowerCase()+' it costs '+f1(lo.cost)+' ms ('+chg(lo.cost,f.cost)+'), so '+(lo.cost<f.cost*0.6?'picture size matters a lot here.':'picture size is not the main cost here.'));
+ if(f&&ms)ok('Edge smoothing off: '+f1(ms.cost)+' ms ('+chg(ms.cost,f.cost)+').');
+ if(cv)(cv.cost>p?bad:ok)('The canvas look (the fallback the speed guard can switch to) costs '+(cv.skip?'at least ':'')+f1(cv.cost)+' ms per frame'+(f?(cv.cost>f.cost?', more than the WebGL2 look':', less than the WebGL2 look'):'')+(cv.cost>p?', so after that switch the game would crawl at about '+Math.round(1000/Math.max(cv.cost,p))+' FPS.':'.'));
  if(RES.census&&RES.census.sync.length)bad('Each frame the game asks the browser '+RES.census.sync.join(', ')+' times for answers that make it wait for the graphics card; Firefox handles these slowly.');else if(RES.census)ok('The game makes no calls that wait for the graphics card ('+RES.census.calls.toFixed(0)+' drawing calls a frame).');
  RES.events.forEach(function(v){(/canvas/.test(v.t)?bad:ok)('Speed guard at '+v.s+' s: '+v.t+'.')});
  if(RES.soak.length>4){var a=RES.soak[1],b=RES.soak[RES.soak.length-1];if(b.dom>a.dom*1.3+50)bad('The game page grew from '+a.dom+' to '+b.dom+' page parts during the race (a possible leak).');if(a.heap&&b.heap&&b.heap>a.heap*1.5+20)bad('Game memory grew from '+a.heap+' to '+b.heap+' MB during the race.')}
@@ -277,7 +281,7 @@ function report(){if(!RES){$('out').textContent='No results yet.';return ''}var 
  if(RES.slow)L.push('Game slow moments list: '+RES.slow);
  if(RES.now)L.push('As drawn now at streetlights (x'+(RES.full||0).toFixed(2)+', frozen): frame '+f1(RES.now.med)+' ms (95th '+f1(RES.now.p95)+'), draw '+f1(RES.now.d)+' ms, graphics card '+(RES.now.gpu==null?'not reported':f1(RES.now.gpu)+' ms'));
  if(RES.census)L.push('Calls per frame: '+RES.census.calls.toFixed(0)+' total, '+RES.census.draws.toFixed(0)+' draws, '+RES.census.tex.toFixed(1)+' texture uploads, '+Math.round(RES.census.up/1024)+' KB uploaded; waiting calls: '+(RES.census.sync.join(', ')||'none')+'; most used: '+RES.census.top.join(', '));
- RES.rows.forEach(function(r){var c=r.cost!=null?r.cost:med(r.costs),g=r.gpu!=null?r.gpu:(r.gpus.length?med(r.gpus):null);L.push(r.label+': real cost '+(r.capped?'under ':'')+f1(c)+' ms per frame'+(r.costs.length>1?' (runs '+r.costs.map(f1).join(', ')+')':'')+', draw commands '+f1(r.d!=null?r.d:(r.ds.length?med(r.ds):null))+' ms, graphics card '+(g==null?'not reported':f1(g)+' ms')+'; copies '+r.pts.map(function(q){return q.N+'='+f1(q.avg)}).join(' '))});
+ RES.rows.forEach(function(r){var c=r.cost!=null?r.cost:med(r.costs),g=r.gpu!=null?r.gpu:(r.gpus.length?med(r.gpus):null);L.push(r.label+': real cost '+(r.skip?'at least ':r.capped?'under ':'')+f1(c)+' ms per frame'+(r.skip?' (extra copies were skipped by the browser, so only the drawing commands are counted)':'')+(r.costs.length>1?' (runs '+r.costs.map(f1).join(', ')+')':'')+', draw commands '+f1(r.d!=null?r.d:(r.ds.length?med(r.ds):null))+' ms, graphics card '+(g==null?'not reported':f1(g)+' ms')+'; copies '+r.pts.map(function(q){return q.N+'='+f1(q.avg)}).join(' '))});
  var f=RES.rows[0];L.push('SUMMARY: '+(st?st.fps.toFixed(0)+' FPS in a real race, '+st.o50+' frames over 50 ms; ':'')+(f?'one frame really costs '+f1(f.cost)+' ms at full sharpness vs '+f1(p)+' ms per refresh':'no cost rows')+(RES.done?'':RES.fail?' (failed: '+RES.fail+')':' (stopped early)'));
  if(RES.findText&&RES.findText.length){L.push('Findings:');RES.findText.forEach(function(x){L.push('- '+x)})}
  if(RES.failButtons)L.push('Buttons showing when it stopped: '+RES.failButtons);
@@ -285,10 +289,10 @@ function report(){if(!RES){$('out').textContent='No results yet.';return ''}var 
 function copy(){var t=RES?report():'Thumb Circuit speed tester '+VER+': no run yet.\n'+(ENV?devLine():'')+'\n--- log ---\n'+LOG.join('\n');var ok=false,ta=document.createElement('textarea');ta.value=t;ta.style.position='fixed';ta.style.opacity='0';document.body.appendChild(ta);ta.select();try{ok=document.execCommand('copy')}catch(e){}document.body.removeChild(ta);
  if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(t).then(function(){say('Copied. Paste it into the chat with Claude.')},function(){say(ok?'Copied. Paste it into the chat with Claude.':'Could not copy. Open "Results as text" below and copy it by hand.');if(!ok)$('rawd').open=true})}else{say(ok?'Copied. Paste it into the chat with Claude.':'Could not copy. Open "Results as text" below and copy it by hand.');if(!ok)$('rawd').open=true}}
 function stop(){if(!busy)return;stopped=true;say('Stopping...')}
-$('quick').onclick=function(){run('quick')};$('full').onclick=function(){run('full')};$('stop').onclick=stop;$('stop2').onclick=stop;$('copy').onclick=copy;
+$('quick').onclick=function(){run('quick')};$('long').onclick=function(){run('long')};$('full').onclick=function(){run('full')};$('stop').onclick=stop;$('stop2').onclick=stop;$('copy').onclick=copy;
 document.addEventListener('visibilitychange',function(){if(busy)log(document.hidden?'tab hidden: frames pause, results from this moment are not real':'tab visible again')});
 addEventListener('resize',function(){if(busy)log('window resized to '+innerWidth+'x'+innerHeight)});
-initEnv().then(function(){var a=Q.get('auto');if(a==='quick'||a==='full')setTimeout(function(){run(a)},800)}).catch(function(e){window.__tsErr('reading this computer: '+(e.message||e))});
+initEnv().then(function(){var a=Q.get('auto');if(a==='quick'||a==='full'||a==='long')setTimeout(function(){run(a)},800)}).catch(function(e){window.__tsErr('reading this computer: '+(e.message||e))});
 })();
 </script>
 </body></html>
