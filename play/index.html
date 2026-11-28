@@ -2,7 +2,7 @@
 <html lang="en"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
 <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'unsafe-inline' 'wasm-unsafe-eval'; style-src 'unsafe-inline'; img-src data:; font-src data:">
-<title>Thumb Circuit sample page v8.05</title>
+<title>Thumb Circuit sample page v8.06</title>
 <style>
 html,body{margin:0;height:100%;background:#5a3d30;overflow:hidden;overscroll-behavior:none;touch-action:none;-webkit-user-select:none;user-select:none;font-family:ui-rounded,"Trebuchet MS",Verdana,sans-serif;color:#4a3228}
 #wrap{position:fixed;inset:0;display:flex;justify-content:center;align-items:flex-start}
@@ -271,7 +271,7 @@ body.dial #boost{display:none!important}body.dial #rk{top:250px!important}body.d
 <div class="trow2"><button class="tb" id="bHow" type="button">How to play</button><button class="tb" id="bDrv" type="button">Drivers</button><button class="tb" id="bStk" type="button">Stickers</button><button class="tb" id="bSet" type="button">Settings</button></div>
 <div class="lvrow" id="lvRow"></div>
 <p class="best" id="best"></p>
-<p class="legal">Sample v8.05 &middot; Forged by LFC Foundry &middot; MIT License</p>
+<p class="legal">Sample v8.06 &middot; Forged by LFC Foundry &middot; MIT License</p>
 </div>
 </div>
 <div id="panel" style="display:none"><div class="card"><button id="cx" type="button" aria-label="Close">X</button>
@@ -2945,7 +2945,7 @@ var VS_PT='in vec2 aP;in vec4 j0;in vec4 j1;in vec4 j2;uniform vec2 uCam;uniform
  var lost=false,restore=function(){};
  function resize(lw,lh,rs){LW=lw;LH=lh;RS=rs;W=lw*rs;H=lh*rs;cv.width=W;cv.height=H;
   for(var k in fb){if(fb[k].f)gl.deleteFramebuffer(fb[k].f);if(fb[k].t)gl.deleteTexture(fb[k].t);if(fb[k].rb)gl.deleteRenderbuffer(fb[k].rb);if(fb[k].db)gl.deleteRenderbuffer(fb[k].db)}
-  fb.m0=target(lw*2,lh*2);fb.m1=target(lw*2,lh*2);fb.scene=target(W,H);var bw=Math.max(8,W>>2),bh=Math.max(8,H>>2);fb.b0=target(bw,bh);fb.b1=target(bw,bh);
+  var mk=Math.min(2,Math.max(1,rs)),mw=Math.round(lw*mk),mh=Math.round(lh*mk);fb.m0=target(mw,mh);fb.m1=target(mw,mh);fb.scene=target(W,H);var bw=Math.max(8,W>>2),bh=Math.max(8,H>>2);fb.b0=target(bw,bh);fb.b1=target(bw,bh);
   var ms=Math.min(window.__ms!==undefined?window.__ms:4,gl.getParameter(gl.MAX_SAMPLES)||0),f=gl.createFramebuffer(),rb=gl.createRenderbuffer(),db=gl.createRenderbuffer();gl.bindFramebuffer(gl.FRAMEBUFFER,f);
   gl.bindRenderbuffer(gl.RENDERBUFFER,rb);gl.renderbufferStorageMultisample(gl.RENDERBUFFER,ms,gl.RGBA8,W,H);gl.framebufferRenderbuffer(gl.FRAMEBUFFER,gl.COLOR_ATTACHMENT0,gl.RENDERBUFFER,rb);
   gl.bindRenderbuffer(gl.RENDERBUFFER,db);gl.renderbufferStorageMultisample(gl.RENDERBUFFER,ms,gl.DEPTH_COMPONENT16,W,H);gl.framebufferRenderbuffer(gl.FRAMEBUFFER,gl.DEPTH_ATTACHMENT,gl.RENDERBUFFER,db);
@@ -3990,7 +3990,7 @@ function report(){
  var a=Array.prototype.slice.call(frames,0,nf).sort(function(x,y){return x-y}),n=a.length,sum=0;for(var i=0;i<n;i++)sum+=a[i];
  var avg=n?sum/n:0,p95=n?a[Math.floor(n*0.95)]:0,worst=n?a[n-1]:0,fps=avg?1000/avg:0;
  var verdict=fps>=55?'smooth (about 60 FPS)':(fps>=40?'ok, some drops':'choppy');
- var t=['Thumb Circuit sample v8.05 results',
+ var t=['Thumb Circuit sample v8.06 results',
  'Car: '+opt.car+' (paint '+meCol(opt.car).join(' / ')+'), driver: '+pName()+', upgrades engine '+lv('eng')+' tires '+lv('tir')+' turbo '+lv('tur')+' body '+lv('bod')+', wallet '+wallet()+', level '+lvl()+' ('+(save.xp||0)+' XP, +'+xpGain+' this race, rivals x'+rivK().toFixed(2)+'), rivals: '+rivals.map(function(r){return r.pers.name+' ('+r.kind+')'}).join(', '),
  'Turns cost speed '+(opt.scr?'on':'off')+', Bouncy edges '+(opt.bnc?'on':'off')+', Rivals: '+(DIFN[opt.dif]||'Normal')+' (rewards x'+(DIFM[opt.dif]||1)+' for a top 3 finish, bonus coins this race '+difB+'), '+'Steering: '+(opt.steer===1?'1 slide thumb':'2 drag a target')+', thumb reach '+['short','medium','long'][opt.sens|0]+', road help '+(opt.assist?'on':'off (coins and fans x1.5)'),
  'Track: '+TRACKS[curTrk].n+', view: '+(opt.view?'tilted':'top-down')+', time of day: '+TOD[opt.tod].n,
