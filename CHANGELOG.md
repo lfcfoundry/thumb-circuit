@@ -2,6 +2,9 @@
 
 Short, plain lines. Each version is one playable sample page in `play/`.
 
+## v8.06
+- The shadow layer is drawn at the picture's own size (capped at 2x), so the speed guard now lowers its cost too. Shadow edges shift by a few shades. Orchard Ring draws faster in Chromium.
+
 ## v8.05
 - Crash slow motion no longer blurs the screen edges in Safari and on iPhone and iPad, where the blur slowed frames.
 
