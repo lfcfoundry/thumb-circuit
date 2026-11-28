@@ -60,7 +60,7 @@ body.running #gw,body.running #strip{display:block}
 body.running header,body.running main{display:none}
 </style></head><body>
 <header><div class="in"><div class="tag">LFC Foundry tester</div><h1>Thumb Circuit speed tester</h1>
-<p>Starts a race of the live game on The Suburbs at night, measures what each frame really costs on this computer, and looks for what makes the game slow. Measure only; nothing is sent anywhere.</p>
+<p>Starts a race of the live game with a hard-driving computer player (fastest car, boosts, drifts and rams), measures what each frame really costs on this computer, and looks for what makes the game slow. Measure only; nothing is sent anywhere.</p>
 <div class="ver" id="ver">Tester 2.0<small id="vdate"></small></div>
 <div style="margin:8px 0 0;font-size:14px"><a id="fresh" href="#">Load the newest copy of this page</a></div>
 <div id="newer"></div></div></header>
@@ -78,7 +78,7 @@ body.running header,body.running main{display:none}
 <div id="c2"><p class="note">No results yet.</p></div></div>
 <div class="card"><h2>Log</h2><p class="note">Every step and every error, from this page and from the game. It is part of Copy results.</p><pre id="log">Waiting for a run.</pre></div>
 <details><summary>What is measured</summary><div class="note" style="font-size:14px">
-<p>The page loads the newest game file from the play page and starts a race on The Suburbs directly, without going through the menus. The game runs with its own empty save, so your saved game is never read by the race and never changed. The page does read your saved settings once, only to report them.</p>
+<p>The page loads the newest game file from the play page and starts a race directly, without going through the menus. For the real race a computer player drives hard the way a player would: the fastest car (F1), boost whenever the meter allows, drifts through corners, and rams rivals while boosting, using the game's own steering and Boost controls with every player effect on. The real cost rows then freeze the race on The Suburbs and Orchard Ring. The game runs with its own empty save, so your saved game is never read by the race and never changed. The page does read your saved settings once, only to report them.</p>
 <p><b>Real race:</b> the game drives itself from the start line with its speed guard on, like normal play. Each second the page records the typical and slowest frame, the time the game spends thinking (update) and issuing drawing commands (draw), and what the speed guard did.</p>
 <p><b>Real cost per frame:</b> the screen limits the game to one frame per refresh (60 FPS), so a frame that takes 4 ms and one that takes 15 ms both show as 16.7 ms. To see the real cost, the page freezes the race at the streetlights and draws 1, 2, 4, 8 and more copies of each frame until the computer falls behind, then divides. This is done at full sharpness, at picture size x1 and x0.5, with edge smoothing off, with the canvas look (the fallback the speed guard can switch to), and on Orchard Ring, which is seen from farther back and draws more (Full run: every track).</p>
 <p><b>Graphics card time:</b> where the browser offers a graphics card timer (Chrome usually does, Firefox does not), the page reads it directly as well.</p>
@@ -90,7 +90,7 @@ body.running header,body.running main{display:none}
 <script>
 (function(){
 'use strict';
-var VER='2.2',VDATE='2026.11.27';
+var VER='2.3',VDATE='2026.11.27';
 var Q=new URLSearchParams(location.search),GAME=Q.get('game')||'../play/';
 function $(i){return document.getElementById(i)}
 $('ver').firstChild.nodeValue='Tester '+VER;$('vdate').textContent=VDATE;$('v2').textContent='Tester '+VER;
@@ -140,6 +140,8 @@ var INSTALL="(function(){if(window.__tsH)return 'again';var D=draw,U=update,H=wi
  "draw=function(){if(!H.on&&H.xd<2){if(H.pend.length)H.poll();return D.apply(this,arguments)}var q=null,g=H.gl,k=H.xd;if(H.on&&H.ext&&glOn()&&H.pend.length<8){q=H.free.pop()||g.createQuery();g.beginQuery(H.ext.TIME_ELAPSED_EXT,q)}var t=performance.now();"+
  "try{D.apply(this,arguments);for(var i=1;i<k;i++)D.apply(this,arguments)}finally{if(q){g.endQuery(H.ext.TIME_ELAPSED_EXT);H.pend.push({q:q,s:H.sid,k:k})}}if(H.on)H.d.push((performance.now()-t)/k);H.poll()};"+
  "return 'ok'})()";
+/* hard driver (2.3): drives like an aggressive player through the game's own controls (arrow keys and the Boost tap): fastest car, boost whenever the meter allows (saved for a rival close ahead), drift through corners, ram rivals while boosting, stay with the pack so crashes keep coming. The game's attract-mode driver (demo) never boosts and switches off many player-only effects, so it hid the worst case. */
+var DRV="(function(){if(window.__tsD)return 'ok';var U=update,D={on:0,b:0,d:0,rk:0,tr:0,rm:0,bu:0,sm:0,er:'',pd:0,t:0,bt:0,dt:0,ot:0,top:0,r0:0,ez:0,md:1e9};window.__tsD=D;\nfunction P(j){j=wrapI(j);return [T.x[j],T.y[j]]}\nfunction fw(j){var a=P(j),b=P(j+2),dx=b[0]-a[0],dy=b[1]-a[1],l=Math.hypot(dx,dy)||1;return [dx/l,dy/l]}\nfunction turn(j,k){var a=fw(j),b=fw(j+k);return Math.atan2(a[0]*b[1]-a[1]*b[0],a[0]*b[0]+a[1]*b[1])}\nfunction dl(k,v){var o=D['l'+k]||0;if(v>o)D[k]=(D[k]||0)+v-o;D['l'+k]=v}\nfunction drv(dt){if(count>0){kL=kR=0;return}\n var i=car.idx||0,sp=Math.hypot(car.vx,car.vy),ds=Math.max(1,DSs||8),la=Math.max(6,Math.min(70,Math.round(sp*0.42/ds)));\n D.t+=dt;if(boostT>0)D.bt+=dt;if(car.dft)D.dt+=dt;if(Math.abs(car.lat||0)>rw(i))D.ot+=dt;if(sp>D.top)D.top=sp;\n var cN=turn(i,Math.max(4,la>>1)),cA=turn(i+la,la),ai=i+la,f=fw(ai),off=(cA>0?1:-1)*Math.min(1,Math.abs(cA)/0.6)*rw(wrapI(ai))*0.62,p=P(ai),tx=p[0]-f[1]*off,ty=p[1]+f[0]*off;\n /* go for a rival ahead when boosting: flips are the heaviest moments */\n dl('rm',nRam);dl('bu',nBumps);dl('sm',fp.n);\n if(typeof ug!=='undefined'&&ug>=1&&boostT<=0&&count<=0){ugTap=performance.now();useBoost();D.b++}\n var rdy=meter>=BMIN(),rv=null,bg=1e9;if(boostT>0.15||rdy)for(var q=0;q<rivals.length;q++){var r=rivals[q],g=r.p-car.p;if(g>-20&&g<900&&!(r.spin>0)&&g<bg){bg=g;rv=r}}\n /* boost when the meter allows; with a rival close ahead, save it until within ramming range */\n if(boostT<=0&&((!startUsed&&runTime<550)||(rdy&&(!rv||bg<260||meter>=0.98)))){useBoost();D.b++}\n if(rv&&(boostT>0.1||bg<500)){var rf=fw(rv.idx||0),ld=Math.min(0.35,bg/Math.max(sp,100));tx=rv.x+rf[0]*(rv.v||0)*ld;ty=rv.y+rf[1]*(rv.v||0)*ld;D.tr++;var dd=Math.hypot(rv.x-car.x,rv.y-car.y);if(dd<D.md)D.md=dd}else rv=null\n /* stay with the pack so collisions keep coming (worst case): ease off when far ahead of every rival */\n var nb=1e9;for(var q2=0;q2<rivals.length;q2++){var g2=car.p-rivals[q2].p;if(g2<nb)nb=g2}var ah=0;for(var q3=0;q3<rivals.length;q3++){var g3=rivals[q3].p-car.p;if(g3>30&&g3<900)ah=1}if(!ah&&nb>(D.pk||-60)&&boostT<=0){car.vx*=Math.exp(-dt*1.2);car.vy*=Math.exp(-dt*1.2);D.ez+=dt}\n var want=Math.atan2(tx-car.x,-(ty-car.y)),er=wrapA(want-car.th),s=Math.max(-1,Math.min(1,er*2.6));\n D.nd=car.dft?0:(D.nd||0)+dt;\n /* drift every real corner, and flick into a drift on long sweeping bends too */\n if(!rv&&sp>W*0.42&&(Math.abs(cN)>(D.th||0.3)||(D.nd>1.6&&Math.abs(cN)>0.035))){s=cN>0?1:-1}\n var edge=Math.abs(car.lat||0)>rw(i)*0.72;if(edge&&!rv)s=Math.max(-1,Math.min(1,er*3.2));else if(car.dft&&!rv){if(er*car.dft<-0.15)s=-car.dft*0.2;else s=car.dft}\n if(car.dft&&!D.pd)D.d++;D.pd=car.dft?1:0;\n kR=s>0?s:0;kL=s<0?-s:0}\nupdate=function(dt){if(D.on&&st==='run'&&!demo){try{drv(dt)}catch(e){if(!D.er)D.er=String(e.message||e)}}return U.apply(this,arguments)};\nreturn 'ok'})()";
 var fr=null,GW=null,X=null,GV='';
 function gx(c){return GW.__tsx(c)}
 async function loadGame(){var u=new URL(GAME,location.href);u.searchParams.set('nc',String(Date.now()));say('Loading the newest game file...');
@@ -160,12 +162,12 @@ async function loadGame(){var u=new URL(GAME,location.href);u.searchParams.set('
   var el=(performance.now()-t0)/1000;if(s&&s!=='boot')break;$('st2').textContent='Starting the game... '+el.toFixed(0)+' s (game screen: '+(s||'loading')+')';if(el>60)throw new Error('the game did not finish starting in 60 s (game screen: '+(s||'not loaded')+')')}
  log('game ready in '+((performance.now()-t0)/1000).toFixed(1)+' s; game screen '+gx('st')+'; window '+GW.innerWidth+'x'+GW.innerHeight);
  if(typeof gx('typeof startRace')!=='string'||gx('typeof startRace')!=='function')throw new Error('this game file does not fit the tester (no race start found)');
- var ok=gx(INSTALL);log('timing hooks: '+ok+'; WebGL2 in game: '+(gx('glOn()')?'on':'off')+'; graphics card timer in game: '+(GW.__tsH.ext?'yes':'no'));URL.revokeObjectURL(url)}
-async function startRace(tn){tn=tn||'The Suburbs';var k=gx("TRACKS.map(function(t){return t.n}).indexOf('"+tn+"')");if(k<0)k=gx('opt.trk');
+ var ok=gx(INSTALL);gx(DRV);gx("opt.car='f1'");log('timing hooks: '+ok+'; WebGL2 in game: '+(gx('glOn()')?'on':'off')+'; graphics card timer in game: '+(GW.__tsH.ext?'yes':'no'));URL.revokeObjectURL(url)}
+async function startRace(tn,hard){tn=tn||'The Suburbs';gx("opt.car='f1';__tsD.on=0");var k=gx("TRACKS.map(function(t){return t.n}).indexOf('"+tn+"')");if(k<0)k=gx('opt.trk');
  for(var a=1;a<=3;a++){say('Starting a race on '+tn+' (try '+a+' of 3)...');gx('opt.trk='+k+';startRace()');var t0=performance.now();
   while(performance.now()-t0<30000){await sleep(200);if(stopped)throw new Error('stopped');if(gx('st')==='run')break}
   if(gx('st')==='run')break;log('race did not start; game screen '+gx('st')+'; buttons showing: '+buttons().join(' | '))}
- if(gx('st')!=='run')throw new Error('the race did not start (game screen: '+gx('st')+')');gx('demo=true');log('race running: '+gx('TRACKS[opt.trk].n')+', time of day '+gx('opt.tod')+', picture size x'+gx('RS').toFixed(2)+', game draws with '+(gx('glOn()')?'WebGL2':'the canvas look'))}
+ if(gx('st')!=='run')throw new Error('the race did not start (game screen: '+gx('st')+')');gx(hard?'demo=false;__tsD.on=1;__tsD.th=0.12':'demo=true');log('race running: '+gx('TRACKS[opt.trk].n')+', '+(hard?'hard driver, ':'')+'car '+gx('opt.car')+', time of day '+gx('opt.tod')+', picture size x'+gx('RS').toFixed(2)+', game draws with '+(gx('glOn()')?'WebGL2':'the canvas look'))}
 function buttons(){try{return [].slice.call(GW.document.querySelectorAll('button')).filter(function(b){return b.offsetParent}).map(function(b){return b.textContent.trim().slice(0,18)}).slice(0,10)}catch(e){return []}}
 
 /* ---------- measuring ---------- */
@@ -194,25 +196,25 @@ async function census(frames){var g=GW.__tsH.gl;if(!g||!gx('glOn()'))return null
 
 /* ---------- the run ---------- */
 async function run(kind){if(busy)return;busy=true;stopped=false;var full=kind==='full',lng=kind==='long';
- RES={kind:kind,start:new Date(),rows:[],soak:[],events:[],errors:[],census:null,game:'',done:false,slow:null};LOG=[];T0=performance.now();
+ RES={legs:'',kind:kind,start:new Date(),rows:[],soak:[],events:[],errors:[],census:null,game:'',done:false,slow:null};LOG=[];T0=performance.now();
  $('quick').disabled=$('full').disabled=$('long').disabled=true;$('stop').disabled=false;document.body.classList.add('running');prog(0);
- var plan=full?{soak:90,scales:[0,2,1,0.75,0.5],twice:true}:lng?{soak:600,scales:[0,1,0.5],twice:false}:{soak:45,scales:[0,1,0.5],twice:false},stepsT=(full?200:lng?670:100),tStart=performance.now();
+ var plan=full?{soak:90,legs:[['The Suburbs',0],['Orchard Ring',45]],scales:[0,2,1,0.75,0.5],twice:true}:lng?{soak:600,legs:[['Orchard Ring',0]],scales:[0,1,0.5],twice:false}:{soak:45,legs:[['Orchard Ring',0]],scales:[0,1,0.5],twice:false},stepsT=(full?200:lng?670:100),tStart=performance.now();
  function P(){prog((performance.now()-tStart)/1000/stepsT)}
  try{log('tester '+VER+' ('+kind+' run); '+devLine());log(mineLine(ENV.mine));
-  await loadGame();RES.game=GV;P();await startRace();P();
+  await loadGame();RES.game=GV;P();RES.legs=plan.legs.map(function(l){return l[0]}).join(' then ');var li=0,leg=plan.legs[0][0];gx('__tsD.on=0;for(var k in __tsD)if(typeof __tsD[k]==="number")__tsD[k]=0');await startRace(leg,true);P();
   /* 1. real race, guard on */
   var H=GW.__tsH,F=GW.__tsF,rsStart=gx('RS'),lastNote=gx('gov.note'),glStart=gx('glOn()');
-  say('Real race: the game drives itself for '+plan.soak+' seconds','Speed guard on, like normal play.');
+  say('Real race: a hard-driving computer player races for '+plan.soak+' seconds','Fastest car, boosts, drifts and rams; speed guard on, like normal play.');
   F.t=[];F.last=0;F.on=1;H.u=[];H.d=[];H.gpu=[];H.sid++;H.on=1;var s0=performance.now(),lastS=s0,raceN=1;
   while(!stopped){await sleep(250);var now=performance.now(),el=(now-s0)/1000;if(now-lastS>=1000){var t=F.t.splice(0),u=H.u.splice(0),d=H.d.splice(0),gp=H.gpu.splice(0);var row={s:Math.round(el),n:t.length,med:med(t),mx:t.length?Math.max.apply(null,t):0,o25:t.filter(function(x){return x>25}).length,o50:t.filter(function(x){return x>50}).length,u:mean(u),d:mean(d),gpu:gp.length?med(gp):null,rs:gx('RS'),gl:gx('glOn()')?1:0,fx:gx('pops.length+flies.length'),dom:GW.document.getElementsByTagName('*').length,heap:GW.performance&&GW.performance.memory?Math.round(GW.performance.memory.usedJSHeapSize/1048576):null,lap:gx('car.lap'),hid:document.hidden?1:0,raw:t};RES.soak.push(row);lastS=now;
     var nt=gx('gov.note');if(nt!==lastNote){RES.events.push({s:row.s,t:nt});log('speed guard at '+row.s+' s: '+nt);lastNote=nt}
     $('sub').textContent='Second '+row.s+' of '+plan.soak+': typical frame '+f1(row.med)+' ms, slowest '+f1(row.mx)+' ms, picture size x'+row.rs.toFixed(2)+(row.gl?'':', CANVAS look');drawSoak();P()}
-   var stt=gx('st');if(stt!=='run'){log('race ended at '+el.toFixed(0)+' s (game screen '+stt+'); starting the next race');RES.events.push({s:Math.round(el),t:'race finished, new race started'});H.on=0;F.on=0;await startRace();raceN++;F.last=0;F.on=1;H.on=1}
+   var stt=gx('st');if(li+1<plan.legs.length&&el>=plan.legs[li+1][1]){li++;leg=plan.legs[li][0];log('switching to '+leg+' at '+el.toFixed(0)+' s');RES.events.push({s:Math.round(el),t:'now on '+leg,trk:1});H.on=0;F.on=0;await startRace(leg,true);raceN++;F.last=0;F.on=1;H.on=1}else if(stt!=='run'){log('race ended at '+el.toFixed(0)+' s (game screen '+stt+'); starting the next race');RES.events.push({s:Math.round(el),t:'race finished, new race started',trk:1});H.on=0;F.on=0;await startRace(leg,true);raceN++;F.last=0;F.on=1;H.on=1}
    if(el>=plan.soak)break}
-  H.on=0;F.on=0;RES.slow=gx("SLW.map(function(e){return 'lap '+e.lap+' at '+e.at+' s: '+e.n+' frames, worst '+e.mx.toFixed(0)+' ms'+(e.gl?'':', canvas')+(e.hid?', tab hidden':'')}).join('; ')")||'none';
+  H.on=0;F.on=0;RES.drive=JSON.parse(gx('JSON.stringify(__tsD)'));gx('__tsD.on=0');log('driving: '+driveLine());RES.slow=gx("SLW.map(function(e){return 'lap '+e.lap+' at '+e.at+' s: '+e.n+' frames, worst '+e.mx.toFixed(0)+' ms'+(e.gl?'':', canvas')+(e.hid?', tab hidden':'')}).join('; ')")||'none';
   RES.guardEnd={rs:gx('RS'),gl:gx('glOn()'),note:gx('gov.note')};log('real race done: guard note "'+RES.guardEnd.note+'", picture size x'+RES.guardEnd.rs.toFixed(2)+', '+(RES.guardEnd.gl?'WebGL2':'canvas look'));
   /* 2. controlled: frozen at the streetlights, guard off */
-  if(!stopped){gx('gov.on=0;gov.frz=1;opt.gl=1;rsCap=3;setup()');if(gx('st')!=='run')await startRace();gx('gov.on=0;gov.frz=0');gx('__tc.slWarp(0.9)');await sleep(400);gx('gov.frz=1');await sleep(300);RES.full=gx('RS');log('frozen at the streetlights, lap '+gx('car.lap')+'; full sharpness here is x'+RES.full.toFixed(2))}
+  if(!stopped){gx('gov.on=0;gov.frz=1;opt.gl=1;rsCap=3;setup()');await startRace('The Suburbs');gx('gov.frz=1');gx('gov.on=0;gov.frz=0');gx('__tc.slWarp(0.9)');await sleep(400);gx('gov.frz=1');await sleep(300);RES.full=gx('RS');log('frozen at the streetlights, lap '+gx('car.lap')+'; full sharpness here is x'+RES.full.toFixed(2))}
   if(!stopped){say('As drawn now (full sharpness, x'+RES.full.toFixed(2)+')');var a=sum(await measure(1500,40));RES.now=a;log('as drawn: frame '+f1(a.med)+' ms, draw commands '+f1(a.d)+' ms, graphics card '+(a.gpu==null?'not reported':f1(a.gpu)+' ms'));P()}
   if(!stopped){say('Counting drawing calls for 60 frames');RES.census=await census(60);if(RES.census)log('calls per frame: '+RES.census.calls.toFixed(0)+', draws '+RES.census.draws.toFixed(0)+', uploads '+Math.round(RES.census.up/1024)+' KB, waiting calls: '+(RES.census.sync.join(', ')||'none'));P()}
   var rows=[];plan.scales.forEach(function(s){rows.push({k:'scale',s:s})});rows.push({k:'msaa'});if(full)rows.push({k:'lights'});rows.push({k:'canvas'});
@@ -238,6 +240,7 @@ async function run(kind){if(busy)return;busy=true;stopped=false;var full=kind===
   drawCost();drawSoak();tiles();findings();report();say(RES.fail?'The run hit a problem: '+RES.fail+'. Tap Copy results and paste it to Claude.':RES.done?'Done. Tap Copy results and paste it to Claude.':'Stopped. The results so far are below; tap Copy results.','');document.title=(RES.done?'DONE ':'')+'Thumb Circuit speed tester'}}
 
 /* ---------- results ---------- */
+function driveLine(){var D=RES&&RES.drive;if(!D||!D.t)return 'no driving data';var pc=function(v){return Math.round(v/D.t*100)+'%'};return 'car '+(RES.car||'f1')+', '+D.b+' boosts, '+D.d+' drifts, '+(D.rm||0)+' rams that flipped a rival, '+(D.bu||0)+' bumps, '+(D.sm||0)+' crash slow motions; boosting '+pc(D.bt)+', drifting '+pc(D.dt)+', off the road '+pc(D.ot)+', easing off to wait for the pack '+pc(D.ez)+' of race time; top speed '+(D.top/324).toFixed(2)+'x normal'+(D.er?'; driver error: '+D.er:'')}
 function per(){return 1000/(ENV&&ENV.hz||60)}
 function soakStats(){var all=[];RES.soak.forEach(function(r){all=all.concat(r.raw)});var tot=0;all.forEach(function(x){tot+=x});return {n:all.length,fps:tot?all.length/(tot/1000):0,med:med(all),p95:pct(all,0.95),o50:all.filter(function(x){return x>50}).length,o25:all.filter(function(x){return x>25}).length,mx:all.length?Math.max.apply(null,all):0,u:mean(RES.soak.map(function(r){return r.u})),d:mean(RES.soak.map(function(r){return r.d}))}}
 function tile(id,v,ok){var e=$(id);e.className=ok==null?'':ok?'ok':'no';e.querySelector('b').textContent=v}
@@ -270,7 +273,8 @@ function findings(){var F=[],e=ENV,bad=function(t){F.push('<span class="bad">'+e
  if(cv)(cv.cost>p?bad:ok)('The canvas look (the fallback the speed guard can switch to) costs '+(cv.skip?'at least ':'')+f1(cv.cost)+' ms per frame'+(f?(cv.cost>f.cost?', more than the WebGL2 look':', less than the WebGL2 look'):'')+(cv.cost>p?', so after that switch the game would crawl at about '+Math.round(1000/Math.max(cv.cost,p))+' FPS.':'.'));
  var trs=RES.rows.filter(function(r){return r.k==='track'});if(f&&trs.length){var hv=trs.slice().sort(function(a,b){return b.cost-a.cost})[0];(hv.cost>p?bad:ok)('Heaviest other track: '+hv.label+' costs '+f1(hv.cost)+' ms per frame, '+(hv.cost/f.cost).toFixed(1)+'x The Suburbs'+(hv.cost>p?', more than one screen refresh, so it cannot hold 60 FPS here.':'.'))}
  if(RES.census&&RES.census.sync.length)bad('Each frame the game asks the browser '+RES.census.sync.join(', ')+' times for answers that make it wait for the graphics card; Firefox handles these slowly.');else if(RES.census)ok('The game makes no calls that wait for the graphics card ('+RES.census.calls.toFixed(0)+' drawing calls a frame).');
- RES.events.forEach(function(v){(/canvas/.test(v.t)?bad:ok)('Speed guard at '+v.s+' s: '+v.t+'.')});
+ RES.events.forEach(function(v){if(v.trk)return;(/canvas/.test(v.t)?bad:ok)('Speed guard at '+v.s+' s: '+v.t+'.')});
+ if(RES.drive&&RES.drive.t>10){var D=RES.drive;(D.b>=D.t/10&&D.d>=D.t/8?ok:bad)('The computer player drove '+(D.b>=D.t/10&&D.d>=D.t/8?'hard':'less hard than planned')+': '+driveLine()+'.')}
  if(RES.soak.length>4){var a=RES.soak[1],b=RES.soak[RES.soak.length-1];if(b.dom>a.dom*1.3+50)bad('The game page grew from '+a.dom+' to '+b.dom+' page parts during the race (a possible leak).');if(a.heap&&b.heap&&b.heap>a.heap*1.5+20)bad('Game memory grew from '+a.heap+' to '+b.heap+' MB during the race.')}
  if(RES.fail)bad('The run stopped early: '+RES.fail);
  $('finds').innerHTML=F.map(function(x){return '<li>'+x+'</li>'}).join('');$('fcard').style.display=F.length?'block':'none';RES.findText=F.map(function(x){return x.replace(/<[^>]+>/g,'').replace(/&amp;/g,'&').replace(/&lt;/g,'<').replace(/&gt;/g,'>').replace(/&quot;/g,'"')})}
@@ -280,8 +284,9 @@ function report(){if(!RES){$('out').textContent='No results yet.';return ''}var 
  L.push('Browser: '+e.ua);L.push('Computer: '+(e.cores||'?')+' threads'+(e.mem?', memory '+e.mem+' GB+':'')+', window '+e.win+' at '+e.dpr+'x, screen '+e.scr+', refresh '+f1(e.hz)+' Hz');
  L.push('Graphics: '+(e.webgl2?(e.vendor||'')+' / '+(e.renderer||'?')+'; uses graphics card: '+(e.hw?'yes':'NO (software)')+'; card timer: '+(e.timer?'yes':'no')+'; edge smoothing max '+e.samples:'WebGL2 not available'+(e.err?' ('+e.err+')':'')));
  L.push(mineLine(e.mine));
- if(st)L.push('Real race ('+RES.soak.length+' s, guard on, game drives itself): '+st.fps.toFixed(1)+' FPS, typical frame '+f1(st.med)+' ms, 95th '+f1(st.p95)+', slowest '+f1(st.mx)+', over 25 ms '+st.o25+', over 50 ms '+st.o50+'; update '+st.u.toFixed(2)+' ms, draw '+st.d.toFixed(2)+' ms a frame');
+ if(st)L.push('Real race ('+RES.soak.length+' s on '+RES.legs+', guard on, hard driver): '+st.fps.toFixed(1)+' FPS, typical frame '+f1(st.med)+' ms, 95th '+f1(st.p95)+', slowest '+f1(st.mx)+', over 25 ms '+st.o25+', over 50 ms '+st.o50+'; update '+st.u.toFixed(2)+' ms, draw '+st.d.toFixed(2)+' ms a frame');
  if(RES.soak.length){var ln=[];for(var i=0;i<RES.soak.length;i+=5){var g=RES.soak.slice(i,i+5),tt=[];g.forEach(function(r){tt=tt.concat(r.raw)});var r0=g[g.length-1];ln.push(g[0].s+'-'+r0.s+'s '+f1(med(tt))+'/'+f1(tt.length?Math.max.apply(null,tt):0)+' x'+r0.rs.toFixed(2)+(r0.gl?'':' CANVAS')+' fx'+r0.fx+' dom'+r0.dom+(r0.heap!=null?' heap'+r0.heap:'')+(g.some(function(r){return r.hid})?' HIDDEN':''))}L.push('Race by 5 s (typical/slowest ms, picture size): '+ln.join('; '))}
+ if(RES.drive)L.push('Driving: '+driveLine());
  if(RES.events.length)L.push('Speed guard: '+RES.events.map(function(v){return v.s+' s '+v.t}).join('; '));
  if(RES.guardEnd)L.push('After the race: guard note "'+RES.guardEnd.note+'", picture size x'+RES.guardEnd.rs.toFixed(2)+', '+(RES.guardEnd.gl?'WebGL2':'CANVAS'));
  if(RES.slow)L.push('Game slow moments list: '+RES.slow);
