@@ -65,7 +65,7 @@ body.running header,body.running main{display:none}
 <div style="margin:8px 0 0;font-size:14px"><a id="fresh" href="#">Load the newest copy of this page</a></div>
 <div id="newer"></div></div></header>
 <main><div class="in">
-<div class="bar"><button id="quick" class="primary">Quick run<small>about 2 minutes</small></button><button id="full">Full run<small>about 3 minutes</small></button><button id="long">Long run<small>about 11 minutes</small></button><button id="stop" disabled>Stop<small>keeps results</small></button><button id="copy">Copy results<small>as text</small></button></div>
+<div class="bar"><button id="quick" class="primary">Quick run<small>about 2 minutes</small></button><button id="full">Full run<small>about 3 minutes</small></button><button id="long">Long run<small>about 11 minutes</small></button><button id="hunt">Hitch hunt<small>about 2.5 minutes</small></button><button id="stop" disabled>Stop<small>keeps results</small></button><button id="copy">Copy results<small>as text</small></button></div>
 <div class="card"><div id="dev" style="font-weight:600">Reading this computer...</div><div id="mine" class="note" style="margin:4px 0 0"></div></div>
 <div class="card"><div id="st">Ready. Use the window size you normally play in, keep this tab in front, and do not touch the game while it measures.</div><div class="prog"><i id="pb"></i></div><div id="sub"></div></div>
 <div class="score"><div id="t1"><b>-</b><span>frame rate in a real race</span></div><div id="t2"><b>-</b><span>what one frame really costs (full sharpness)</span></div><div id="t3"><b>-</b><span>spare time in each frame</span></div><div id="t4"><b>-</b><span>slow frames in the race (over 50 ms)</span></div></div>
@@ -90,7 +90,7 @@ body.running header,body.running main{display:none}
 <script>
 (function(){
 'use strict';
-var VER='2.3',VDATE='2026.11.27';
+var VER='2.4',VDATE='2026.11.27';
 var Q=new URLSearchParams(location.search),GAME=Q.get('game')||'../play/';
 function $(i){return document.getElementById(i)}
 $('ver').firstChild.nodeValue='Tester '+VER;$('vdate').textContent=VDATE;$('v2').textContent='Tester '+VER;
@@ -197,7 +197,7 @@ async function census(frames){var g=GW.__tsH.gl;if(!g||!gx('glOn()'))return null
 /* ---------- the run ---------- */
 async function run(kind){if(busy)return;busy=true;stopped=false;var full=kind==='full',lng=kind==='long';
  RES={legs:'',kind:kind,start:new Date(),rows:[],soak:[],events:[],errors:[],census:null,game:'',done:false,slow:null};LOG=[];T0=performance.now();
- $('quick').disabled=$('full').disabled=$('long').disabled=true;$('stop').disabled=false;document.body.classList.add('running');prog(0);
+ $('quick').disabled=$('full').disabled=$('long').disabled=$('hunt').disabled=true;$('stop').disabled=false;document.body.classList.add('running');prog(0);
  var plan=full?{soak:90,legs:[['The Suburbs',0],['Orchard Ring',45]],scales:[0,2,1,0.75,0.5],twice:true}:lng?{soak:600,legs:[['Orchard Ring',0]],scales:[0,1,0.5],twice:false}:{soak:45,legs:[['Orchard Ring',0]],scales:[0,1,0.5],twice:false},stepsT=(full?200:lng?670:100),tStart=performance.now();
  function P(){prog((performance.now()-tStart)/1000/stepsT)}
  try{log('tester '+VER+' ('+kind+' run); '+devLine());log(mineLine(ENV.mine));
@@ -236,8 +236,49 @@ async function run(kind){if(busy)return;busy=true;stopped=false;var full=kind===
   RES.rows.forEach(function(r){r.cost=med(r.costs);r.gpu=r.gpus.length?med(r.gpus):null;r.d=r.ds.length?med(r.ds):null});
   RES.done=!stopped}
  catch(e){if(String(e.message)!=='stopped'){RES.fail=String(e.message||e);window.__tsErr('run stopped: '+RES.fail);RES.failButtons=buttons().join(' | ')}}
- finally{try{if(GW&&GW.__tsH){GW.__tsH.on=0;GW.__tsH.xd=1}}catch(e){}$('gw').innerHTML='';fr=null;GW=null;document.body.classList.remove('running');busy=false;$('quick').disabled=$('full').disabled=$('long').disabled=false;$('stop').disabled=true;prog(RES.done?1:parseFloat($('pb').style.width)/100);
+ finally{try{if(GW&&GW.__tsH){GW.__tsH.on=0;GW.__tsH.xd=1}}catch(e){}$('gw').innerHTML='';fr=null;GW=null;document.body.classList.remove('running');busy=false;$('quick').disabled=$('full').disabled=$('long').disabled=$('hunt').disabled=false;$('stop').disabled=true;prog(RES.done?1:parseFloat($('pb').style.width)/100);
   drawCost();drawSoak();tiles();findings();report();say(RES.fail?'The run hit a problem: '+RES.fail+'. Tap Copy results and paste it to Claude.':RES.done?'Done. Tap Copy results and paste it to Claude.':'Stopped. The results so far are below; tap Copy results.','');document.title=(RES.done?'DONE ':'')+'Thumb Circuit speed tester'}}
+
+var HHC="(function(){if(window.__tsHH)return 'ok';var g=window.__tsH&&window.__tsH.gl,HH={ng:0,np:0,k:0,rec:0,seg:0,f:[],last:0};window.__tsHH=HH;\nvar oe=emit;emit=function(){if(HH.np)return;return oe.apply(this,arguments)};\nif(g){var ot=g.texImage2D;g.texImage2D=function(){if(HH.ng&&arguments[5]===cv&&((HH.k++)&1))return;return ot.apply(g,arguments)}}\nvar U=update,D=draw,js=0;update=function(){var t=performance.now();try{return U.apply(this,arguments)}finally{js+=performance.now()-t}};\ndraw=function(){var t=performance.now();try{return D.apply(this,arguments)}finally{js+=performance.now()-t}};\nfunction tick(t){requestAnimationFrame(tick);if(HH.rec&&HH.last)HH.f.push([HH.seg,t-HH.last,js,boostT>0?1:0,car.dft?1:0,fp.t>0?1:0]);HH.last=HH.rec?t:0;js=0}requestAnimationFrame(tick);\nvar s=document.createElement('style');s.textContent='body.tshh #hud,body.tshh #mini,body.tshh #gauge,body.tshh #boost,body.tshh #feed,body.tshh #msg,body.tshh #rk,body.tshh #rail,body.tshh #lights,body.tshh #banner,body.tshh #hlp,body.tshh #chev,body.tshh #fpl{display:none!important}';document.head.appendChild(s);\nreturn 'ok'})()\n";
+/* ---------- hitch hunt (2.4): which part of the game comes with the 34 ms hitches ---------- */
+var HSEG=[
+ {k:'base',t:'Orchard Ring, hard driver (normal)'},
+ {k:'ng',t:'Ground picture sent to the graphics card every other frame'},
+ {k:'hud',t:'Screen overlays hidden (top bar, map, speed dial, Boost button, messages)'},
+ {k:'np',t:'No dust, sparks or smoke'},
+ {k:'rs',t:'Picture size x0.75'},
+ {k:'gentle',t:'Gentle driver (the old one: no boosts, fewer effects)'},
+ {k:'sub',t:'The Suburbs, hard driver'},
+ {k:'base2',t:'Orchard Ring, hard driver (normal, again)'}];
+async function hunt(){if(busy)return;busy=true;stopped=false;var SEGS=15;
+ RES={legs:'',kind:'hitch hunt',start:new Date(),rows:[],soak:[],events:[],errors:[],census:null,game:'',done:false,slow:null,hunt:[]};LOG=[];T0=performance.now();
+ $('quick').disabled=$('full').disabled=$('long').disabled=$('hunt').disabled=true;$('stop').disabled=false;document.body.classList.add('running');prog(0);var tStart=performance.now(),tot=HSEG.length*(SEGS+1.5)+8;
+ function P(){prog((performance.now()-tStart)/1000/tot)}
+ try{log('tester '+VER+' (hitch hunt); '+devLine());log(mineLine(ENV.mine));
+  await loadGame();RES.game=GV;gx(HHC);var HH=GW.__tsHH;await startRace('Orchard Ring',true);gx('gov.on=0');log('speed guard off for the hunt, so the picture size stays put');
+  for(var i=0;i<HSEG.length&&!stopped;i++){var S=HSEG[i];
+   if(S.k==='sub'){await startRace('The Suburbs',true);gx('gov.on=0')}else if(S.k==='base2'){await startRace('Orchard Ring',true);gx('gov.on=0')}else if(gx('st')!=='run'){await startRace('Orchard Ring',true);gx('gov.on=0')}
+   if(S.k==='ng')HH.ng=1;if(S.k==='np')HH.np=1;if(S.k==='hud')GW.document.body.classList.add('tshh');if(S.k==='rs'){var r0=gx('RS');gx('rsCap='+(r0*0.75)+';setup()')}if(S.k==='gentle')gx('demo=true;__tsD.on=0');
+   say('Hitch hunt '+(i+1)+' of '+HSEG.length+': '+S.t);await sleep(1000);HH.seg=i;HH.rec=1;var t0=performance.now();
+   while(performance.now()-t0<SEGS*1000&&!stopped){await sleep(250);P();if(gx('st')!=='run'){HH.rec=0;log('race ended; starting the next race');await startRace(S.k==='sub'?'The Suburbs':'Orchard Ring',S.k!=='gentle');gx('gov.on=0'+(S.k==='gentle'?';demo=true;__tsD.on=0':''));HH.rec=1}}
+   HH.rec=0;var pic='x'+gx('RS').toFixed(2);
+   HH.ng=0;HH.np=0;GW.document.body.classList.remove('tshh');if(S.k==='rs')gx('rsCap=3;setup()');if(S.k==='gentle')gx('demo=false;__tsD.on=1');
+   var R=hseg(HH.f.filter(function(x){return x[0]===i}),S.t);R.pic=pic;RES.hunt.push(R);log(huntLine(R));P()}
+  RES.drive=JSON.parse(gx('JSON.stringify(__tsD)'));RES.done=!stopped}
+ catch(e){if(String(e.message)!=='stopped'){RES.fail=String(e.message||e);window.__tsErr('run stopped: '+RES.fail);RES.failButtons=buttons().join(' | ')}}
+ finally{$('gw').innerHTML='';fr=null;GW=null;document.body.classList.remove('running');busy=false;$('quick').disabled=$('full').disabled=$('long').disabled=$('hunt').disabled=false;$('stop').disabled=true;prog(RES.done?1:parseFloat($('pb').style.width)/100);
+  tiles();findings();report();say(RES.fail?'The run hit a problem: '+RES.fail+'. Tap Copy results and paste it to Claude.':RES.done?'Done. Tap Copy results and paste it to Claude.':'Stopped. The results so far are below; tap Copy results.','');document.title=(RES.done?'DONE ':'')+'Thumb Circuit speed tester'}}
+function hseg(f,t){var p=per(),iv=f.map(function(x){return x[1]}),sl=f.filter(function(x){return x[1]>p*1.5}),tm=0;iv.forEach(function(v){tm+=v});
+ var js=f.map(function(x){return x[2]}),jsS=sl.map(function(x){return x[2]}),sh=function(a,k){return a.length?a.filter(function(x){return x[k]}).length/a.length:0};
+ return {t:t,n:f.length,secs:tm/1000,fps:tm?f.length/(tm/1000):0,slow:sl.length,rate:tm?sl.length/(tm/10000):0,mx:iv.length?Math.max.apply(null,iv):0,js:mean(js),jsS:jsS.length?mean(jsS):null,jsMx:js.length?Math.max.apply(null,js):0,
+  bo:[sh(f,3),sh(sl,3)],df:[sh(f,4),sh(sl,4)],fp:[sh(f,5),sh(sl,5)]}}
+function huntLine(R){var pc=function(v){return Math.round(v*100)+'%'};return R.t+' ('+R.pic+'): '+R.fps.toFixed(1)+' FPS, '+R.slow+' hitches in '+R.secs.toFixed(0)+' s = '+R.rate.toFixed(1)+' per 10 s, slowest '+f1(R.mx)+' ms; game work '+f1(R.js)+' ms a frame'+(R.jsS!=null?', '+f1(R.jsS)+' ms in hitch frames':'')+' (max '+f1(R.jsMx)+'); boosting '+pc(R.bo[0])+' of frames vs '+pc(R.bo[1])+' of hitches, drifting '+pc(R.df[0])+' vs '+pc(R.df[1])+', crash slow motion '+pc(R.fp[0])+' vs '+pc(R.fp[1])}
+function huntFind(bad,ok){var H=RES.hunt;if(!H||H.length<2)return;var b=H.filter(function(r){return /normal/.test(r.t)}),base=b.length?mean(b.map(function(r){return r.rate})):H[0].rate;
+ ok('Hitch hunt: a hitch is a frame that takes 1.5 screen refreshes or more. Normal Orchard Ring with the hard driver: '+b.map(function(r){return r.rate.toFixed(1)}).join(' and ')+' hitches per 10 s.');
+ if(b.length===2&&Math.abs(b[0].rate-b[1].rate)>Math.max(2,base*0.5))bad('The two normal stretches differ a lot ('+b[0].rate.toFixed(1)+' vs '+b[1].rate.toFixed(1)+' per 10 s), so treat single results below with care.');
+ if(base<0.5){ok('Almost no hitches in the normal stretches, so there was nothing to hunt on this run.');return}
+ H.forEach(function(r){if(/normal/.test(r.t))return;var d=Math.round((1-r.rate/base)*100);if(d>=60)bad(r.t+': hitches drop by '+d+'% ('+r.rate.toFixed(1)+' per 10 s). This part of the game comes with the hitches.');else if(d<=-60)bad(r.t+': hitches rise by '+(-d)+'% ('+r.rate.toFixed(1)+' per 10 s).');else ok(r.t+': '+r.rate.toFixed(1)+' per 10 s ('+(Math.abs(d)<25?'about the same':d>0?d+'% fewer':(-d)+'% more')+').')});
+ var all=H.filter(function(r){return r.jsS!=null});if(all.length){var a=mean(all.map(function(r){return r.js})),s=mean(all.map(function(r){return r.jsS}));ok('Game work in hitch frames: '+f1(s)+' ms vs '+f1(a)+' ms in all frames. '+(s<a*1.5+1?'The game itself is not doing more work in those frames, so the wait is in the graphics card or in the browser putting the picture on screen.':'The game does more work in those frames, so the game code itself is part of the cause.'))}}
 
 /* ---------- results ---------- */
 function driveLine(){var D=RES&&RES.drive;if(!D||!D.t)return 'no driving data';var pc=function(v){return Math.round(v/D.t*100)+'%'};return 'car '+(RES.car||'f1')+', '+D.b+' boosts, '+D.d+' drifts, '+(D.rm||0)+' rams that flipped a rival, '+(D.bu||0)+' bumps, '+(D.sm||0)+' crash slow motions; boosting '+pc(D.bt)+', drifting '+pc(D.dt)+', off the road '+pc(D.ot)+', easing off to wait for the pack '+pc(D.ez)+' of race time; top speed '+(D.top/324).toFixed(2)+'x normal'+(D.er?'; driver error: '+D.er:'')}
@@ -276,6 +317,7 @@ function findings(){var F=[],e=ENV,bad=function(t){F.push('<span class="bad">'+e
  RES.events.forEach(function(v){if(v.trk)return;(/canvas/.test(v.t)?bad:ok)('Speed guard at '+v.s+' s: '+v.t+'.')});
  if(RES.drive&&RES.drive.t>10){var D=RES.drive;(D.b>=D.t/10&&D.d>=D.t/8?ok:bad)('The computer player drove '+(D.b>=D.t/10&&D.d>=D.t/8?'hard':'less hard than planned')+': '+driveLine()+'.')}
  if(RES.soak.length>4){var a=RES.soak[1],b=RES.soak[RES.soak.length-1];if(b.dom>a.dom*1.3+50)bad('The game page grew from '+a.dom+' to '+b.dom+' page parts during the race (a possible leak).');if(a.heap&&b.heap&&b.heap>a.heap*1.5+20)bad('Game memory grew from '+a.heap+' to '+b.heap+' MB during the race.')}
+ huntFind(bad,ok);
  if(RES.fail)bad('The run stopped early: '+RES.fail);
  $('finds').innerHTML=F.map(function(x){return '<li>'+x+'</li>'}).join('');$('fcard').style.display=F.length?'block':'none';RES.findText=F.map(function(x){return x.replace(/<[^>]+>/g,'').replace(/&amp;/g,'&').replace(/&lt;/g,'<').replace(/&gt;/g,'>').replace(/&quot;/g,'"')})}
 function report(){if(!RES){$('out').textContent='No results yet.';return ''}var L=[],e=ENV,st=RES.soak.length?soakStats():null,p=per();
@@ -286,6 +328,7 @@ function report(){if(!RES){$('out').textContent='No results yet.';return ''}var 
  L.push(mineLine(e.mine));
  if(st)L.push('Real race ('+RES.soak.length+' s on '+RES.legs+', guard on, hard driver): '+st.fps.toFixed(1)+' FPS, typical frame '+f1(st.med)+' ms, 95th '+f1(st.p95)+', slowest '+f1(st.mx)+', over 25 ms '+st.o25+', over 50 ms '+st.o50+'; update '+st.u.toFixed(2)+' ms, draw '+st.d.toFixed(2)+' ms a frame');
  if(RES.soak.length){var ln=[];for(var i=0;i<RES.soak.length;i+=5){var g=RES.soak.slice(i,i+5),tt=[];g.forEach(function(r){tt=tt.concat(r.raw)});var r0=g[g.length-1];ln.push(g[0].s+'-'+r0.s+'s '+f1(med(tt))+'/'+f1(tt.length?Math.max.apply(null,tt):0)+' x'+r0.rs.toFixed(2)+(r0.gl?'':' CANVAS')+' fx'+r0.fx+' dom'+r0.dom+(r0.heap!=null?' heap'+r0.heap:'')+(g.some(function(r){return r.hid})?' HIDDEN':''))}L.push('Race by 5 s (typical/slowest ms, picture size): '+ln.join('; '))}
+ if(RES.hunt&&RES.hunt.length){L.push('Hitch hunt (15 s each, speed guard off):');RES.hunt.forEach(function(r){L.push('- '+huntLine(r))})}
  if(RES.drive)L.push('Driving: '+driveLine());
  if(RES.events.length)L.push('Speed guard: '+RES.events.map(function(v){return v.s+' s '+v.t}).join('; '));
  if(RES.guardEnd)L.push('After the race: guard note "'+RES.guardEnd.note+'", picture size x'+RES.guardEnd.rs.toFixed(2)+', '+(RES.guardEnd.gl?'WebGL2':'CANVAS'));
@@ -293,17 +336,17 @@ function report(){if(!RES){$('out').textContent='No results yet.';return ''}var 
  if(RES.now)L.push('As drawn now at streetlights (x'+(RES.full||0).toFixed(2)+', frozen): frame '+f1(RES.now.med)+' ms (95th '+f1(RES.now.p95)+'), draw '+f1(RES.now.d)+' ms, graphics card '+(RES.now.gpu==null?'not reported':f1(RES.now.gpu)+' ms'));
  if(RES.census)L.push('Calls per frame: '+RES.census.calls.toFixed(0)+' total, '+RES.census.draws.toFixed(0)+' draws, '+RES.census.tex.toFixed(1)+' texture uploads, '+Math.round(RES.census.up/1024)+' KB uploaded; waiting calls: '+(RES.census.sync.join(', ')||'none')+'; most used: '+RES.census.top.join(', '));
  RES.rows.forEach(function(r){var c=r.cost!=null?r.cost:med(r.costs),g=r.gpu!=null?r.gpu:(r.gpus.length?med(r.gpus):null);L.push(r.label+': real cost '+(r.skip?'at least ':r.capped?'under ':'')+f1(c)+' ms per frame'+(r.skip?' (extra copies were skipped by the browser, so only the drawing commands are counted)':'')+(r.costs.length>1?' (runs '+r.costs.map(f1).join(', ')+')':'')+', draw commands '+f1(r.d!=null?r.d:(r.ds.length?med(r.ds):null))+' ms, graphics card '+(g==null?'not reported':f1(g)+' ms')+'; copies '+r.pts.map(function(q){return q.N+'='+f1(q.avg)}).join(' '))});
- var f=RES.rows[0];L.push('SUMMARY: '+(st?st.fps.toFixed(0)+' FPS in a real race, '+st.o50+' frames over 50 ms; ':'')+(f?'one frame really costs '+f1(f.cost)+' ms at full sharpness vs '+f1(p)+' ms per refresh':'no cost rows')+(RES.done?'':RES.fail?' (failed: '+RES.fail+')':' (stopped early)'));
+ var f=RES.rows[0];if(RES.hunt&&RES.hunt.length)L.push('SUMMARY: hitch hunt, '+RES.hunt.map(function(r){return r.rate.toFixed(1)}).join(' / ')+' hitches per 10 s by stretch'+(RES.done?'':' (stopped early)'));else L.push('SUMMARY: '+(st?st.fps.toFixed(0)+' FPS in a real race, '+st.o50+' frames over 50 ms; ':'')+(f?'one frame really costs '+f1(f.cost)+' ms at full sharpness vs '+f1(p)+' ms per refresh':'no cost rows')+(RES.done?'':RES.fail?' (failed: '+RES.fail+')':' (stopped early)'));
  if(RES.findText&&RES.findText.length){L.push('Findings:');RES.findText.forEach(function(x){L.push('- '+x)})}
  if(RES.failButtons)L.push('Buttons showing when it stopped: '+RES.failButtons);
  L.push('--- log ---');LOG.forEach(function(x){L.push(x)});var t=ascii(L.join('\n'));$('out').textContent=t;window.__tsResult=t;return t}
 function copy(){var t=RES?report():'Thumb Circuit speed tester '+VER+': no run yet.\n'+(ENV?devLine():'')+'\n--- log ---\n'+LOG.join('\n');var ok=false,ta=document.createElement('textarea');ta.value=t;ta.style.position='fixed';ta.style.opacity='0';document.body.appendChild(ta);ta.select();try{ok=document.execCommand('copy')}catch(e){}document.body.removeChild(ta);
  if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(t).then(function(){say('Copied. Paste it into the chat with Claude.')},function(){say(ok?'Copied. Paste it into the chat with Claude.':'Could not copy. Open "Results as text" below and copy it by hand.');if(!ok)$('rawd').open=true})}else{say(ok?'Copied. Paste it into the chat with Claude.':'Could not copy. Open "Results as text" below and copy it by hand.');if(!ok)$('rawd').open=true}}
 function stop(){if(!busy)return;stopped=true;say('Stopping...')}
-$('quick').onclick=function(){run('quick')};$('long').onclick=function(){run('long')};$('full').onclick=function(){run('full')};$('stop').onclick=stop;$('stop2').onclick=stop;$('copy').onclick=copy;
+$('quick').onclick=function(){run('quick')};$('hunt').onclick=function(){hunt()};$('long').onclick=function(){run('long')};$('full').onclick=function(){run('full')};$('stop').onclick=stop;$('stop2').onclick=stop;$('copy').onclick=copy;
 document.addEventListener('visibilitychange',function(){if(busy)log(document.hidden?'tab hidden: frames pause, results from this moment are not real':'tab visible again')});
 addEventListener('resize',function(){if(busy)log('window resized to '+innerWidth+'x'+innerHeight)});
-initEnv().then(function(){var a=Q.get('auto');if(a==='quick'||a==='full'||a==='long')setTimeout(function(){run(a)},800)}).catch(function(e){window.__tsErr('reading this computer: '+(e.message||e))});
+initEnv().then(function(){var a=Q.get('auto');if(a==='quick'||a==='full'||a==='long')setTimeout(function(){run(a)},800);if(a==='hunt')setTimeout(hunt,800)}).catch(function(e){window.__tsErr('reading this computer: '+(e.message||e))});
 })();
 </script>
 </body></html>
